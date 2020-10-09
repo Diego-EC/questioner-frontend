@@ -6,6 +6,7 @@ import { Login } from "./views/login";
 import { Main } from "./views/main";
 import { QuestionDetail } from "./views/question-detail";
 import { CreateUser } from "./views/create-user";
+import { ForgotPassword } from "./views/forgot-password";
 
 import injectContext from "./store/app-context";
 
@@ -22,6 +23,7 @@ const Layout = () => {
 						<Route exact path="/" component={Login} />
 						<Route exact path="/main" component={Main} />
 						<Route exact path="/create-user" component={CreateUser} />
+						<Route exact path="/forgot-password" component={ForgotPassword} />
 						<Route exact path="/question-detail" component={QuestionDetail} />
 						<Route>
 							<h1>Not found!</h1>
