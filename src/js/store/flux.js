@@ -1,42 +1,35 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	return {
 		store: {
-			demo: [
+			questions: [
 				{
-					title: "FIRST",
-					background: "white",
-					initial: "white"
+					id: "1",
+					title: "Question 1",
+					description: "description 1"
 				},
 				{
-					title: "SECOND",
-					background: "white",
-					initial: "white"
+					id: "2",
+					title: "Question 2",
+					description: "description 2"
+				},
+				{
+					id: "3",
+					title: "Question 3",
+					description: "description 3"
 				}
 			]
 		},
 		actions: {
-			// Use getActions to call a function within a fuction
-			exampleFunction: () => {
-				getActions().changeColor(0, "green");
+			getAllQuestions: () => {
+				let store = getStore();
+				return store.questions;
 			},
-			loadSomeData: () => {
-				/**
-					fetch().then().then(data => setStore({ "foo": data.bar }))
-				*/
-			},
-			changeColor: (index, color) => {
-				//get the store
-				const store = getStore();
-
-				//we have to loop the entire demo array to look for the respective index
-				//and change its color
-				const demo = store.demo.map((elm, i) => {
-					if (i === index) elm.background = color;
-					return elm;
+			getQuestionById: id => {
+				let store = getStore();
+				var question = store.questions.find(obj => {
+					return obj.id == id;
 				});
-
-				//reset the global store
-				setStore({ demo: demo });
+				return question;
 			}
 		}
 	};
