@@ -1,17 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ScrollToTop from "./component/scrollToTop";
-
-import { Login } from "./views/login";
-import { Main } from "./views/main";
-import { QuestionDetail } from "./views/question-detail";
-import { CreateUser } from "./views/create-user";
-import { ForgotPassword } from "./views/forgot-password";
-
 import injectContext from "./store/app-context";
-
+import ScrollToTop from "./component/scrollToTop";
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+
+import { Login } from "./views/login";
+import { Questions } from "./views/questions";
+import { CreateUser } from "./views/create-user";
+import { ForgotPassword } from "./views/forgot-password";
 
 const Layout = () => {
 	return (
@@ -21,10 +18,9 @@ const Layout = () => {
 					<Navbar />
 					<Switch>
 						<Route exact path="/" component={Login} />
-						<Route exact path="/main" component={Main} />
+						<Route exact path="/questions" component={Questions} />
 						<Route exact path="/create-user" component={CreateUser} />
 						<Route exact path="/forgot-password" component={ForgotPassword} />
-						<Route exact path="/question-detail" component={QuestionDetail} />
 						<Route>
 							<h1>Not found!</h1>
 						</Route>

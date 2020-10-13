@@ -1,11 +1,9 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 export const Login = () => {
 	function goToMainView() {
-		//console.log("LOL");
-		history.push("/main");
+		history.push("/questions");
 	}
 
 	return (
@@ -33,10 +31,11 @@ export const Login = () => {
 					</label>
 				</div>
 				<div className="form-group">
-					{/*<button type="submit" className="btn btn-primary">
+					{/* TODO: este botón enviará el formulario a la API
+                    <button type="submit" className="btn btn-primary">
 						Sign in
                     </button>*/}
-					<Link to="/main" className="btn btn-primary">
+					<Link to="/questions" className="btn btn-primary">
 						Sign in
 					</Link>
 				</div>
