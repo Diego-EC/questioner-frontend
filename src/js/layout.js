@@ -10,6 +10,8 @@ import { Questions } from "./views/questions";
 import { CreateUser } from "./views/create-user";
 import { ForgotPassword } from "./views/forgot-password";
 import { QuestionDetail } from "./views/question-detail";
+import { Admin } from "./views/admin";
+import { AddQuestion } from "./views/add-question";
 
 const Layout = () => {
 	return (
@@ -23,6 +25,8 @@ const Layout = () => {
 						<Route exact path="/create-user" component={CreateUser} />
 						<Route exact path="/forgot-password" component={ForgotPassword} />
 						<Route exact path="/question-detail/:id" component={QuestionDetail} />
+						<Route exact path="/admin" component={Admin} />
+						<Route exact path="/add-question" component={AddQuestion} />
 						<Route>
 							<h1>Not found!</h1>
 						</Route>
