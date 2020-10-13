@@ -9,6 +9,7 @@ import { Login } from "./views/login";
 import { Questions } from "./views/questions";
 import { CreateUser } from "./views/create-user";
 import { ForgotPassword } from "./views/forgot-password";
+import { QuestionDetail } from "./views/question-detail";
 
 const Layout = () => {
 	return (
@@ -21,6 +22,7 @@ const Layout = () => {
 						<Route exact path="/questions" component={Questions} />
 						<Route exact path="/create-user" component={CreateUser} />
 						<Route exact path="/forgot-password" component={ForgotPassword} />
+						<Route exact path="/question-detail/:id" component={QuestionDetail} />
 						<Route>
 							<h1>Not found!</h1>
 						</Route>
