@@ -22,6 +22,9 @@ export const QuestionDetail = () => {
 			<p>{question.description}</p>
 			<div className="row justify-content-center">
 				<div className="col" align="right">
+					<Link to={"/question-detail/" + id + "/add-answer"} className="btn btn-primary">
+						Add Answer
+					</Link>
 					<Link to="/questions" className="btn btn-secondary">
 						Go Back
 					</Link>
