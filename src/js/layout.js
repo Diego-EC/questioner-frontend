@@ -10,7 +10,7 @@ import { Questions } from "./views/questions";
 import { CreateUser } from "./views/create-user";
 import { ForgotPassword } from "./views/forgot-password";
 import { QuestionDetail } from "./views/question-detail";
-import { Admin } from "./views/admin";
+import { ManageUsers } from "./views/manage-users";
 import { AddQuestion } from "./views/add-question";
 import { AddAnwser } from "./views/add-answer";
 
@@ -26,7 +26,7 @@ const Layout = () => {
 						<Route exact path="/create-user" component={CreateUser} />
 						<Route exact path="/forgot-password" component={ForgotPassword} />
 						<Route exact path="/question-detail/:id" component={QuestionDetail} />
-						<Route exact path="/admin" component={Admin} />
+						<Route exact path="/manage-users" component={ManageUsers} />
 						<Route exact path="/add-question" component={AddQuestion} />
 						<Route exact path="/question-detail/:id/add-answer" component={AddAnwser} />
 						<Route>

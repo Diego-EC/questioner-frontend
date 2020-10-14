@@ -6,8 +6,8 @@ export const MenuBar = () => {
 		<div className="container my-4">
 			<div className="row">
 				<div className="col-2 my-auto">
-					<Link to="/admin" className="btn btn-warning text-white">
-						Admin
+					<Link to="/manage-users" className="btn btn-warning text-white">
+						Manage Users
 					</Link>
 				</div>
 				<div className="col-8 my-auto">
