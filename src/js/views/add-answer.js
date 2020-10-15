@@ -10,12 +10,12 @@ export const AddAnwser = () => {
 			<form action="">
 				<div className="row justify-content-center">
 					<div className="col" align="center">
-						<Link to="/questions" className="btn btn-primary">
+						<Link to={"/question-detail/" + id} className="btn btn-primary">
 							OK
 						</Link>
 					</div>
 					<div className="col" align="center">
-						<Link to="/questions" className="btn btn-secondary">
+						<Link to={"/question-detail/" + id} className="btn btn-secondary">
 							Cancel
 						</Link>
 					</div>
