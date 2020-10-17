@@ -21,14 +21,14 @@ export const Navbar = () => {
 				className="navbar-toggler my-1"
 				type="button"
 				data-toggle="collapse"
-				data-target="#navbarTogglerDemo03"
-				aria-controls="navbarTogglerDemo03"
+				data-target="#menu-bar"
+				aria-controls="menu-bar"
 				aria-expanded="false"
 				aria-label="Toggle navigation">
 				<span className="navbar-toggler-icon"></span>
 			</button>
 
-			<div className="collapse navbar-collapse" id="navbarTogglerDemo03">
+			<div className="collapse navbar-collapse" id="menu-bar">
 				<div className="navbar-nav float-right text-right pr-3 ml-auto">
 					<div className="mr-2 my-1">
 						<Link to="/manage-users">
