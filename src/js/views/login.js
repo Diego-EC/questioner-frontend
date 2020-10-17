@@ -9,7 +9,9 @@ export const Login = () => {
 
 	return (
 		<div className="container">
-			<h1 className="text-center">Login View</h1>
+			<h1 className="text-center">Questioner</h1>
+			<h4 className="text-center">Where the answers live</h4>
+
 			<form action="">
 				<div className="form-group">
 					<label htmlFor="email">Email:</label>
@@ -32,10 +34,6 @@ export const Login = () => {
 					</label>
 				</div>
 				<div className="form-group">
-					{/* TODO: este botón enviará el formulario a la API
-                    <button type="submit" className="btn btn-primary">
-						Sign in
-                    </button>*/}
 					<Link to="/questions">
 						<ButtonPrimary label={"Sign in"} />
 					</Link>
