@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Question } from "../component/question";
-import { MenuBar } from "../component/menu-bar";
 import { Context } from "../store/app-context";
 
 export const Questions = () => {
@@ -31,7 +30,6 @@ export const Questions = () => {
 
 	return (
 		<div className="container">
-			<MenuBar />
 			<div className="container">{questions}</div>
 		</div>
 	);
