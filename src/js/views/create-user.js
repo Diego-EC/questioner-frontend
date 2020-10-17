@@ -4,6 +4,10 @@ import { ButtonPrimary } from "../component/bootstrap/button-primary";
 import { ButtonSecondary } from "../component/bootstrap/button-secondary";
 
 export const CreateUser = () => {
+	function userCreatedOk() {
+		alert("Success! \n Your user account has been created successfully.");
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Create User Account</h1>
@@ -28,7 +32,7 @@ export const CreateUser = () => {
 				<div className="row mt-5">
 					<div className="col" align="right">
 						<Link to="/">
-							<ButtonPrimary label={"OK"} />
+							<ButtonPrimary label={"Create"} onClick={userCreatedOk} />
 						</Link>
 					</div>
 					<div className="col" align="left">
