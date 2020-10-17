@@ -1,6 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Searcher } from "./searcher";
+import { ButtonWarning } from "./bootstrap/button-warning";
+import { ButtonPrimary } from "./bootstrap/button-primary";
+import { ButtonSecondary } from "./bootstrap/button-secondary";
 
 export const Navbar = () => {
 	return (
@@ -28,24 +31,21 @@ export const Navbar = () => {
 			<div className="collapse navbar-collapse" id="navbarTogglerDemo03">
 				<div className="navbar-nav float-right text-right pr-3 ml-auto">
 					<div className="mr-2 my-1">
-						<Link to="/manage-users" className="btn btn-warning text-white">
-							Manage Users
+						<Link to="/manage-users">
+							<ButtonWarning label={"Manage Users"} />
 						</Link>
 					</div>
 					<div className="mr-2 my-1">
 						<Searcher />
 					</div>
 					<div className="mr-2 my-1">
-						<Link to="/add-question" className="btn btn-primary">
-							Make Question
+						<Link to="/add-question">
+							<ButtonPrimary label={"Make Question"} />
 						</Link>
 					</div>
 					<div className="mr-2 my-1">
 						<Link to="/">
-							<button className="btn btn-secondary">
-								<span>Logout </span>
-								<span className="fas fa-sign-out-alt"></span>
-							</button>
+							<ButtonSecondary label={"Logout "} icon={"fas fa-sign-out-alt"} />
 						</Link>
 					</div>
 				</div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
+import { ButtonPrimary } from "../component/bootstrap/button-primary";
 
 export const Login = () => {
 	function goToMainView() {
@@ -35,8 +36,8 @@ export const Login = () => {
                     <button type="submit" className="btn btn-primary">
 						Sign in
                     </button>*/}
-					<Link to="/questions" className="btn btn-primary">
-						Sign in
+					<Link to="/questions">
+						<ButtonPrimary label={"Sign in"} />
 					</Link>
 				</div>
 				<div className="form-group">
