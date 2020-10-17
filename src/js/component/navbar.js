@@ -40,6 +40,14 @@ export const Navbar = () => {
 							Make Question
 						</Link>
 					</div>
+					<div className="mr-2 my-1">
+						<Link to="/">
+							<button className="btn btn-secondary">
+								<span>Logout </span>
+								<span className="fas fa-sign-out-alt"></span>
+							</button>
+						</Link>
+					</div>
 				</div>
 			</div>
 		</nav>
