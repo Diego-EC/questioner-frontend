@@ -21,7 +21,14 @@ export const Questions = () => {
 		if (allQuestions) {
 			questionsMap = allQuestions.map(function(question, index) {
 				return (
-					<Question key={index} id={question.id} title={question.title} description={question.description} />
+					<Question
+						key={index}
+						id={question.id}
+						title={question.title}
+						description={question.description}
+						isAnswered={question.isAnswered}
+						numberOfAnswers={question.numberOfAnswers}
+					/>
 				);
 			});
 		}
