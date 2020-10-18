@@ -9,7 +9,7 @@ export const ButtonPrimary = props => {
 	};
 
 	return (
-		<div className="btn btn-primary" onClick={props.onClick}>
+		<div className="btn btn-primary" type="submit" onClick={props.onClick}>
 			{props.label}
 			<span className={props.icon}></span>
 		</div>
