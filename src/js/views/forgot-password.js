@@ -11,7 +11,7 @@ export const ForgotPassword = () => {
 
 	return (
 		<div className="container">
-			<h1 className="text-center">Recover Password</h1>
+			<h1 className="text-center">Reset Password</h1>
 			<form action="">
 				<div className="form-group">
 					<label htmlFor="email">Email:</label>
