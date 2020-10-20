@@ -70,7 +70,7 @@ export const AddQuestion = () => {
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
 						<Link to="/questions">
-							<ButtonPrimary label={"OK"} />
+							<ButtonPrimary label={"Save"} />
 						</Link>
 					</div>
 					<div className="col" align="left">

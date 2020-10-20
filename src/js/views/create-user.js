@@ -8,7 +8,7 @@ export const CreateUser = () => {
 	const history = useHistory();
 
 	function userCreatedOk() {
-		$("#userCreatedOk").modal();
+		$("#userCreatedOk").modal({ show: true, keyboard: false, backdrop: "static" });
 	}
 
 	function closeModal() {
@@ -39,7 +39,12 @@ export const CreateUser = () => {
 				<div className="row mt-5">
 					<div className="col" align="right">
 						<ButtonPrimary label={"Create"} onClick={userCreatedOk} />
-						<Modal id={"userCreatedOk"} title={"Usuario creado"} text={"texto"} close={closeModal} />
+						<Modal
+							id={"userCreatedOk"}
+							title={"Usuario creado"}
+							text={"Revisa tu correo electónico para confirmar la cuenta."}
+							close={closeModal}
+						/>
 					</div>
 					<div className="col" align="left">
 						<Link to="/">
