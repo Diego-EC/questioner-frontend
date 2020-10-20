@@ -13,63 +13,65 @@ export const ManageUsers = () => {
 						<thead className="">
 							<tr>
 								<th scope="col">User</th>
-								<th scope="col">Email</th>
+								<th scope="col" className="d-none d-sm-block">
+									Email
+								</th>
 								<th scope="col">Active</th>
 							</tr>
 						</thead>
 						<tbody className="">
 							<tr>
 								<td>Dieo Ezquerro Calvo</td>
-								<td>diego.ezquerro@gmail.com</td>
+								<td className="d-none d-sm-block">diego.ezquerro@gmail.com</td>
 								<td>
 									<Switches idUser={"1"} />
 								</td>
 							</tr>
 							<tr>
 								<td>kristen_khan</td>
-								<td>kristen_khan@hotmail.com</td>
+								<td className="d-none d-sm-block">kristen_khan@hotmail.com</td>
 								<td>
 									<Switches idUser={"2"} />
 								</td>
 							</tr>
 							<tr>
 								<td>tuan_mccormick</td>
-								<td>tuan_mccormick@aol.com</td>
+								<td className="d-none d-sm-block">tuan_mccormick@aol.com</td>
 								<td>
 									<Switches idUser={"3"} />
 								</td>
 							</tr>
 							<tr>
 								<td>kyung_prentice</td>
-								<td>kyung_prentice@outlook.com</td>
+								<td className="d-none d-sm-block">kyung_prentice@outlook.com</td>
 								<td>
 									<Switches idUser={"4"} />
 								</td>
 							</tr>
 							<tr>
 								<td>lesha_iles</td>
-								<td>lesha_iles@hotmail.com</td>
+								<td className="d-none d-sm-block">lesha_iles@hotmail.com</td>
 								<td>
 									<Switches idUser={"5"} />
 								</td>
 							</tr>
 							<tr>
 								<td>chris_buxton</td>
-								<td>chris_buxton@gmail.com</td>
+								<td className="d-none d-sm-block">chris_buxton@gmail.com</td>
 								<td>
 									<Switches idUser={"6"} />
 								</td>
 							</tr>
 							<tr>
 								<td>tamra_gould</td>
-								<td>tamra_gould@gmail.com</td>
+								<td className="d-none d-sm-block">tamra_gould@gmail.com</td>
 								<td>
 									<Switches idUser={"7"} />
 								</td>
 							</tr>
 							<tr>
 								<td>lurlene_bourne</td>
-								<td>lurlene_bourne@aol.com</td>
+								<td className="d-none d-sm-block">lurlene_bourne@aol.com</td>
 								<td>
 									<Switches idUser={"8"} />
 								</td>
