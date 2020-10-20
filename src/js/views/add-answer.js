@@ -82,7 +82,7 @@ export const AddAnwser = () => {
 						<Button label={"Save"} color={"primary"} onClick={answerCreatedOK} />
 						<Modal
 							id={"answerCreatedOK"}
-							title={"Answer saved"}
+							title={"Answer Saved"}
 							text={"Thank you for your collaboration."}
 							close={closeModal}
 						/>

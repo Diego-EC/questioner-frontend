@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ButtonPrimary } from "../component/bootstrap/button-primary";
 import { Switches } from "../component/bootstrap/switches";
 import { Button } from "../component/bootstrap/button";
 

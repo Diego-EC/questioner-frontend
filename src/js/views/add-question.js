@@ -1,8 +1,19 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
+import { Modal } from "../component/bootstrap/modal";
 
 export const AddQuestion = () => {
+	const history = useHistory();
+
+	function questionCreatedOK() {
+		$("#questionCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+	}
+
+	function closeModal() {
+		history.push("/questions");
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Add Question</h1>
@@ -68,9 +79,13 @@ export const AddQuestion = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						<Link to="/questions">
-							<Button label={"Save"} color={"primary"} />
-						</Link>
+						<Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />
+						<Modal
+							id={"questionCreatedOK"}
+							title={"Question Saved"}
+							text={"Soon you will have an answer ;)"}
+							close={closeModal}
+						/>
 					</div>
 					<div className="col" align="left">
 						<Link to="/questions">
