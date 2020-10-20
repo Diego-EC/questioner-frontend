@@ -1,8 +1,6 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
-import { ButtonPrimary } from "../component/bootstrap/button-primary";
-import { ButtonSecondary } from "../component/bootstrap/button-secondary";
 import { Answer } from "../component/answer";
 import { Button } from "../component/bootstrap/button";
 
