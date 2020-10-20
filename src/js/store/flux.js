@@ -68,12 +68,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				return question;
 			},
 			getAnswersByQuestionId: idQuestion => {
-				console.log("idQuestion: ", idQuestion);
 				let store = getStore();
 				var answers = store.answers.filter(answer => {
 					return answer.idQuestion == idQuestion;
 				});
-				console.log("answers: ", answers);
 				return answers;
 			}
 		}
