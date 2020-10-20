@@ -3,7 +3,7 @@ import { Link, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Answer } from "../component/answer";
 import { Button } from "../component/bootstrap/button";
-
+//
 export const QuestionDetail = () => {
 	let { id } = useParams();
 	const { store, actions } = useContext(Context);
