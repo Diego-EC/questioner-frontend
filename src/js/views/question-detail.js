@@ -14,9 +14,7 @@ export const QuestionDetail = () => {
 		const questionById = getQuestionById();
 		setQuestion(questionById);
 		const answersByQuestionId = getAnswersByQuestionId();
-		console.log("answersByQuestionId: ", answersByQuestionId);
 		setAnswers(answersByQuestionId);
-		console.log(answers);
 	}, []);
 
 	function getQuestionById() {
@@ -28,14 +26,20 @@ export const QuestionDetail = () => {
 	}
 
 	let mapAnswers = answers.map((answer, index) => {
-		console.log("answer ", answer);
 		return <Answer key={index} id={answer.id} title={answer.title} description={answer.description} />;
 	});
 
 	return (
 		<div className="container">
-			<p className="h2">{question.title}</p>
-			<p>{question.description}</p>
+			<div className="border border-secondary mb-3 p-2">
+				<div className="mb-2 d-flex justify-content-end">
+					<Link to={id + "/edit-question"}>
+						<Button label={"Edit Question"} color={"primary"} />
+					</Link>
+				</div>
+				<p className="h2">{question.title}</p>
+				<p>{question.description}</p>
+			</div>
 			<div>{mapAnswers}</div>
 			<div className="mt-5 row justify-content-center">
 				<div className="col" align="right">
