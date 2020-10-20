@@ -1,15 +1,20 @@
 import React from "react";
 import PropTypes from "prop-types";
-
+// badge-dinamic-label-amount-color
 export const BadgeInfo = props => {
 	BadgeInfo.propTypes = {
 		label: PropTypes.string,
-		amount: PropTypes.number
+		amount: PropTypes.number,
+		color: PropTypes.string
 	};
 
 	return (
-		<button type="buton" className="btn btn-info" disabled>
+		<span className={"ml-1 text-white p-1 rounded bg-" + props.color}>
 			{props.label} <span className="badge badge-light">{props.amount}</span>
-		</button>
+		</span>
 	);
+};
+
+BadgeInfo.defaultProps = {
+	color: "primary"
 };
