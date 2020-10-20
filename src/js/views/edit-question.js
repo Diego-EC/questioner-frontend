@@ -3,7 +3,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
-//
+
 export const EditQuestion = () => {
 	const history = useHistory();
 	let { id } = useParams();
