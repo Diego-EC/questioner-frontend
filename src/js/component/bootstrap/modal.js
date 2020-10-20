@@ -20,7 +20,7 @@ export const Modal = props => {
 							&times;
 						</button>
 					</div>
-					<div className="modal-body">
+					<div className="modal-body text-left">
 						<p>{props.text}</p>
 					</div>
 					<div className="modal-footer">
