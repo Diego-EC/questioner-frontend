@@ -4,18 +4,14 @@ import { Link, useHistory } from "react-router-dom";
 
 export const Modal = props => {
 	Modal.propTypes = {
+		id: PropTypes.string,
 		title: PropTypes.string,
-		text: PropTypes.string
+		text: PropTypes.string,
+		close: PropTypes.func
 	};
 
-	function goToMainView() {
-		console.log("goToMainView");
-		//history.push("/");
-		alert("Great Shot!");
-	}
-
 	return (
-		<div className="modal fade" id="questioner-modal" role="dialog">
+		<div className="modal fade" id={props.id} role="dialog">
 			<div className="modal-dialog">
 				<div className="modal-content">
 					<div className="modal-header">
@@ -32,7 +28,7 @@ export const Modal = props => {
 							type="button"
 							className="btn btn-outline-secondary"
 							data-dismiss="modal"
-							onClick={goToMainView}>
+							onClick={props.close}>
 							Close
 						</button>
 					</div>

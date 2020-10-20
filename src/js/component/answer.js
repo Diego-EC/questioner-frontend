@@ -1,11 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { QuestionDetail } from "../views/question-detail";
 import PropTypes from "prop-types";
-import { BadgeInfo } from "./bootstrap/badge-info";
+import { Button } from "../component/bootstrap/button";
 
-export const Question = props => {
-	Question.propTypes = {
+export const Answer = props => {
+	Answer.propTypes = {
 		id: PropTypes.string,
 		title: PropTypes.string,
 		description: PropTypes.string,
@@ -17,14 +16,12 @@ export const Question = props => {
 		<div className="card mb-3">
 			<div className="card-header">
 				<div className="row justify-content-end">
-					<BadgeInfo label={"Solved"} color={"success"} />
-					<BadgeInfo label={"Answers"} amount={props.numberOfAnswers} color={"info"} />
+					<Button label={"Choose as Best Answer"} color={"primary"} />
 				</div>
 			</div>
 			<div className="card-body">
-				<Link to={"/question-detail/" + props.id}>
-					<h4 className="card-title">{props.title}</h4>
-				</Link>
+				<h4 className="card-title">{props.title}</h4>
+				<p className="card-text">{props.description}</p>
 			</div>
 		</div>
 	);

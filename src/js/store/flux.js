@@ -28,6 +28,31 @@ const getState = ({ getStore, getActions, setStore }) => {
 					isAnswered: false,
 					numberOfAnswers: 0
 				}
+			],
+			answers: [
+				{
+					id: "1",
+					idQuestion: "1",
+					title: "Prueba con esto",
+					description: "Prueba con esto que seguro que te funciona.",
+					isBestAnswer: false
+				},
+				{
+					id: "2",
+					idQuestion: "1",
+					title: "Necesito mas datos",
+					description:
+						"You should probably start with a little theory and simple examples such as the midpoint displacement algorithm. You should also learn a little about Perlin Noise if you are interested in generating graphics. I used this to get me started with my final year project on procedural generation. Fractals are closely related to procedural generation. Terragen and SpeedTree will show you some amazing possibilities of procedural generation. Procedural generation is a technique that can be used in any language (it is definitely not restricted to procedural languages such as C, as it can be used in OO languages such as Java, and Logic languages such as Prolog). A good understanding of recursion in any language will strengthen your grasp of Procedural Generation.",
+					isBestAnswer: false
+				},
+				{
+					id: "3",
+					idQuestion: "2",
+					title: "Necesito mas datos",
+					description:
+						"You should probably start with a little theory and simple examples such as the midpoint displacement algorithm. You should also learn a little about Perlin Noise if you are interested in generating graphics. I used this to get me started with my final year project on procedural generation. Fractals are closely related to procedural generation. Terragen and SpeedTree will show you some amazing possibilities of procedural generation. Procedural generation is a technique that can be used in any language (it is definitely not restricted to procedural languages such as C, as it can be used in OO languages such as Java, and Logic languages such as Prolog). A good understanding of recursion in any language will strengthen your grasp of Procedural Generation.",
+					isBestAnswer: false
+				}
 			]
 		},
 		actions: {
@@ -41,6 +66,15 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return obj.id == id;
 				});
 				return question;
+			},
+			getAnswersByQuestionId: idQuestion => {
+				console.log("idQuestion: ", idQuestion);
+				let store = getStore();
+				var answers = store.answers.filter(answer => {
+					return answer.idQuestion == idQuestion;
+				});
+				console.log("answers: ", answers);
+				return answers;
 			}
 		}
 	};

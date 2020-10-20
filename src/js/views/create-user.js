@@ -1,11 +1,18 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { ButtonPrimary } from "../component/bootstrap/button-primary";
 import { ButtonSecondary } from "../component/bootstrap/button-secondary";
+import { Modal } from "../component/bootstrap/modal";
 
 export const CreateUser = () => {
+	const history = useHistory();
+
 	function userCreatedOk() {
-		alert("Success! \n Your user account has been created successfully.");
+		$("#userCreatedOk").modal();
+	}
+
+	function closeModal() {
+		history.push("/");
 	}
 
 	return (
@@ -31,9 +38,8 @@ export const CreateUser = () => {
 
 				<div className="row mt-5">
 					<div className="col" align="right">
-						<Link to="/">
-							<ButtonPrimary label={"Create"} onClick={userCreatedOk} />
-						</Link>
+						<ButtonPrimary label={"Create"} onClick={userCreatedOk} />
+						<Modal id={"userCreatedOk"} title={"Usuario creado"} text={"texto"} close={closeModal} />
 					</div>
 					<div className="col" align="left">
 						<Link to="/">
