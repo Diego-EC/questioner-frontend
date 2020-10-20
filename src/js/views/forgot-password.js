@@ -1,12 +1,17 @@
 import React from "react";
-import { Link } from "react-router-dom";
-import { ButtonPrimary } from "../component/bootstrap/button-primary";
-import { ButtonSecondary } from "../component/bootstrap/button-secondary";
+import { Link, useHistory } from "react-router-dom";
 import { Modal } from "../component/bootstrap/modal";
+import { Button } from "../component/bootstrap/button";
 
 export const ForgotPassword = () => {
-	function resetOk() {
-		alert("Success! \n You will receive an email with the instructions to reset your password.");
+	const history = useHistory();
+
+	function resetOK() {
+		$("#passwordResetOK").modal({ show: true, keyboard: false, backdrop: "static" });
+	}
+
+	function closeModal() {
+		history.push("/");
 	}
 
 	return (
@@ -19,13 +24,17 @@ export const ForgotPassword = () => {
 				</div>
 				<div className="row mt-5">
 					<div className="col" align="right">
-						<Link to="/">
-							<ButtonPrimary label={"Send"} onClick={resetOk} />
-						</Link>
+						<Button label={"Send"} color={"primary"} onClick={resetOK} />
+						<Modal
+							id={"passwordResetOK"}
+							title={"Passwod Reseted"}
+							text={"You will receive an email with the instructions to reset the password."}
+							close={closeModal}
+						/>
 					</div>
 					<div className="col" align="left">
 						<Link to="/">
-							<ButtonSecondary label={"Cancel"} />
+							<Button label={"Cancel"} color={"secondary"} />
 						</Link>
 					</div>
 				</div>

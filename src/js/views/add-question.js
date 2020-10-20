@@ -1,7 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { ButtonPrimary } from "../component/bootstrap/button-primary";
-import { ButtonSecondary } from "../component/bootstrap/button-secondary";
+import { Button } from "../component/bootstrap/button";
 
 export const AddQuestion = () => {
 	return (
@@ -70,12 +69,12 @@ export const AddQuestion = () => {
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
 						<Link to="/questions">
-							<ButtonPrimary label={"Save"} />
+							<Button label={"Save"} color={"primary"} />
 						</Link>
 					</div>
 					<div className="col" align="left">
 						<Link to="/questions">
-							<ButtonSecondary label={"Cancel"} />
+							<Button label={"Cancel"} color={"secondary"} />
 						</Link>
 					</div>
 				</div>

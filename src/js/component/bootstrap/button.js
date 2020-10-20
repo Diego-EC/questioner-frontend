@@ -11,8 +11,7 @@ export const Button = props => {
 
 	return (
 		<div className={"btn btn-" + props.color} type="submit" onClick={props.onClick}>
-			{props.label}
-			<span className={props.icon}></span>
+			{props.label} <span className={props.icon}></span>
 		</div>
 	);
 };
