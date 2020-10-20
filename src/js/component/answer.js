@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import PropTypes from "prop-types";
-import { ButtonPrimary } from "../component/bootstrap/button-primary";
+import { Button } from "../component/bootstrap/button";
 
 export const Answer = props => {
 	Answer.propTypes = {
@@ -16,7 +16,7 @@ export const Answer = props => {
 		<div className="card mb-3">
 			<div className="card-header">
 				<div className="row justify-content-end">
-					<ButtonPrimary label={"Choose as Best Answer"} />
+					<Button label={"Choose as Best Answer"} color={"primary"} />
 				</div>
 			</div>
 			<div className="card-body">
