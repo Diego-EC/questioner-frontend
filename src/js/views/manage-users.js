@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ButtonPrimary } from "../component/bootstrap/button-primary";
 import { Switches } from "../component/bootstrap/switches";
+import { Button } from "../component/bootstrap/button";
 
 export const ManageUsers = () => {
 	return (
@@ -80,7 +81,7 @@ export const ManageUsers = () => {
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="center">
 						<Link to="/questions">
-							<ButtonPrimary label={"Go Back"} />
+							<Button label={"Go Back"} color={"primary"} />
 						</Link>
 					</div>
 				</div>

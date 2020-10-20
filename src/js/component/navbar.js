@@ -1,9 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { Searcher } from "./searcher";
-import { ButtonWarning } from "./bootstrap/button-warning";
-import { ButtonPrimary } from "./bootstrap/button-primary";
-import { ButtonSecondary } from "./bootstrap/button-secondary";
+import { Button } from "./bootstrap/button";
 
 export const Navbar = () => {
 	return (
@@ -32,7 +30,7 @@ export const Navbar = () => {
 				<div className="navbar-nav float-right text-right pr-3 ml-auto">
 					<div className="mr-2 my-1">
 						<Link to="/manage-users">
-							<ButtonWarning label={"Manage Users"} />
+							<Button label={"Manage Users"} color={"warning"} />
 						</Link>
 					</div>
 					<div className="mr-2 my-1">
@@ -40,12 +38,12 @@ export const Navbar = () => {
 					</div>
 					<div className="mr-2 my-1">
 						<Link to="/add-question">
-							<ButtonPrimary label={"Make Question"} />
+							<Button label={"Make Question"} color={"primary"} />
 						</Link>
 					</div>
 					<div className="mr-2 my-1">
 						<Link to="/">
-							<ButtonSecondary label={"Logout "} icon={"fas fa-sign-out-alt"} />
+							<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} />
 						</Link>
 					</div>
 				</div>

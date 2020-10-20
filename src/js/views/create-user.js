@@ -1,14 +1,13 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { ButtonPrimary } from "../component/bootstrap/button-primary";
-import { ButtonSecondary } from "../component/bootstrap/button-secondary";
 import { Modal } from "../component/bootstrap/modal";
+import { Button } from "../component/bootstrap/button";
 
 export const CreateUser = () => {
 	const history = useHistory();
 
-	function userCreatedOk() {
-		$("#userCreatedOk").modal({ show: true, keyboard: false, backdrop: "static" });
+	function userCreatedOK() {
+		$("#userCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 	}
 
 	function closeModal() {
@@ -38,9 +37,9 @@ export const CreateUser = () => {
 
 				<div className="row mt-5">
 					<div className="col" align="right">
-						<ButtonPrimary label={"Create"} onClick={userCreatedOk} />
+						<Button label={"Create"} color={"primary"} onClick={userCreatedOK} />
 						<Modal
-							id={"userCreatedOk"}
+							id={"userCreatedOK"}
 							title={"Usuario creado"}
 							text={"Revisa tu correo electónico para confirmar la cuenta."}
 							close={closeModal}
@@ -48,7 +47,7 @@ export const CreateUser = () => {
 					</div>
 					<div className="col" align="left">
 						<Link to="/">
-							<ButtonSecondary label={"Cancel"} />
+							<Button label={"Cancel"} color={"secondary"} />
 						</Link>
 					</div>
 				</div>
