@@ -111,7 +111,7 @@ export const EditQuestion = () => {
 							id={"questionUpdatedOK"}
 							title={"Question Edited"}
 							text={"Soon you will have an answer ;)"}
-							close={closeModal}
+							cancelCallbackFunction={closeModal}
 						/>
 					</div>
 					<div className="col" align="left">

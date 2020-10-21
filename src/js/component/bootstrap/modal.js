@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 
@@ -7,8 +7,24 @@ export const Modal = props => {
 		id: PropTypes.string,
 		title: PropTypes.string,
 		text: PropTypes.string,
-		close: PropTypes.func
+		okCallbackFunction: PropTypes.func,
+		cancelCallbackFunction: PropTypes.func,
+		labelOK: PropTypes.string,
+		labelCancel: PropTypes.string
 	};
+
+	let confirmModal = "";
+	if (props.labelOK) {
+		confirmModal = (
+			<button
+				type="button"
+				className="btn btn-outline-primary"
+				data-dismiss="modal"
+				onClick={props.okCallbackFunction}>
+				{props.labelOK}
+			</button>
+		);
+	}
 
 	return (
 		<div className="modal fade" id={props.id} role="dialog">
@@ -24,16 +40,21 @@ export const Modal = props => {
 						<p>{props.text}</p>
 					</div>
 					<div className="modal-footer">
+						{confirmModal}
 						<button
 							type="button"
 							className="btn btn-outline-secondary"
 							data-dismiss="modal"
-							onClick={props.close}>
-							Close
+							onClick={props.cancelCallbackFunction}>
+							{props.labelCancel}
 						</button>
 					</div>
 				</div>
 			</div>
 		</div>
 	);
+};
+
+Modal.defaultProps = {
+	labelCancel: "Close"
 };
