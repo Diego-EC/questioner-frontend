@@ -53,6 +53,56 @@ const getState = ({ getStore, getActions, setStore }) => {
 						"You should probably start with a little theory and simple examples such as the midpoint displacement algorithm. You should also learn a little about Perlin Noise if you are interested in generating graphics. I used this to get me started with my final year project on procedural generation. Fractals are closely related to procedural generation. Terragen and SpeedTree will show you some amazing possibilities of procedural generation. Procedural generation is a technique that can be used in any language (it is definitely not restricted to procedural languages such as C, as it can be used in OO languages such as Java, and Logic languages such as Prolog). A good understanding of recursion in any language will strengthen your grasp of Procedural Generation.",
 					isBestAnswer: false
 				}
+			],
+			users: [
+				{
+					id: "1",
+					name: "Diego Ezquerro Calvo",
+					email: "diego.ezquerro@gmail.com",
+					isActive: true
+				},
+				{
+					id: "2",
+					name: "kristen_khan",
+					email: "kristen_khan@hotmail.com",
+					isActive: true
+				},
+				{
+					id: "3",
+					name: "tuan_mccormick",
+					email: "tuan_mccormick@aol.com",
+					isActive: true
+				},
+				{
+					id: "4",
+					name: "kyung_prentice",
+					email: "kyung_prentice@outlook.com",
+					isActive: true
+				},
+				{
+					id: "5",
+					name: "lesha_iles",
+					email: "lesha_iles@hotmail.com",
+					isActive: true
+				},
+				{
+					id: "6",
+					name: "chris_buxton",
+					email: "chris_buxton@gmail.com",
+					isActive: true
+				},
+				{
+					id: "7",
+					name: "tamra_gould",
+					email: "tamra_gould@gmail.com",
+					isActive: true
+				},
+				{
+					id: "8",
+					name: "lurlene_bourne",
+					email: "lurlene_bourne@aol.com",
+					isActive: true
+				}
 			]
 		},
 		actions: {
@@ -73,6 +123,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 					return answer.idQuestion == idQuestion;
 				});
 				return answers;
+			},
+			getAllUsers: () => {
+				let store = getStore();
+				return store.users;
 			}
 		}
 	};
