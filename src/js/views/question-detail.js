@@ -35,8 +35,12 @@ export const QuestionDetail = () => {
 		$("#questionDeletedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 	}
 
-	function closeModal() {
+	function deleteQuestion() {
 		history.push("/questions");
+	}
+
+	function closeModal() {
+		history.push(`/question-detail/${id}`);
 	}
 
 	return (
@@ -52,7 +56,7 @@ export const QuestionDetail = () => {
 							id={"questionDeletedOK"}
 							title={"Are you sure you want to delete the question?"}
 							text={"All the answers will also be deleted."}
-							okCallbackFunction={closeModal}
+							okCallbackFunction={deleteQuestion}
 							cancelCallbackFunction={closeModal}
 							labelOK="OK"
 							labelCancel="Cancel"

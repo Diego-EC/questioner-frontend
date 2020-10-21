@@ -115,7 +115,7 @@ export const EditQuestion = () => {
 						/>
 					</div>
 					<div className="col" align="left">
-						<Link to="/questions">
+						<Link to={"/question-detail/" + id}>
 							<Button label={"Cancel"} color={"secondary"} />
 						</Link>
 					</div>
