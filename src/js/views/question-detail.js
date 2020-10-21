@@ -1,11 +1,13 @@
 import React, { useState, useContext, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Answer } from "../component/answer";
 import { Button } from "../component/bootstrap/button";
+import { Modal } from "../component/bootstrap/modal";
 
 export const QuestionDetail = () => {
 	let { id } = useParams();
+	const history = useHistory();
 	const { store, actions } = useContext(Context);
 	const [question, setQuestion] = useState({});
 	const [answers, setAnswers] = useState([]);
@@ -29,6 +31,14 @@ export const QuestionDetail = () => {
 		return <Answer key={index} id={answer.id} title={answer.title} description={answer.description} />;
 	});
 
+	function questionDeletedOK() {
+		$("#questionDeletedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+	}
+
+	function closeModal() {
+		history.push("/questions");
+	}
+
 	return (
 		<div className="container">
 			<div className="border border-secondary mb-3 p-2">
@@ -36,6 +46,18 @@ export const QuestionDetail = () => {
 					<Link to={id + "/edit-question"}>
 						<Button label={"Edit Question"} color={"primary"} />
 					</Link>
+					<div className="ml-2">
+						<Button label={"Delete Question"} color={"danger"} onClick={questionDeletedOK} />
+						<Modal
+							id={"questionDeletedOK"}
+							title={"Are you sure you want to delete the question?"}
+							text={"All the answers will also be deleted."}
+							okCallbackFunction={closeModal}
+							cancelCallbackFunction={closeModal}
+							labelOK="OK"
+							labelCancel="Cancel"
+						/>
+					</div>
 				</div>
 				<p className="h2">{question.title}</p>
 				<p>{question.description}</p>

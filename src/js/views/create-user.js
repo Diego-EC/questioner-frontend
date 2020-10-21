@@ -35,6 +35,27 @@ export const CreateUser = () => {
 					<input type="email" className="form-control" id="email" placeholder="Enter email" name="email" />
 				</div>
 
+				<div className="form-group">
+					<label htmlFor="password">Enter Password:</label>
+					<input
+						type="password"
+						className="form-control"
+						id="password"
+						placeholder="Enter password"
+						name="password"
+					/>
+				</div>
+				<div className="form-group">
+					<label htmlFor="password">Repeat Password:</label>
+					<input
+						type="password"
+						className="form-control"
+						id="password"
+						placeholder="Repeat password"
+						name="password"
+					/>
+				</div>
+
 				<div className="row mt-5">
 					<div className="col" align="right">
 						<Button label={"Create"} color={"primary"} onClick={userCreatedOK} />

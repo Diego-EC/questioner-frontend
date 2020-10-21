@@ -84,7 +84,7 @@ export const AddAnwser = () => {
 							id={"answerCreatedOK"}
 							title={"Answer Saved"}
 							text={"Thank you for your collaboration."}
-							close={closeModal}
+							cancelCallbackFunction={closeModal}
 						/>
 					</div>
 					<div className="col" align="left">

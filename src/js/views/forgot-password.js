@@ -29,7 +29,7 @@ export const ForgotPassword = () => {
 							id={"passwordResetOK"}
 							title={"Passwod Reseted"}
 							text={"You will receive an email with the instructions to reset the password."}
-							close={closeModal}
+							cancelCallbackFunction={closeModal}
 						/>
 					</div>
 					<div className="col" align="left">
