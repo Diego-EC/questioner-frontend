@@ -14,6 +14,7 @@ import { ManageUsers } from "./views/manage-users";
 import { AddQuestion } from "./views/add-question";
 import { AddAnwser } from "./views/add-answer";
 import { EditQuestion } from "./views/edit-question";
+import { EditAnswer } from "./views/edit-answer";
 
 const Layout = () => {
 	return (
@@ -31,6 +32,7 @@ const Layout = () => {
 						<Route exact path="/add-question" component={AddQuestion} />
 						<Route exact path="/question-detail/:id/add-answer" component={AddAnwser} />
 						<Route exact path="/question-detail/:id/edit-question" component={EditQuestion} />
+						<Route exact path="/question-detail/:id/edit-answer" component={EditAnswer} />
 						<Route>
 							<h1>Not found!</h1>
 						</Route>

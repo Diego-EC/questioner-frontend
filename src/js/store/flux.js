@@ -117,6 +117,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 				});
 				return question;
 			},
+			getAnswerById: id => {
+				let store = getStore();
+				var answer = store.answers.find(obj => {
+					return obj.id == id;
+				});
+				return answer;
+			},
 			getAnswersByQuestionId: idQuestion => {
 				let store = getStore();
 				var answers = store.answers.filter(answer => {
