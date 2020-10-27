@@ -3,8 +3,35 @@ import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 
 export const Login = () => {
+	const history = useHistory();
+
 	function goToMainView() {
 		history.push("/questions");
+	}
+
+	function signIn() {
+		let data = {
+			email: "diegoezquerro@gmail.com",
+			password: "123456"
+		};
+		fetch("https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/login", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data)
+		})
+			.then(response => {
+				return response.json();
+			})
+			.then(responseJson => {
+				if (responseJson.status === "KO") {
+					alert("Usuario no existe");
+				} else {
+					localStorage.setItem("accessToken", responseJson.access_token);
+					alert("Usuario correcto");
+				}
+			});
 	}
 
 	return (
@@ -34,9 +61,7 @@ export const Login = () => {
 					</label>
 				</div>
 				<div className="form-group">
-					<Link to="/questions">
-						<Button label={"Sign in"} color={"primary"} />
-					</Link>
+					<Button label={"Sign in"} color={"primary"} onClick={signIn} />
 				</div>
 				<div className="form-group">
 					<p>

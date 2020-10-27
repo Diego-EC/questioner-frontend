@@ -1,9 +1,35 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Searcher } from "./searcher";
 import { Button } from "./bootstrap/button";
 
 export const Navbar = () => {
+	const history = useHistory();
+
+	function logout() {
+		const accessToken = localStorage.getItem("accessToken");
+		if (accessToken === null) {
+			history.push("/");
+		}
+
+		localStorage.removeItem("accessToken");
+		fetch("https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/logout", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + accessToken,
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Credentials": true
+			}
+		})
+			.then(response => {
+				return response.json();
+			})
+			.then(responseJson => {
+				history.push("/");
+			});
+	}
+
 	return (
 		<nav className="navbar navbar-expand-md navbar-light bg-light mb-3">
 			<Link to="/">
@@ -42,9 +68,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 					<div className="mr-2 my-1">
-						<Link to="/">
-							<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} />
-						</Link>
+						<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} onClick={logout} />
 					</div>
 				</div>
 			</div>

@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 
 export const AddQuestion = () => {
+	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 
 	function questionCreatedOK() {
@@ -12,6 +13,35 @@ export const AddQuestion = () => {
 
 	function closeModal() {
 		history.push("/questions");
+	}
+
+	useEffect(() => {
+		const accessToken = localStorage.getItem("accessToken");
+		fetch("https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/check-protected", {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json",
+				Authorization: "Bearer " + accessToken,
+				"Access-Control-Allow-Origin": "*",
+				"Access-Control-Allow-Credentials": true
+			}
+		})
+			.then(response => {
+				return response.json();
+			})
+			.then(responseJson => {
+				if (responseJson.status !== undefined && responseJson.status === "OK") {
+					alert("Usuario correcto");
+					setLoading(false);
+				} else {
+					alert("Usuario no existe");
+					history.push("/");
+				}
+			});
+	}, []);
+
+	if (loading == true) {
+		return "Loading...";
 	}
 
 	return (
