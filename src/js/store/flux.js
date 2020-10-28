@@ -1,4 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
+	const BACKEND_ROOT = "https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/";
+	const LOGIN_ENDPOINT = "login/";
+
 	return {
 		store: {
 			questions: [
@@ -106,6 +109,35 @@ const getState = ({ getStore, getActions, setStore }) => {
 			]
 		},
 		actions: {
+			fetchLogin: async data => {
+				let json = await getActions().doFetch(BACKEND_ROOT + LOGIN_ENDPOINT, "POST", data);
+
+				if (json) {
+					return json;
+				}
+			},
+			doFetch: (endpoint, method, data) => {
+				let fetchOptions = {
+					method: method,
+					headers: { "Content-Type": "application/json" },
+					body: JSON.stringify(data)
+				};
+
+				return fetch(endpoint, fetchOptions)
+					.then(response => {
+						if (response.ok) {
+							return response.json();
+						} else {
+							throw Error(response.statusText);
+						}
+						// TODO: esto hace falta?
+						return response.json();
+					})
+					.catch(error => {
+						throw Error(error);
+						return null;
+					});
+			},
 			getAllQuestions: () => {
 				let store = getStore();
 				return store.questions;

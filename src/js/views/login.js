@@ -1,19 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
+import { Context } from "../store/app-context";
 
 export const Login = () => {
+	const { store, actions } = useContext(Context);
 	const history = useHistory();
 
 	function goToMainView() {
 		history.push("/questions");
 	}
 
-	function signIn() {
+	async function signIn() {
 		let data = {
 			email: "diegoezquerro@gmail.com",
 			password: "123456"
 		};
+
+		let json = await actions.fetchLogin(data);
+		if (json.status === "KO") {
+			alert("Usuario no existe");
+		} else {
+			localStorage.setItem("accessToken", json.access_token);
+			alert("Usuario correcto");
+		}
+		/*
 		fetch("https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/login", {
 			method: "POST",
 			headers: {
@@ -31,7 +42,8 @@ export const Login = () => {
 					localStorage.setItem("accessToken", responseJson.access_token);
 					alert("Usuario correcto");
 				}
-			});
+            });
+            */
 	}
 
 	return (
