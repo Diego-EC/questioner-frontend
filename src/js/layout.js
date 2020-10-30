@@ -17,6 +17,7 @@ import { EditQuestion } from "./views/edit-question";
 import { EditAnswer } from "./views/edit-answer";
 
 const Layout = () => {
+	// TODO: https://stackoverflow.com/questions/41474134/nested-routes-with-react-router-v4-v5
 	return (
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter>

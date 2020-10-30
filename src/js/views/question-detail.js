@@ -6,6 +6,7 @@ import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 
 export const QuestionDetail = () => {
+	const [loading, setLoading] = useState(true);
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
@@ -13,14 +14,31 @@ export const QuestionDetail = () => {
 	const [answers, setAnswers] = useState([]);
 
 	useEffect(() => {
-		const questionById = getQuestionById();
+		useEffectAsync();
+	}, []);
+
+	async function useEffectAsync() {
+		await checkProtected();
+		const questionById = await getQuestionById();
 		setQuestion(questionById);
 		const answersByQuestionId = getAnswersByQuestionId();
 		setAnswers(answersByQuestionId);
-	}, []);
+	}
+
+	async function checkProtected() {
+		let responseJson = await actions.fetchCheckProtected();
+		if (responseJson.status !== undefined && responseJson.status === "OK") {
+			alert("Usuario correcto");
+			setLoading(false);
+		} else {
+			alert("Usuario no existe");
+			history.push("/");
+		}
+	}
 
 	function getQuestionById() {
-		return actions.getQuestionById(id);
+		//return actions.getQuestionById(id);
+		return actions.fetchGetQuestionById(id);
 	}
 
 	function getAnswersByQuestionId() {
@@ -41,6 +59,10 @@ export const QuestionDetail = () => {
 
 	function closeModal() {
 		history.push(`/question-detail/${id}`);
+	}
+
+	if (loading == true) {
+		return "Loading...";
 	}
 
 	return (

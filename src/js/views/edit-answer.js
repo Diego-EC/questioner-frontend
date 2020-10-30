@@ -5,6 +5,7 @@ import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 
 export const EditAnswer = () => {
+	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	let { id } = useParams();
 	const { store, actions } = useContext(Context);
@@ -16,7 +17,19 @@ export const EditAnswer = () => {
 	}, []);
 
 	async function useEffectAsync() {
+		await checkProtected();
 		await getAnswerById(id);
+	}
+
+	async function checkProtected() {
+		let responseJson = await actions.fetchCheckProtected();
+		if (responseJson.status !== undefined && responseJson.status === "OK") {
+			alert("Usuario correcto");
+			setLoading(false);
+		} else {
+			alert("Usuario no existe");
+			history.push("/");
+		}
 	}
 
 	async function getAnswerById(id) {
@@ -35,6 +48,10 @@ export const EditAnswer = () => {
 
 	function closeModal() {
 		history.push(`/question-detail/${id}`);
+	}
+
+	if (loading == true) {
+		return "Loading...";
 	}
 
 	return (

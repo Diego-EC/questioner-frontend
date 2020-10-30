@@ -5,14 +5,32 @@ import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
 
 export const ManageUsers = () => {
+	const [loading, setLoading] = useState(true);
 	const { store, actions } = useContext(Context);
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
+		checkProtected();
 		const allUsers = getAllUsers();
 		const usersMap = mapUsers(allUsers);
 		setUsers(usersMap);
 	}, []);
+
+	async function checkProtected() {
+		let responseJson = await actions.fetchCheckProtected();
+		console.log(responseJson);
+		if (
+			responseJson.status !== undefined &&
+			responseJson.status === "OK" &&
+			responseJson.logged_in_as["id_role"] === 1 // TODO: isAdmin()
+		) {
+			alert("Usuario correcto");
+			setLoading(false);
+		} else {
+			alert("Usuario incorrecto");
+			history.push("/");
+		}
+	}
 
 	function getAllUsers() {
 		return actions.getAllUsers();
@@ -34,6 +52,10 @@ export const ManageUsers = () => {
 			});
 		}
 		return usersMap;
+	}
+
+	if (loading == true) {
+		return "Loading...";
 	}
 
 	return (

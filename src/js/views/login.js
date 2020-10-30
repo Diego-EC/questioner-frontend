@@ -23,27 +23,8 @@ export const Login = () => {
 		} else {
 			localStorage.setItem("accessToken", json.access_token);
 			alert("Usuario correcto");
+			goToMainView();
 		}
-		/*
-		fetch("https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/login", {
-			method: "POST",
-			headers: {
-				"Content-Type": "application/json"
-			},
-			body: JSON.stringify(data)
-		})
-			.then(response => {
-				return response.json();
-			})
-			.then(responseJson => {
-				if (responseJson.status === "KO") {
-					alert("Usuario no existe");
-				} else {
-					localStorage.setItem("accessToken", responseJson.access_token);
-					alert("Usuario correcto");
-				}
-            });
-            */
 	}
 
 	return (

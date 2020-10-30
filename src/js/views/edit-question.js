@@ -5,6 +5,7 @@ import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 
 export const EditQuestion = () => {
+	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	let { id } = useParams();
 	const { store, actions } = useContext(Context);
@@ -12,18 +13,32 @@ export const EditQuestion = () => {
 	const [description, setDesciption] = useState("");
 
 	useEffect(() => {
-		useEffectAux();
+		//TODO: cambiar todos los useEffectAsync a init
+		init();
 	}, []);
 
-	async function useEffectAux() {
-		await getQuestionById(id);
-	}
-
-	async function getQuestionById(id) {
+	async function init() {
+		await checkProtected();
 		let question = await actions.getQuestionById(id);
 		setDefaultQuestionValues(question);
 	}
 
+	async function checkProtected() {
+		let responseJson = await actions.fetchCheckProtected();
+		if (responseJson.status !== undefined && responseJson.status === "OK") {
+			alert("Usuario correcto");
+			setLoading(false);
+		} else {
+			alert("Usuario no existe");
+			history.push("/");
+		}
+	}
+	/*
+	async function getQuestionById(id) {
+		let question = await actions.getQuestionById(id);
+		setDefaultQuestionValues(question);
+	}
+*/
 	function setDefaultQuestionValues(question) {
 		setTitle(question.title);
 		setDesciption(question.description);
@@ -35,6 +50,10 @@ export const EditQuestion = () => {
 
 	function closeModal() {
 		history.push(`/question-detail/${id}`);
+	}
+
+	if (loading == true) {
+		return "Loading...";
 	}
 
 	return (
