@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 import { Context } from "../store/app-context";
+import { doPostFetch, doGetFetch } from "../helpers/fetch-helper";
 
 export const AddQuestion = () => {
 	const { store, actions } = useContext(Context);
@@ -18,7 +19,7 @@ export const AddQuestion = () => {
 	}
 
 	useEffect(() => {
-		checkProtected();
+		//checkProtected();
 	}, []);
 
 	async function checkProtected() {
@@ -32,9 +33,11 @@ export const AddQuestion = () => {
 		}
 	}
 
+	/*
 	if (loading == true) {
 		return "Loading...";
-	}
+    }
+    */
 
 	return (
 		<div className="container">

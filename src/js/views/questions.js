@@ -1,21 +1,20 @@
 import React, { useState, useContext, useEffect } from "react";
 import { Question } from "../component/question";
 import { Context } from "../store/app-context";
+import { doPostFetch, doGetFetch } from "../helpers/fetch-helper";
 
 export const Questions = () => {
-	const [loading, setLoading] = useState(true);
+	//const [loading, setLoading] = useState(true);
 	const { store, actions } = useContext(Context);
 	const [questions, setQuestions] = useState([]);
 
 	useEffect(() => {
-		useEffectAsync();
+		init();
 	}, []);
 
-	async function useEffectAsync() {
-		await checkProtected();
-		const allQuestions = await getAllQuestions();
-		console.log(allQuestions);
-		const questionsMap = mapQuestions(allQuestions);
+	async function init() {
+		const questions = await actions.fetchGetQuestons();
+		const questionsMap = mapQuestions(questions);
 		setQuestions(questionsMap);
 	}
 
@@ -30,15 +29,10 @@ export const Questions = () => {
 		}
 	}
 
-	function getAllQuestions() {
-		//return actions.getAllQuestions();
-		return actions.fetchGetQuestons();
-	}
-
-	function mapQuestions(allQuestions) {
+	function mapQuestions(questions) {
 		let questionsMap;
-		if (allQuestions) {
-			questionsMap = allQuestions.map(function(question, index) {
+		if (questions) {
+			questionsMap = questions.map(function(question, index) {
 				return (
 					<Question
 						key={index}
@@ -54,9 +48,9 @@ export const Questions = () => {
 		return questionsMap;
 	}
 
-	if (loading == true) {
+	/*if (loading == true) {
 		return "Loading...";
-	}
+	}*/
 
 	return (
 		<div className="container">

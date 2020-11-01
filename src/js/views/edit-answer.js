@@ -5,41 +5,24 @@ import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 
 export const EditAnswer = () => {
-	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	let { id } = useParams();
 	const { store, actions } = useContext(Context);
-	const [title, setTitle] = useState("");
 	const [description, setDesciption] = useState("");
+	const [link, setLink] = useState("");
 
 	useEffect(() => {
-		useEffectAsync();
+		init();
 	}, []);
 
-	async function useEffectAsync() {
-		await checkProtected();
-		await getAnswerById(id);
-	}
-
-	async function checkProtected() {
-		let responseJson = await actions.fetchCheckProtected();
-		if (responseJson.status !== undefined && responseJson.status === "OK") {
-			alert("Usuario correcto");
-			setLoading(false);
-		} else {
-			alert("Usuario no existe");
-			history.push("/");
-		}
-	}
-
-	async function getAnswerById(id) {
-		let answer = await actions.getAnswerById(id);
+	async function init() {
+		const answer = await actions.fetchGetAnswerById(id);
 		setDefaultAnswerValues(answer);
 	}
 
 	function setDefaultAnswerValues(answer) {
-		setTitle(answer.title);
 		setDesciption(answer.description);
+		setLink(answer.link);
 	}
 
 	function answerUpdatedOK() {
@@ -50,30 +33,11 @@ export const EditAnswer = () => {
 		history.push(`/question-detail/${id}`);
 	}
 
-	if (loading == true) {
-		return "Loading...";
-	}
-
 	return (
 		<div className="container">
 			<h1 className="text-center">Edit Answer</h1>
 
 			<form action="" className="was-validated" noValidate="">
-				<div className="form-group">
-					<label htmlFor="title">Title:</label>
-					<input
-						type="text"
-						className="form-control"
-						id="title"
-						aria-describedby="title"
-						placeholder="Title"
-						required
-						onChange={event => setTitle(event.target.value)}
-						defaultValue={title}
-					/>
-					<div className="invalid-feedback">Please write a title for the answer.</div>
-				</div>
-
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
 					<textarea
@@ -112,6 +76,8 @@ export const EditAnswer = () => {
 							placeholder="Link"
 							aria-label="add link"
 							aria-describedby="add link"
+							onChange={event => setLink(event.target.value)}
+							defaultValue={link}
 						/>
 						<div className="input-group-append">
 							<button className="btn btn-outline-secondary" type="button">

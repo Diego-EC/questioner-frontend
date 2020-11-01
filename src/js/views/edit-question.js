@@ -3,45 +3,57 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
+import { doGetFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const EditQuestion = () => {
-	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 	let { id } = useParams();
 	const { store, actions } = useContext(Context);
 	const [title, setTitle] = useState("");
 	const [description, setDesciption] = useState("");
+	const [files, setFiles] = useState([]);
+	const [link, setLink] = useState("");
 
 	useEffect(() => {
-		//TODO: cambiar todos los useEffectAsync a init
 		init();
 	}, []);
 
 	async function init() {
-		await checkProtected();
-		let question = await actions.getQuestionById(id);
+		//await checkProtected();
+		//let question = await fetchGetQuestionById(id);
+		//let question = await actions.fetchGetQuestionById(id);
+		let question = await actionFetchGetQuestionById(id);
 		setDefaultQuestionValues(question);
 	}
 
-	async function checkProtected() {
-		let responseJson = await actions.fetchCheckProtected();
-		if (responseJson.status !== undefined && responseJson.status === "OK") {
-			alert("Usuario correcto");
-			setLoading(false);
-		} else {
-			alert("Usuario no existe");
-			history.push("/");
+	async function actionFetchGetQuestionById(id) {
+		const headers = { "Content-Type": "application/json" };
+		const data = {
+			id: id
+		};
+		let json = await actions.doFetch(Constant.BACKEND_ROOT + Constant.QUESTION_ENDPOINT + "/" + id, "GET");
+		if (json) {
+			return json;
 		}
 	}
-	/*
-	async function getQuestionById(id) {
-		let question = await actions.getQuestionById(id);
-		setDefaultQuestionValues(question);
+
+	async function fetchGetQuestionById(id) {
+		const headers = { "Content-Type": "application/json" };
+		const data = {
+			id: id
+		};
+		let json = await doGetFetch(Constant.BACKEND_ROOT + Constant.QUESTION_ENDPOINT + "/" + id);
+		//if (json) {
+		// TODO: este return está bien?
+		return json;
+		//}
 	}
-*/
+
 	function setDefaultQuestionValues(question) {
 		setTitle(question.title);
 		setDesciption(question.description);
+		setLink(question.link);
 	}
 
 	function questionUpdatedOK() {
@@ -50,10 +62,6 @@ export const EditQuestion = () => {
 
 	function closeModal() {
 		history.push(`/question-detail/${id}`);
-	}
-
-	if (loading == true) {
-		return "Loading...";
 	}
 
 	return (
@@ -114,6 +122,8 @@ export const EditQuestion = () => {
 							placeholder="Link"
 							aria-label="add link"
 							aria-describedby="add link"
+							onChange={event => setLink(event.target.value)}
+							defaultValue={link}
 						/>
 						<div className="input-group-append">
 							<button className="btn btn-outline-secondary" type="button">

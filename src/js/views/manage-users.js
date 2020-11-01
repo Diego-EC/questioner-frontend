@@ -3,37 +3,20 @@ import { Link } from "react-router-dom";
 import { Switches } from "../component/bootstrap/switches";
 import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
+import { isAdmin } from "../helpers/tools-helpers";
 
 export const ManageUsers = () => {
-	const [loading, setLoading] = useState(true);
 	const { store, actions } = useContext(Context);
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		checkProtected();
-		const allUsers = getAllUsers();
-		const usersMap = mapUsers(allUsers);
-		setUsers(usersMap);
+		init();
 	}, []);
 
-	async function checkProtected() {
-		let responseJson = await actions.fetchCheckProtected();
-		console.log(responseJson);
-		if (
-			responseJson.status !== undefined &&
-			responseJson.status === "OK" &&
-			responseJson.logged_in_as["id_role"] === 1 // TODO: isAdmin()
-		) {
-			alert("Usuario correcto");
-			setLoading(false);
-		} else {
-			alert("Usuario incorrecto");
-			history.push("/");
-		}
-	}
-
-	function getAllUsers() {
-		return actions.getAllUsers();
+	async function init() {
+		const users = await actions.fetchGetUsers();
+		const usersMap = mapUsers(users);
+		setUsers(usersMap);
 	}
 
 	function mapUsers(allUsers) {
@@ -52,10 +35,6 @@ export const ManageUsers = () => {
 			});
 		}
 		return usersMap;
-	}
-
-	if (loading == true) {
-		return "Loading...";
 	}
 
 	return (
