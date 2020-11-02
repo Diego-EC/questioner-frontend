@@ -1,18 +1,17 @@
+// TODO: quitar headers, se puede condicionar el de autenticación a tener el token en flux
 export async function doPostFetch(endpoint, headers, data) {
-	await doFetch(endpoint, "POST", headers, data);
+	return await doFetch(endpoint, "POST", headers, data);
 }
 export async function doGetFetch(endpoint, headers, data) {
-	console.log("doGetFetch - INI");
-	await doFetch(endpoint, "GET", headers, data);
-	console.log("doGetFetch - FIN");
+	return await doFetch(endpoint, "GET", headers, data);
 }
 export async function doPutFetch(endpoint, headers, data) {
-	await doFetch(endpoint, "PUT", headers, data);
+	return await doFetch(endpoint, "PUT", headers, data);
 }
 export async function doDeleteFetch(endpoint, headers, data) {
-	await doFetch(endpoint, "DELETE", headers, data);
+	return await doFetch(endpoint, "DELETE", headers, data);
 }
-function doFetch(endpoint, method, headers, data) {
+async function doFetch(endpoint, method, headers, data) {
 	console.log("doFetch - INI");
 	let fetchOptions = {
 		method: method,

@@ -15,10 +15,12 @@ export const Questions = () => {
 	async function init() {
 		const questions = await actions.fetchGetQuestons();
 		const questionsMap = mapQuestions(questions);
+		console.log(questionsMap);
+		console.log("questionsMap");
 		setQuestions(questionsMap);
 	}
 
-	async function checkProtected() {
+	/*async function checkProtected() {
 		let responseJson = await actions.fetchCheckProtected();
 		if (responseJson.status !== undefined && responseJson.status === "OK") {
 			alert("Usuario correcto");
@@ -27,7 +29,7 @@ export const Questions = () => {
 			alert("Usuario no existe");
 			history.push("/");
 		}
-	}
+	}*/
 
 	function mapQuestions(questions) {
 		let questionsMap;
