@@ -1,10 +1,30 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
+import { Context } from "../store/app-context";
 
 export const Login = () => {
+	const { store, actions } = useContext(Context);
+	const history = useHistory();
+
 	function goToMainView() {
 		history.push("/questions");
+	}
+
+	async function signIn() {
+		let data = {
+			email: "diegoezquerro@gmail.com",
+			password: "123456"
+		};
+
+		let json = await actions.fetchLogin(data);
+		if (json.status === "KO") {
+			alert("Usuario no existe");
+		} else {
+			localStorage.setItem("accessToken", json.access_token);
+			alert("Usuario correcto");
+			goToMainView();
+		}
 	}
 
 	return (
@@ -34,9 +54,7 @@ export const Login = () => {
 					</label>
 				</div>
 				<div className="form-group">
-					<Link to="/questions">
-						<Button label={"Sign in"} color={"primary"} />
-					</Link>
+					<Button label={"Sign in"} color={"primary"} onClick={signIn} />
 				</div>
 				<div className="form-group">
 					<p>

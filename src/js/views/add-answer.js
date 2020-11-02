@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
@@ -6,6 +6,22 @@ import { Modal } from "../component/bootstrap/modal";
 export const AddAnwser = () => {
 	let { id } = useParams();
 	const history = useHistory();
+	const [loading, setLoading] = useState(true);
+
+	useEffect(() => {
+		checkProtected();
+	}, []);
+
+	async function checkProtected() {
+		let responseJson = await actions.fetchCheckProtected();
+		if (responseJson.status !== undefined && responseJson.status === "OK") {
+			alert("Usuario correcto");
+			setLoading(false);
+		} else {
+			alert("Usuario no existe");
+			history.push("/");
+		}
+	}
 
 	function answerCreatedOK() {
 		$("#answerCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
@@ -13,6 +29,10 @@ export const AddAnwser = () => {
 
 	function closeModal() {
 		history.push(`/question-detail/${id}`);
+	}
+
+	if (loading == true) {
+		return "Loading...";
 	}
 
 	return (

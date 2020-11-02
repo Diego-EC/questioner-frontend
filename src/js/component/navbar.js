@@ -1,9 +1,24 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useContext } from "react";
+import { Link, useHistory } from "react-router-dom";
 import { Searcher } from "./searcher";
 import { Button } from "./bootstrap/button";
+import { Context } from "../store/app-context";
 
 export const Navbar = () => {
+	const { store, actions } = useContext(Context);
+	const history = useHistory();
+
+	async function logout() {
+		const accessToken = localStorage.getItem("accessToken");
+		if (accessToken === null) {
+			history.push("/");
+		}
+
+		localStorage.removeItem("accessToken");
+		let json = await actions.fetchLogout();
+		history.push("/");
+	}
+
 	return (
 		<nav className="navbar navbar-expand-md navbar-light bg-light mb-3">
 			<Link to="/">
@@ -42,9 +57,7 @@ export const Navbar = () => {
 						</Link>
 					</div>
 					<div className="mr-2 my-1">
-						<Link to="/">
-							<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} />
-						</Link>
+						<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} onClick={logout} />
 					</div>
 				</div>
 			</div>

@@ -6,6 +6,7 @@ import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 
 export const QuestionDetail = () => {
+	//const [loading, setLoading] = useState(true);
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
@@ -13,23 +14,52 @@ export const QuestionDetail = () => {
 	const [answers, setAnswers] = useState([]);
 
 	useEffect(() => {
-		const questionById = getQuestionById();
-		setQuestion(questionById);
-		const answersByQuestionId = getAnswersByQuestionId();
-		setAnswers(answersByQuestionId);
+		init();
 	}, []);
 
-	function getQuestionById() {
-		return actions.getQuestionById(id);
+	async function init() {
+		//await checkProtected();
+		const question = await actions.fetchGetQuestionById(id);
+		setQuestion(question);
+		//const answers = actions.getAnswersByQuestionId(id);
+		const answers = await actions.fetchGetAnswersByQuestionId(id);
+		const answersMap = mapAnswers(answers);
+		setAnswers(answersMap);
 	}
 
-	function getAnswersByQuestionId() {
+	/*async function checkProtected() {
+		let responseJson = await actions.fetchCheckProtected();
+		if (responseJson.status !== undefined && responseJson.status === "OK") {
+			alert("Usuario correcto");
+			setLoading(false);
+		} else {
+			alert("Usuario no existe");
+			history.push("/");
+		}
+	}*/
+
+	/*function getQuestionById() {
+		//return actions.getQuestionById(id);
+		return actions.fetchGetQuestionById(id);
+	}*/
+
+	/*function getAnswersByQuestionId() {
 		return actions.getAnswersByQuestionId(id);
+	}*/
+
+	function mapAnswers(answers) {
+		let answersMap;
+		if (answers) {
+			answersMap = answers.map(function(answer, index) {
+				return <Answer key={index} id={answer.id} title={answer.title} description={answer.description} />;
+			});
+		}
+		return answersMap;
 	}
 
-	let mapAnswers = answers.map((answer, index) => {
+	/*let mapAnswers = answers.map((answer, index) => {
 		return <Answer key={index} id={answer.id} title={answer.title} description={answer.description} />;
-	});
+	});*/
 
 	function questionDeletedOK() {
 		$("#questionDeletedOK").modal({ show: true, keyboard: false, backdrop: "static" });
@@ -42,6 +72,10 @@ export const QuestionDetail = () => {
 	function closeModal() {
 		history.push(`/question-detail/${id}`);
 	}
+
+	/*if (loading == true) {
+		return "Loading...";
+	}*/
 
 	return (
 		<div className="container">
@@ -66,7 +100,7 @@ export const QuestionDetail = () => {
 				<p className="h2">{question.title}</p>
 				<p>{question.description}</p>
 			</div>
-			<div>{mapAnswers}</div>
+			<div>{answers}</div>
 			<div className="mt-5 row justify-content-center">
 				<div className="col" align="right">
 					<Link to={"/question-detail/" + id + "/add-answer"}>

@@ -17,6 +17,7 @@ import { EditQuestion } from "./views/edit-question";
 import { EditAnswer } from "./views/edit-answer";
 
 const Layout = () => {
+	// TODO: https://stackoverflow.com/questions/41474134/nested-routes-with-react-router-v4-v5
 	return (
 		<div className="d-flex flex-column h-100">
 			<BrowserRouter>
@@ -24,8 +25,8 @@ const Layout = () => {
 					<Navbar />
 					<Switch>
 						<Route exact path="/" component={Login} />
-						<Route exact path="/questions" component={Questions} />
-						<Route exact path="/create-user" component={CreateUser} />
+						{/*<Route exact path="/questions" component={Questions} />
+						<Route exact path="/create-user" component={CreateUser} />*/}
 						<Route exact path="/forgot-password" component={ForgotPassword} />
 						<Route exact path="/question-detail/:id" component={QuestionDetail} />
 						<Route exact path="/manage-users" component={ManageUsers} />
@@ -33,6 +34,14 @@ const Layout = () => {
 						<Route exact path="/question-detail/:id/add-answer" component={AddAnwser} />
 						<Route exact path="/question-detail/:id/edit-question" component={EditQuestion} />
 						<Route exact path="/question-detail/:id/edit-answer" component={EditAnswer} />
+						<Route
+							render={({ match: { url } }) => (
+								<>
+									<Route path={`/questions`} component={Questions} />
+									<Route path={`/create-user`} component={CreateUser} />
+								</>
+							)}
+						/>
 						<Route>
 							<h1>Not found!</h1>
 						</Route>

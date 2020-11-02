@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect, useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
+import { Context } from "../store/app-context";
+import { doPostFetch, doGetFetch } from "../helpers/fetch-helper";
 
 export const AddQuestion = () => {
+	const { store, actions } = useContext(Context);
+	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 
 	function questionCreatedOK() {
@@ -13,6 +17,27 @@ export const AddQuestion = () => {
 	function closeModal() {
 		history.push("/questions");
 	}
+
+	useEffect(() => {
+		//checkProtected();
+	}, []);
+
+	async function checkProtected() {
+		let responseJson = await actions.fetchCheckProtected();
+		if (responseJson.status !== undefined && responseJson.status === "OK") {
+			alert("Usuario correcto");
+			setLoading(false);
+		} else {
+			alert("Usuario no existe");
+			history.push("/");
+		}
+	}
+
+	/*
+	if (loading == true) {
+		return "Loading...";
+    }
+    */
 
 	return (
 		<div className="container">

@@ -3,19 +3,20 @@ import { Link } from "react-router-dom";
 import { Switches } from "../component/bootstrap/switches";
 import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
+import { isAdmin } from "../helpers/tools-helpers";
 
 export const ManageUsers = () => {
 	const { store, actions } = useContext(Context);
 	const [users, setUsers] = useState([]);
 
 	useEffect(() => {
-		const allUsers = getAllUsers();
-		const usersMap = mapUsers(allUsers);
-		setUsers(usersMap);
+		init();
 	}, []);
 
-	function getAllUsers() {
-		return actions.getAllUsers();
+	async function init() {
+		const users = await actions.fetchGetUsers();
+		const usersMap = mapUsers(users);
+		setUsers(usersMap);
 	}
 
 	function mapUsers(allUsers) {
