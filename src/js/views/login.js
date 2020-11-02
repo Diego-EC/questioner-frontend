@@ -18,12 +18,12 @@ export const Login = () => {
 		};
 
 		let json = await actions.fetchLogin(data);
-		if (json.status === "KO") {
-			alert("Usuario no existe");
-		} else {
+		if (json.status === "OK") {
 			localStorage.setItem("accessToken", json.access_token);
-			alert("Usuario correcto");
+			actions.setLoggedUserData(json.user, json.access_token);
 			goToMainView();
+		} else {
+			alert("Usuario no existe");
 		}
 	}
 

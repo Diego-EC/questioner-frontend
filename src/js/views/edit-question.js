@@ -20,22 +20,8 @@ export const EditQuestion = () => {
 	}, []);
 
 	async function init() {
-		//await checkProtected();
-		//let question = await fetchGetQuestionById(id);
-		//let question = await actions.fetchGetQuestionById(id);
-		let question = await actionFetchGetQuestionById(id);
+		let question = await fetchGetQuestionById(id);
 		setDefaultQuestionValues(question);
-	}
-
-	async function actionFetchGetQuestionById(id) {
-		const headers = { "Content-Type": "application/json" };
-		const data = {
-			id: id
-		};
-		let json = await actions.doFetch(Constant.BACKEND_ROOT + Constant.QUESTION_ENDPOINT + "/" + id, "GET");
-		if (json) {
-			return json;
-		}
 	}
 
 	async function fetchGetQuestionById(id) {
@@ -44,10 +30,7 @@ export const EditQuestion = () => {
 			id: id
 		};
 		let json = await doGetFetch(Constant.BACKEND_ROOT + Constant.QUESTION_ENDPOINT + "/" + id);
-		//if (json) {
-		// TODO: este return está bien?
 		return json;
-		//}
 	}
 
 	function setDefaultQuestionValues(question) {

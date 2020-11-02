@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, Fragment } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Searcher } from "./searcher";
 import { Button } from "./bootstrap/button";
@@ -8,8 +8,38 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
 
+	let buttonManageUsersHTML = "";
+	if (store.loggedUser.idRole === 1) {
+		buttonManageUsersHTML = (
+			<Fragment>
+				<Link to="/manage-users">
+					<Button label={"Manage Users"} color={"warning"} />
+				</Link>
+			</Fragment>
+		);
+	}
+
+	let buttonMakeQuestionHTML = "";
+	let searcherHTML = "";
+	let buttonLogoutHTML = "";
+	if (store.loggedUser.id !== null) {
+		buttonMakeQuestionHTML = (
+			<Fragment>
+				<Link to="/add-question">
+					<Button label={"Make Question"} color={"primary"} />
+				</Link>
+			</Fragment>
+		);
+		searcherHTML = <Searcher />;
+		buttonLogoutHTML = (
+			<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} onClick={logout} />
+		);
+	}
+
 	async function logout() {
 		const accessToken = localStorage.getItem("accessToken");
+		console.log("-----> " + accessToken);
+		actions.setLogoutUser();
 		if (accessToken === null) {
 			history.push("/");
 		}
@@ -43,21 +73,20 @@ export const Navbar = () => {
 
 			<div className="collapse navbar-collapse" id="menu-bar">
 				<div className="navbar-nav float-right text-right pr-3 ml-auto">
+					<div className="mr-2 my-1">{buttonManageUsersHTML}</div>
 					<div className="mr-2 my-1">
-						<Link to="/manage-users">
-							<Button label={"Manage Users"} color={"warning"} />
-						</Link>
+						{searcherHTML}
+						{/*<Searcher />*/}
 					</div>
 					<div className="mr-2 my-1">
-						<Searcher />
-					</div>
-					<div className="mr-2 my-1">
-						<Link to="/add-question">
+						{buttonMakeQuestionHTML}
+						{/*<Link to="/add-question">
 							<Button label={"Make Question"} color={"primary"} />
-						</Link>
+    </Link>*/}
 					</div>
 					<div className="mr-2 my-1">
-						<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} onClick={logout} />
+						{buttonLogoutHTML}
+						{/*<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} onClick={logout} />*/}
 					</div>
 				</div>
 			</div>
