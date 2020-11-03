@@ -1,18 +1,34 @@
-// TODO: quitar headers, se puede condicionar el de autenticación a tener el token en flux
-export async function doPostFetch(endpoint, headers, data) {
+import React, { useContext } from "react";
+import { Context } from "../store/app-context";
+
+function setHeaders() {
+	const accessToken = localStorage.getItem("accessToken");
+	let headers = {};
+	if (accessToken === null) {
+		headers = { "Content-Type": "application/json" };
+	} else {
+		headers = { "Content-Type": "application/json", Authorization: "Bearer " + accessToken };
+	}
+	return headers;
+}
+
+export async function doPostFetch(endpoint, data) {
+	const headers = setHeaders();
 	return await doFetch(endpoint, "POST", headers, data);
 }
-export async function doGetFetch(endpoint, headers, data) {
+export async function doGetFetch(endpoint, data) {
+	const headers = setHeaders();
 	return await doFetch(endpoint, "GET", headers, data);
 }
-export async function doPutFetch(endpoint, headers, data) {
+export async function doPutFetch(endpoint, data) {
+	const headers = setHeaders();
 	return await doFetch(endpoint, "PUT", headers, data);
 }
-export async function doDeleteFetch(endpoint, headers, data) {
+export async function doDeleteFetch(endpoint, data) {
+	const headers = setHeaders();
 	return await doFetch(endpoint, "DELETE", headers, data);
 }
 async function doFetch(endpoint, method, headers, data) {
-	console.log("doFetch - INI");
 	let fetchOptions = {
 		method: method,
 		headers: headers,
@@ -20,16 +36,14 @@ async function doFetch(endpoint, method, headers, data) {
 	};
 	// TODOs: header application/json aquí y body condicionarlo también a si
 	// le paso algo en data.
-	console.log("fetch");
+	console.log("doFetch");
 	console.log(endpoint);
 	console.log(fetchOptions);
 	return fetch(endpoint, fetchOptions)
 		.then(response => {
 			if (response.ok) {
-				console.log("doFetch - OK");
 				return response.json();
 			} else {
-				console.log("doFetch - ELSE");
 				throw Error(response.status);
 			}
 		})
@@ -39,5 +53,4 @@ async function doFetch(endpoint, method, headers, data) {
 			alert(error);
 			return null;
 		});
-	console.log("doFetch - FIN");
 }

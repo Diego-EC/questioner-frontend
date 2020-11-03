@@ -1,6 +1,7 @@
 const getState = ({ getStore, getActions, setStore }) => {
 	const DEV_ROOT = "https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/";
 	const BACKEND_ROOT = "https://questioner-back.herokuapp.com/";
+	//const BACKEND_ROOT = "https://3000-f4686e89-3f28-4d9f-b041-346f4456ba04.ws-eu01.gitpod.io/";
 	const LOGIN_ENDPOINT = "login";
 	const CHECK_PROTECTED_ENDPOINT = "check-protected";
 	const LOGOUT_ENDPOINT = "logout";
@@ -23,11 +24,11 @@ const getState = ({ getStore, getActions, setStore }) => {
 				idRole: null,
 				isActive: null,
 				alertsActivated: null,
-				token: null
+				accessToken: null
 			}
 		},
 		actions: {
-			setLoggedUserData: (loggedUser, token) => {
+			setLoggedUserData: (loggedUser, accessToken) => {
 				let loggedUserParsed = {};
 				loggedUserParsed.id = loggedUser.id;
 				loggedUserParsed.name = loggedUser.name;
@@ -35,11 +36,10 @@ const getState = ({ getStore, getActions, setStore }) => {
 				loggedUserParsed.idRole = loggedUser.id_role;
 				loggedUserParsed.isActive = loggedUser.is_active;
 				loggedUserParsed.alertsActivated = loggedUser.alerts_activated;
-				loggedUserParsed.token = token;
+				loggedUserParsed.accessToken = accessToken;
 				setStore({ loggedUser: loggedUserParsed });
 			},
 			setLogoutUser: () => {
-				console.log("LOL");
 				let logoutUserParsed = {};
 				logoutUserParsed.id = null;
 				logoutUserParsed.name = null;
@@ -47,7 +47,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				logoutUserParsed.idRole = null;
 				logoutUserParsed.isActive = null;
 				logoutUserParsed.alertsActivated = null;
-				logoutUserParsed.token = null;
+				logoutUserParsed.accessToken = null;
 				setStore({ loggedUser: logoutUserParsed });
 			},
 			// TODO: añadir validación en los endpoints:
@@ -79,13 +79,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			doFetch: (endpoint, method, headers, data) => {
-				/*let tempHeaders;
-				if (headers == null) {
-					tempHeaders = { "Content-Type": "application/json" };
-				} else {
-					tempHeaders = { "Content-Type": "application/json", headers };
-				}*/
-
 				let fetchOptions = {
 					method: method,
 					headers: headers,
@@ -109,13 +102,13 @@ const getState = ({ getStore, getActions, setStore }) => {
 						return null;
 					});
 			},
-			fetchGetQuestons: async () => {
+			/*fetchGetQuestons: async () => {
 				const headers = { "Content-Type": "application/json" };
 				let json = await getActions().doFetch(BACKEND_ROOT + QUESTIONS_ENDPOINT, "GET", headers);
 				if (json) {
 					return json;
 				}
-			},
+			},*/
 			fetchGetQuestionById: async id => {
 				const headers = { "Content-Type": "application/json" };
 				const data = {

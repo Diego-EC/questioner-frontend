@@ -6,18 +6,23 @@ import { BadgeInfo } from "./bootstrap/badge-info";
 
 export const Question = props => {
 	Question.propTypes = {
-		id: PropTypes.string,
+		id: PropTypes.number,
 		title: PropTypes.string,
 		description: PropTypes.string,
-		isAnswered: PropTypes.bool,
+		idAnswerSelected: PropTypes.number,
 		numberOfAnswers: PropTypes.number
 	};
+
+	let buttonSolvedHTML = "";
+	if (props.idAnswerSelected !== null) {
+		buttonSolvedHTML = <BadgeInfo label={"Solved"} color={"success"} />;
+	}
 
 	return (
 		<div className="card mb-3">
 			<div className="card-header">
 				<div className="row justify-content-end">
-					<BadgeInfo label={"Solved"} color={"success"} />
+					{buttonSolvedHTML}
 					<BadgeInfo label={"Answers"} amount={props.numberOfAnswers} color={"info"} />
 				</div>
 			</div>

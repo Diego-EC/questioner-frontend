@@ -1,27 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
+import { doPostFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const Login = () => {
+	const LOGIN_ENDPOINT = "login";
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
-
-	function goToMainView() {
-		history.push("/questions");
-	}
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
 
 	async function signIn() {
+		if (email == "" || password == "") {
+			alert("Please, enter valid email and password.");
+			return;
+		}
+
 		let data = {
-			email: "diegoezquerro@gmail.com",
-			password: "123456"
+			email: email,
+			password: password
 		};
 
-		let json = await actions.fetchLogin(data);
-		if (json.status === "OK") {
+		let json = await doPostFetch(Constant.BACKEND_ROOT + LOGIN_ENDPOINT, data);
+		if (json !== null && json.status === "OK") {
 			localStorage.setItem("accessToken", json.access_token);
 			actions.setLoggedUserData(json.user, json.access_token);
-			goToMainView();
+			history.push("/questions");
 		} else {
 			alert("Usuario no existe");
 		}
@@ -35,7 +41,14 @@ export const Login = () => {
 			<form action="">
 				<div className="form-group">
 					<label htmlFor="email">Email:</label>
-					<input type="email" className="form-control" id="email" placeholder="Enter email" name="email" />
+					<input
+						type="email"
+						className="form-control"
+						id="email"
+						placeholder="Enter email"
+						name="email"
+						onChange={e => setEmail(e.target.value)}
+					/>
 				</div>
 				<div className="form-group">
 					<label htmlFor="password">Password:</label>
@@ -45,6 +58,7 @@ export const Login = () => {
 						id="password"
 						placeholder="Enter password"
 						name="password"
+						onChange={e => setPassword(e.target.value)}
 					/>
 				</div>
 				<div className="form-group form-check">
