@@ -4,17 +4,46 @@ import PropTypes from "prop-types";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 import { Context } from "../store/app-context";
+import { doPutFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const Answer = props => {
 	Answer.propTypes = {
-		id: PropTypes.string,
-		title: PropTypes.string,
-		description: PropTypes.string
+		id: PropTypes.number,
+		idUser: PropTypes.number,
+		description: PropTypes.string,
+		idQuestionOwner: PropTypes.number,
+		idQuestion: PropTypes.number
 	};
+	const MARK_BEST_ANSWER_ENDPOINT = "mark-best-answer";
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
-	const [answer, setAnswer] = useState({});
+
+	let buttonChooseAsBestAnswer = "";
+	let buttonEditAnswer = "";
+	let buttonDeleteAnswer = "";
+	if (props.idUser == store.loggedUser.id) {
+		buttonEditAnswer = (
+			<Link to={id + "/edit-answer"}>
+				<Button label={"Edit answer"} color={"primary"} />
+			</Link>
+		);
+		buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={answerDeletedOK} />;
+	}
+	if (props.idQuestionOwner == store.loggedUser.id) {
+		buttonChooseAsBestAnswer = (
+			<Button label={"Choose as Best Answer"} color={"primary"} onClick={chooseAsBestAnswer} />
+		);
+	}
+
+	function chooseAsBestAnswer() {
+		let data = {
+			id_question: props.idQuestion,
+			id_answer: props.id
+		};
+		doPutFetch(Constant.BACKEND_ROOT + MARK_BEST_ANSWER_ENDPOINT, data);
+	}
 
 	function answerDeletedOK() {
 		$("#answerDeletedOK").modal({ show: true, keyboard: false, backdrop: "static" });
@@ -32,16 +61,10 @@ export const Answer = props => {
 		<div className="card mb-3">
 			<div className="card-header">
 				<div className="d-flex justify-content-end">
-					<div className="">
-						<Button label={"Choose as Best Answer"} color={"primary"} />
-					</div>
+					<div className="">{buttonChooseAsBestAnswer}</div>
+					<div className="ml-1">{buttonEditAnswer}</div>
 					<div className="ml-1">
-						<Link to={id + "/edit-answer"}>
-							<Button label={"Edit answer"} color={"primary"} />
-						</Link>
-					</div>
-					<div className="ml-1">
-						<Button label={"Delete answer"} color={"danger"} onClick={answerDeletedOK} />
+						{buttonDeleteAnswer}
 						<Modal
 							id={"answerDeletedOK"}
 							title={"Are you sure you want to delete the answer?"}
@@ -55,7 +78,6 @@ export const Answer = props => {
 				</div>
 			</div>
 			<div className="card-body">
-				<h4 className="card-title">{props.title}</h4>
 				<p className="card-text">{props.description}</p>
 			</div>
 		</div>

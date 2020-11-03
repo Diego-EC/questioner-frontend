@@ -4,9 +4,12 @@ import { Context } from "../store/app-context";
 import { Answer } from "../component/answer";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
+import { doGetFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const QuestionDetail = () => {
-	//const [loading, setLoading] = useState(true);
+	const QUESTION_ENDPOINT = "question";
+	const ANSWERS_BY_QUESTION_ID_ENDPOINT = "answers-by-question-id";
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
@@ -17,49 +20,43 @@ export const QuestionDetail = () => {
 		init();
 	}, []);
 
+	let buttonEditQuestionHTML = "";
+	let buttonDeleteQuestionHTML = "";
+	if (question.id_user == store.loggedUser.id) {
+		buttonEditQuestionHTML = (
+			<Link to={id + "/edit-question"}>
+				<Button label={"Edit Question"} color={"primary"} />
+			</Link>
+		);
+		buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={questionDeletedOK} />;
+	}
+
 	async function init() {
-		//await checkProtected();
-		const question = await actions.fetchGetQuestionById(id);
-		setQuestion(question);
-		//const answers = actions.getAnswersByQuestionId(id);
-		const answers = await actions.fetchGetAnswersByQuestionId(id);
-		const answersMap = mapAnswers(answers);
+		const responseQuestion = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
+		setQuestion(responseQuestion);
+		const answers = await doGetFetch(Constant.BACKEND_ROOT + ANSWERS_BY_QUESTION_ID_ENDPOINT + "/" + id);
+		const answersMap = mapAnswers(answers, responseQuestion.id_user);
 		setAnswers(answersMap);
 	}
 
-	/*async function checkProtected() {
-		let responseJson = await actions.fetchCheckProtected();
-		if (responseJson.status !== undefined && responseJson.status === "OK") {
-			alert("Usuario correcto");
-			setLoading(false);
-		} else {
-			alert("Usuario no existe");
-			history.push("/");
-		}
-	}*/
-
-	/*function getQuestionById() {
-		//return actions.getQuestionById(id);
-		return actions.fetchGetQuestionById(id);
-	}*/
-
-	/*function getAnswersByQuestionId() {
-		return actions.getAnswersByQuestionId(id);
-	}*/
-
-	function mapAnswers(answers) {
+	function mapAnswers(answers, idQuestionOwner) {
 		let answersMap;
 		if (answers) {
 			answersMap = answers.map(function(answer, index) {
-				return <Answer key={index} id={answer.id} title={answer.title} description={answer.description} />;
+				return (
+					<Answer
+						key={index}
+						id={answer.id}
+						idUser={answer.id_user}
+						description={answer.description}
+						idQuestionOwner={idQuestionOwner}
+						idQuestion={id}
+					/>
+				);
 			});
 		}
 		return answersMap;
 	}
-
-	/*let mapAnswers = answers.map((answer, index) => {
-		return <Answer key={index} id={answer.id} title={answer.title} description={answer.description} />;
-	});*/
 
 	function questionDeletedOK() {
 		$("#questionDeletedOK").modal({ show: true, keyboard: false, backdrop: "static" });
@@ -73,19 +70,13 @@ export const QuestionDetail = () => {
 		history.push(`/question-detail/${id}`);
 	}
 
-	/*if (loading == true) {
-		return "Loading...";
-	}*/
-
 	return (
 		<div className="container">
 			<div className="border border-secondary mb-3 p-2">
 				<div className="mb-2 d-flex justify-content-end">
-					<Link to={id + "/edit-question"}>
-						<Button label={"Edit Question"} color={"primary"} />
-					</Link>
+					{buttonEditQuestionHTML}
 					<div className="ml-2">
-						<Button label={"Delete Question"} color={"danger"} onClick={questionDeletedOK} />
+						{buttonDeleteQuestionHTML}
 						<Modal
 							id={"questionDeletedOK"}
 							title={"Are you sure you want to delete the question?"}

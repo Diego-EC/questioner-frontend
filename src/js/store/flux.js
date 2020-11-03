@@ -86,7 +86,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				};
 				// TODOs: header application/json aquí y body condicionarlo también a si
 				// le paso algo en data.
-				console.log("fetch");
+				console.log("FETCH");
 				console.log(endpoint);
 				console.log(fetchOptions);
 				return fetch(endpoint, fetchOptions)
