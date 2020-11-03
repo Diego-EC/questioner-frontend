@@ -1,11 +1,10 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Question } from "../component/question";
-import { Context } from "../store/app-context";
-import { doPostFetch, doGetFetch } from "../helpers/fetch-helper";
+import { doGetFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const Questions = () => {
-	//const [loading, setLoading] = useState(true);
-	const { store, actions } = useContext(Context);
+	const QUESTIONS_ENDPOINT = "questions";
 	const [questions, setQuestions] = useState([]);
 
 	useEffect(() => {
@@ -13,23 +12,10 @@ export const Questions = () => {
 	}, []);
 
 	async function init() {
-		const questions = await actions.fetchGetQuestons();
+		const questions = await doGetFetch(Constant.BACKEND_ROOT + QUESTIONS_ENDPOINT);
 		const questionsMap = mapQuestions(questions);
-		console.log(questionsMap);
-		console.log("questionsMap");
 		setQuestions(questionsMap);
 	}
-
-	/*async function checkProtected() {
-		let responseJson = await actions.fetchCheckProtected();
-		if (responseJson.status !== undefined && responseJson.status === "OK") {
-			alert("Usuario correcto");
-			setLoading(false);
-		} else {
-			alert("Usuario no existe");
-			history.push("/");
-		}
-	}*/
 
 	function mapQuestions(questions) {
 		let questionsMap;
@@ -41,18 +27,14 @@ export const Questions = () => {
 						id={question.id}
 						title={question.title}
 						description={question.description}
-						isAnswered={question.isAnswered}
-						numberOfAnswers={question.numberOfAnswers}
+						idAnswerSelected={question.id_answer_selected}
+						numberOfAnswers={question.number_of_answers}
 					/>
 				);
 			});
 		}
 		return questionsMap;
 	}
-
-	/*if (loading == true) {
-		return "Loading...";
-	}*/
 
 	return (
 		<div className="container">

@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import { Switches } from "../component/bootstrap/switches";
 import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
-import { isAdmin } from "../helpers/tools-helpers";
 
 export const ManageUsers = () => {
 	const { store, actions } = useContext(Context);
