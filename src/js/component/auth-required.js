@@ -19,9 +19,9 @@ export const AuthRequired = () => {
 	const [loading, setLoading] = useState(true);
 	const history = useHistory();
 
-	if (localStorage.getItem("accessToken") == null) {
+	/*if (localStorage.getItem("accessToken") == null) {
 		history.push(REDIRECT_TO_IF_NOT_AUTHORIZED);
-	}
+	}*/
 
 	useEffect(() => {
 		init();
