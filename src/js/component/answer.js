@@ -13,7 +13,7 @@ export const Answer = props => {
 		idUser: PropTypes.number,
 		description: PropTypes.string,
 		idQuestionOwner: PropTypes.number,
-		idQuestion: PropTypes.number
+		idQuestion: PropTypes.string
 	};
 	const MARK_BEST_ANSWER_ENDPOINT = "mark-best-answer";
 	let { id } = useParams();
