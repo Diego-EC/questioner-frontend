@@ -1,43 +1,34 @@
-import React, { useEffect, useState, useContext } from "react";
+import React, { useState, useContext } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 import { Context } from "../store/app-context";
-import { doPostFetch, doGetFetch } from "../helpers/fetch-helper";
+import { doPostFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const AddQuestion = () => {
+	const ADD_QUESTION_ENDPOINT = "question";
 	const { store, actions } = useContext(Context);
-	const [loading, setLoading] = useState(true);
 	const history = useHistory();
+	const [title, setTitle] = useState("");
+	const [description, setDesciption] = useState("");
+	const [link, setLink] = useState("");
 
-	function questionCreatedOK() {
-		$("#questionCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+	async function questionCreatedOK() {
+		//$("#questionCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+		let data = {
+			id_user: store.loggedUser.id,
+			title: title,
+			description: description,
+			link: link
+		};
+		await doPostFetch(Constant.BACKEND_ROOT + ADD_QUESTION_ENDPOINT, data);
+		history.push(`/questions`);
 	}
 
 	function closeModal() {
 		history.push("/questions");
 	}
-
-	useEffect(() => {
-		//checkProtected();
-	}, []);
-
-	async function checkProtected() {
-		let responseJson = await actions.fetchCheckProtected();
-		if (responseJson.status !== undefined && responseJson.status === "OK") {
-			alert("Usuario correcto");
-			setLoading(false);
-		} else {
-			alert("Usuario no existe");
-			history.push("/");
-		}
-	}
-
-	/*
-	if (loading == true) {
-		return "Loading...";
-    }
-    */
 
 	return (
 		<div className="container">
@@ -52,6 +43,7 @@ export const AddQuestion = () => {
 						id="title"
 						aria-describedby="title"
 						placeholder="Title"
+						onChange={event => setTitle(event.target.value)}
 						required
 					/>
 					<div className="invalid-feedback">Please write a title for the question.</div>
@@ -64,6 +56,7 @@ export const AddQuestion = () => {
 						id="text-area"
 						rows="3"
 						placeholder="Description"
+						onChange={event => setDesciption(event.target.value)}
 						required></textarea>
 					<div className="invalid-feedback">Please write a description for the question.</div>
 				</div>
@@ -93,6 +86,7 @@ export const AddQuestion = () => {
 							placeholder="Link"
 							aria-label="add link"
 							aria-describedby="add link"
+							onChange={event => setLink(event.target.value)}
 						/>
 						<div className="input-group-append">
 							<button className="btn btn-outline-secondary" type="button">

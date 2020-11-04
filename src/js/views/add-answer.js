@@ -34,19 +34,6 @@ export const AddAnwser = () => {
 		<div className="container">
 			<h1 className="text-center">Add Anwser</h1>
 			<form action="">
-				{/*<div className="form-group">
-					<label htmlFor="title">Title:</label>
-					<input
-						type="text"
-						className="form-control"
-						id="title"
-						aria-describedby="title"
-						placeholder="Title"
-						required
-					/>
-					<div className="invalid-feedback">Please write a title for the question.</div>
-    </div>*/}
-
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
 					<textarea
