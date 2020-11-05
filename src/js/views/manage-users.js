@@ -3,17 +3,20 @@ import { Link } from "react-router-dom";
 import { Switches } from "../component/bootstrap/switches";
 import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
+import { doGetFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const ManageUsers = () => {
 	const { store, actions } = useContext(Context);
 	const [users, setUsers] = useState([]);
+	const USERS_ENDPOINT = "users";
 
 	useEffect(() => {
 		init();
 	}, []);
 
 	async function init() {
-		const users = await actions.fetchGetUsers();
+		const users = await doGetFetch(Constant.BACKEND_ROOT + USERS_ENDPOINT);
 		const usersMap = mapUsers(users);
 		setUsers(usersMap);
 	}
@@ -22,12 +25,13 @@ export const ManageUsers = () => {
 		let usersMap;
 		if (allUsers) {
 			usersMap = allUsers.map(function(user, index) {
+				console.log(user);
 				return (
 					<tr key={index}>
 						<td>{user.name}</td>
 						<td className="d-none d-sm-table-cell">{user.email}</td>
 						<td>
-							<Switches idUser={user.id} />
+							<Switches idUser={user.id} isActive={user.is_active} />
 						</td>
 					</tr>
 				);

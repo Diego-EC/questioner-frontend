@@ -9,7 +9,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 	const QUESTION_ENDPOINT = "question";
 	const ANSWERS_BY_QUESTION_ID_ENDPOINT = "answers-by-question-id";
 	const ANSWER_ENDPOINT = "answer";
-	const USERS_ENDPOINT = "users";
+	//const USERS_ENDPOINT = "users";
 
 	// Si aglo está en el flux (datos, array, ...) solo debe estar en el flux.
 	// Por ejemplo, datos que van a ser usados en varias vistas.
