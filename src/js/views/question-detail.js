@@ -44,7 +44,6 @@ export const QuestionDetail = () => {
 		let answersMap;
 		if (answers) {
 			answersMap = answers.map(function(answer, index) {
-				console.log("answer.id " + answer.id);
 				return (
 					<Answer
 						key={index}
@@ -58,13 +57,10 @@ export const QuestionDetail = () => {
 				);
 			});
 		}
-		console.log("answersMap");
-		console.log(answersMap);
 		return answersMap;
 	}
 
 	async function onDeleteAnswer() {
-		console.log("onDeleteAnswer");
 		const answers = await doGetFetch(Constant.BACKEND_ROOT + ANSWERS_BY_QUESTION_ID_ENDPOINT + "/" + id);
 		const answersMap = mapAnswers(answers, question.id_user);
 		setAnswers(answersMap);

@@ -3,10 +3,13 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
+import { doGetFetch, doPutFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const EditAnswer = () => {
+	const ANSWER_ENDPOINT = "answer";
 	const history = useHistory();
-	let { id } = useParams();
+	let { idQuestion, idAnswer } = useParams();
 	const { store, actions } = useContext(Context);
 	const [description, setDesciption] = useState("");
 	const [link, setLink] = useState("");
@@ -15,8 +18,17 @@ export const EditAnswer = () => {
 		init();
 	}, []);
 
+	async function updateAnswer() {
+		let data = {
+			description: description,
+			link: link
+		};
+		let json = await doPutFetch(Constant.BACKEND_ROOT + ANSWER_ENDPOINT + "/" + idAnswer, data);
+		history.push(`/question-detail/${idQuestion}`);
+	}
+
 	async function init() {
-		const answer = await actions.fetchGetAnswerById(id);
+		const answer = await doGetFetch(Constant.BACKEND_ROOT + ANSWER_ENDPOINT + "/" + idAnswer);
 		setDefaultAnswerValues(answer);
 	}
 
@@ -30,7 +42,7 @@ export const EditAnswer = () => {
 	}
 
 	function closeModal() {
-		history.push(`/question-detail/${id}`);
+		history.push(`/question-detail/${idQuestion}`);
 	}
 
 	return (
@@ -89,7 +101,8 @@ export const EditAnswer = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						<Button label={"Save"} color={"primary"} onClick={answerUpdatedOK} />
+						{/*<Button label={"Save"} color={"primary"} onClick={answerUpdatedOK} />*/}
+						<Button label={"Save"} color={"primary"} onClick={updateAnswer} />
 						<Modal
 							id={"answerUpdatedOK"}
 							title={"Answer Edited"}
@@ -98,7 +111,7 @@ export const EditAnswer = () => {
 						/>
 					</div>
 					<div className="col" align="left">
-						<Link to={"/question-detail/" + id}>
+						<Link to={"/question-detail/" + idQuestion}>
 							<Button label={"Cancel"} color={"secondary"} />
 						</Link>
 					</div>

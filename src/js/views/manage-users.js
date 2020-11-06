@@ -25,7 +25,6 @@ export const ManageUsers = () => {
 		let usersMap;
 		if (allUsers) {
 			usersMap = allUsers.map(function(user, index) {
-				console.log(user);
 				return (
 					<tr key={index}>
 						<td>{user.name}</td>
