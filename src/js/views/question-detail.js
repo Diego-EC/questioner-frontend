@@ -4,7 +4,7 @@ import { Context } from "../store/app-context";
 import { Answer } from "../component/answer";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
-import { doGetFetch } from "../helpers/fetch-helper";
+import { doGetFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 
 export const QuestionDetail = () => {
@@ -28,7 +28,8 @@ export const QuestionDetail = () => {
 				<Button label={"Edit Question"} color={"primary"} />
 			</Link>
 		);
-		buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={questionDeletedOK} />;
+		//buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={questionDeletedOK} />;
+		buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={deleteQuestion} />;
 	}
 
 	async function init() {
@@ -73,7 +74,8 @@ export const QuestionDetail = () => {
 		$("#questionDeletedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 	}
 
-	function deleteQuestion() {
+	async function deleteQuestion() {
+		let json = await doDeleteFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
 		history.push("/questions");
 	}
 
