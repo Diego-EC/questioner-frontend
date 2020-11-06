@@ -57,11 +57,7 @@ export const Answer = props => {
 	}
 
 	async function deleteAnswer() {
-		console.log("delete " + props.id);
-		console.log("description " + props.description);
-
 		let json = await doDeleteFetch(Constant.BACKEND_ROOT + ANSWER_ENDPOINT + "/" + props.id);
-		console.log(json);
 
 		//history.push(`/question-detail/${id}`);
 		props.onDeleteAnswer();
