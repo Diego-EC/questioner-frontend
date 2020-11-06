@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 import { Context } from "../store/app-context";
-import { doPutFetch } from "../helpers/fetch-helper";
+import { doPutFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 
 export const Answer = props => {
@@ -13,12 +13,18 @@ export const Answer = props => {
 		idUser: PropTypes.number,
 		description: PropTypes.string,
 		idQuestionOwner: PropTypes.number,
-		idQuestion: PropTypes.string
+		idQuestion: PropTypes.string,
+		onDeleteAnswer: PropTypes.func
 	};
 	const MARK_BEST_ANSWER_ENDPOINT = "mark-best-answer";
+	const ANSWER_ENDPOINT = "answer";
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
+
+	function onDeleteAnswer() {
+		props.onDeleteAnswer();
+	}
 
 	let buttonChooseAsBestAnswer = "";
 	let buttonEditAnswer = "";
@@ -29,7 +35,8 @@ export const Answer = props => {
 				<Button label={"Edit answer"} color={"primary"} />
 			</Link>
 		);
-		buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={answerDeletedOK} />;
+		//buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={answerDeletedOK} />;
+		buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={deleteAnswer} />;
 	}
 	if (props.idQuestionOwner == store.loggedUser.id) {
 		buttonChooseAsBestAnswer = (
@@ -49,8 +56,15 @@ export const Answer = props => {
 		$("#answerDeletedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 	}
 
-	function deleteAnswer() {
-		history.push(`/question-detail/${id}`);
+	async function deleteAnswer() {
+		console.log("delete " + props.id);
+		console.log("description " + props.description);
+
+		let json = await doDeleteFetch(Constant.BACKEND_ROOT + ANSWER_ENDPOINT + "/" + props.id);
+		console.log(json);
+
+		//history.push(`/question-detail/${id}`);
+		props.onDeleteAnswer();
 	}
 
 	function closeModal() {
