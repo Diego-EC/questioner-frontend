@@ -12,8 +12,6 @@ export const Switches = props => {
 	const USER_IS_ACTIVE_ENDPOINT = "user-is-active";
 
 	async function toggleIsActiveValue(checked) {
-		console.log(checked);
-
 		let data = {
 			id_user: props.idUser,
 			is_active: checked

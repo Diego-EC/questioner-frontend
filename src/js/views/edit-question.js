@@ -3,10 +3,11 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
-import { doGetFetch } from "../helpers/fetch-helper";
+import { doGetFetch, doPutFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 
 export const EditQuestion = () => {
+	const QUESTION_ENDPOINT = "question";
 	const history = useHistory();
 	let { id } = useParams();
 	const { store, actions } = useContext(Context);
@@ -20,23 +21,24 @@ export const EditQuestion = () => {
 	}, []);
 
 	async function init() {
-		let question = await fetchGetQuestionById(id);
+		let question = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
 		setDefaultQuestionValues(question);
-	}
-
-	async function fetchGetQuestionById(id) {
-		const headers = { "Content-Type": "application/json" };
-		const data = {
-			id: id
-		};
-		let json = await doGetFetch(Constant.BACKEND_ROOT + Constant.QUESTION_ENDPOINT + "/" + id);
-		return json;
 	}
 
 	function setDefaultQuestionValues(question) {
 		setTitle(question.title);
 		setDesciption(question.description);
 		setLink(question.link);
+	}
+
+	async function updateQuestion() {
+		let data = {
+			title: title,
+			description: description,
+			link: link
+		};
+		let json = await doPutFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id, data);
+		history.push(`/question-detail/${id}`);
 	}
 
 	function questionUpdatedOK() {
@@ -118,7 +120,8 @@ export const EditQuestion = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						<Button label={"Save"} color={"primary"} onClick={questionUpdatedOK} />
+						{/*<Button label={"Save"} color={"primary"} onClick={questionUpdatedOK} />*/}
+						<Button label={"Save"} color={"primary"} onClick={updateQuestion} />
 						<Modal
 							id={"questionUpdatedOK"}
 							title={"Question Edited"}

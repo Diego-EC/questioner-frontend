@@ -31,7 +31,7 @@ export const Answer = props => {
 	let buttonDeleteAnswer = "";
 	if (props.idUser == store.loggedUser.id) {
 		buttonEditAnswer = (
-			<Link to={id + "/edit-answer"}>
+			<Link to={id + "/edit-answer/" + props.id}>
 				<Button label={"Edit answer"} color={"primary"} />
 			</Link>
 		);

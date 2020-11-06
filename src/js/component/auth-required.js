@@ -48,7 +48,7 @@ export const AuthRequired = () => {
 			<Route exact path="/add-question" component={AddQuestion} />
 			<Route exact path="/question-detail/:id/add-answer" component={AddAnwser} />
 			<Route exact path="/question-detail/:id/edit-question" component={EditQuestion} />
-			<Route exact path="/question-detail/:id/edit-answer" component={EditAnswer} />
+			<Route exact path="/question-detail/:idQuestion/edit-answer/:idAnswer" component={EditAnswer} />
 		</Fragment>
 	);
 };
