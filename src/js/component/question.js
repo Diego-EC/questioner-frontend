@@ -14,13 +14,17 @@ export const Question = props => {
 	};
 
 	let buttonSolvedHTML = "";
+	let borderHighlightHTML = "";
+	let textHighlightHTML = "";
 	if (props.idAnswerSelected !== null) {
 		buttonSolvedHTML = <BadgeInfo label={"Solved"} color={"success"} />;
+		borderHighlightHTML = "border-success";
+		textHighlightHTML = "text-success";
 	}
 
 	return (
-		<div className="card mb-3">
-			<div className="card-header">
+		<div className={"card mb-3 " + borderHighlightHTML}>
+			<div className={"card-header " + borderHighlightHTML}>
 				<div className="row justify-content-end">
 					{buttonSolvedHTML}
 					<BadgeInfo label={"Answers"} amount={props.numberOfAnswers} color={"info"} />
@@ -28,7 +32,7 @@ export const Question = props => {
 			</div>
 			<div className="card-body">
 				<Link to={"/question-detail/" + props.id}>
-					<h4 className="card-title">{props.title}</h4>
+					<h4 className={"card-title " + textHighlightHTML}>{props.title}</h4>
 				</Link>
 			</div>
 		</div>
