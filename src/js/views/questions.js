@@ -29,6 +29,7 @@ export const Questions = () => {
 						description={question.description}
 						idAnswerSelected={question.id_answer_selected}
 						numberOfAnswers={question.number_of_answers}
+						userName={question.user_name}
 					/>
 				);
 			});
