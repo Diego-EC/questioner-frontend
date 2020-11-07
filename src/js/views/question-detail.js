@@ -59,6 +59,7 @@ export const QuestionDetail = () => {
 						onDeleteAnswer={onDeleteAnswer}
 						isBestAnswer={isBestAnswer}
 						onChooseBestAnswer={onChooseBestAnswer}
+						userName={answer.user_name}
 					/>
 				);
 			});
@@ -96,19 +97,24 @@ export const QuestionDetail = () => {
 	return (
 		<div className="container">
 			<div className="border border-secondary mb-3 p-2">
-				<div className="mb-2 d-flex justify-content-end">
-					{buttonEditQuestionHTML}
-					<div className="ml-2">
-						{buttonDeleteQuestionHTML}
-						<Modal
-							id={"questionDeletedOK"}
-							title={"Are you sure you want to delete the question?"}
-							text={"All the answers will also be deleted."}
-							okCallbackFunction={deleteQuestion}
-							cancelCallbackFunction={closeModal}
-							labelOK="OK"
-							labelCancel="Cancel"
-						/>
+				<div className="row justify-content-between mx-0">
+					<div>
+						<span>Owner: {question.user_name}</span>
+					</div>
+					<div className="mb-2 d-flex justify-content-end">
+						{buttonEditQuestionHTML}
+						<div className="ml-2">
+							{buttonDeleteQuestionHTML}
+							<Modal
+								id={"questionDeletedOK"}
+								title={"Are you sure you want to delete the question?"}
+								text={"All the answers will also be deleted."}
+								okCallbackFunction={deleteQuestion}
+								cancelCallbackFunction={closeModal}
+								labelOK="OK"
+								labelCancel="Cancel"
+							/>
+						</div>
 					</div>
 				</div>
 				<p className="h2">{question.title}</p>

@@ -17,7 +17,8 @@ export const Answer = props => {
 		idQuestion: PropTypes.string,
 		onDeleteAnswer: PropTypes.func,
 		isBestAnswer: PropTypes.bool,
-		onChooseBestAnswer: PropTypes.func
+		onChooseBestAnswer: PropTypes.func,
+		userName: PropTypes.string
 	};
 	const MARK_BEST_ANSWER_ENDPOINT = "mark-best-answer";
 	const ANSWER_ENDPOINT = "answer";
@@ -42,7 +43,6 @@ export const Answer = props => {
 		buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={deleteAnswer} />;
 	}
 	if (props.idQuestionOwner == store.loggedUser.id) {
-		console.log("props.isBestAnswer " + props.isBestAnswer);
 		if (props.isBestAnswer == true) {
 			buttonChooseAsBestAnswer = <BadgeInfo label={"Best Answer"} color={"success"} />;
 			buttonDeleteAnswer = "";
@@ -88,20 +88,25 @@ export const Answer = props => {
 	return (
 		<div className={"card mb-3" + borderHighlightHTML}>
 			<div className={"card-header" + borderHighlightHTML}>
-				<div className="d-flex justify-content-end">
-					<div className="ms-1">{buttonChooseAsBestAnswer}</div>
-					<div className="ml-1">{buttonEditAnswer}</div>
-					<div className="ml-1">
-						{buttonDeleteAnswer}
-						<Modal
-							id={"answerDeletedOK"}
-							title={"Are you sure you want to delete the answer?"}
-							text={"The data will be lost forever."}
-							okCallbackFunction={deleteAnswer}
-							cancelCallbackFunction={closeModal}
-							labelOK="OK"
-							labelCancel="Cancel"
-						/>
+				<div className="row justify-content-between">
+					<div>
+						<span className={textHighlightHTML}>Owner: {props.userName}</span>
+					</div>
+					<div className="d-flex justify-content-end">
+						<div className="ms-1">{buttonChooseAsBestAnswer}</div>
+						<div className="ml-1">{buttonEditAnswer}</div>
+						<div className="ml-1">
+							{buttonDeleteAnswer}
+							<Modal
+								id={"answerDeletedOK"}
+								title={"Are you sure you want to delete the answer?"}
+								text={"The data will be lost forever."}
+								okCallbackFunction={deleteAnswer}
+								cancelCallbackFunction={closeModal}
+								labelOK="OK"
+								labelCancel="Cancel"
+							/>
+						</div>
 					</div>
 				</div>
 			</div>
