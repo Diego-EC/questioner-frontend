@@ -6,6 +6,7 @@ import { Modal } from "../component/bootstrap/modal";
 import { Context } from "../store/app-context";
 import { doPutFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
+import { BadgeInfo } from "./bootstrap/badge-info";
 
 export const Answer = props => {
 	Answer.propTypes = {
@@ -14,7 +15,9 @@ export const Answer = props => {
 		description: PropTypes.string,
 		idQuestionOwner: PropTypes.number,
 		idQuestion: PropTypes.string,
-		onDeleteAnswer: PropTypes.func
+		onDeleteAnswer: PropTypes.func,
+		isBestAnswer: PropTypes.bool,
+		onChooseBestAnswer: PropTypes.func
 	};
 	const MARK_BEST_ANSWER_ENDPOINT = "mark-best-answer";
 	const ANSWER_ENDPOINT = "answer";
@@ -39,17 +42,25 @@ export const Answer = props => {
 		buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={deleteAnswer} />;
 	}
 	if (props.idQuestionOwner == store.loggedUser.id) {
-		buttonChooseAsBestAnswer = (
-			<Button label={"Choose as Best Answer"} color={"primary"} onClick={chooseAsBestAnswer} />
-		);
+		console.log("props.isBestAnswer " + props.isBestAnswer);
+		if (props.isBestAnswer == true) {
+			buttonChooseAsBestAnswer = <BadgeInfo label={"Best Answer"} color={"success"} />;
+			buttonDeleteAnswer = "";
+			buttonEditAnswer = "";
+		} else {
+			buttonChooseAsBestAnswer = (
+				<Button label={"Choose as Best Answer"} color={"primary"} onClick={chooseAsBestAnswer} />
+			);
+		}
 	}
 
-	function chooseAsBestAnswer() {
+	async function chooseAsBestAnswer() {
 		let data = {
 			id_question: props.idQuestion,
 			id_answer: props.id
 		};
-		doPutFetch(Constant.BACKEND_ROOT + MARK_BEST_ANSWER_ENDPOINT, data);
+		await doPutFetch(Constant.BACKEND_ROOT + MARK_BEST_ANSWER_ENDPOINT, data);
+		props.onChooseBestAnswer();
 	}
 
 	function answerDeletedOK() {
@@ -67,11 +78,18 @@ export const Answer = props => {
 		history.push(`/question-detail/${id}`);
 	}
 
+	let borderHighlightHTML = "";
+	let textHighlightHTML = "";
+	if (props.isBestAnswer == true) {
+		borderHighlightHTML = " border-success";
+		textHighlightHTML = " text-success";
+	}
+
 	return (
-		<div className="card mb-3">
-			<div className="card-header">
+		<div className={"card mb-3" + borderHighlightHTML}>
+			<div className={"card-header" + borderHighlightHTML}>
 				<div className="d-flex justify-content-end">
-					<div className="">{buttonChooseAsBestAnswer}</div>
+					<div className="ms-1">{buttonChooseAsBestAnswer}</div>
 					<div className="ml-1">{buttonEditAnswer}</div>
 					<div className="ml-1">
 						{buttonDeleteAnswer}
@@ -88,7 +106,7 @@ export const Answer = props => {
 				</div>
 			</div>
 			<div className="card-body">
-				<p className="card-text">{props.description}</p>
+				<p className={"card-text" + textHighlightHTML}>{props.description}</p>
 			</div>
 		</div>
 	);

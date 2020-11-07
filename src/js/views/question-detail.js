@@ -34,16 +34,20 @@ export const QuestionDetail = () => {
 
 	async function init() {
 		const responseQuestion = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
-		setQuestion(responseQuestion);
+		await setQuestion(responseQuestion);
 		const answers = await doGetFetch(Constant.BACKEND_ROOT + ANSWERS_BY_QUESTION_ID_ENDPOINT + "/" + id);
-		const answersMap = mapAnswers(answers, responseQuestion.id_user);
+		const answersMap = mapAnswers(answers, responseQuestion.id_user, responseQuestion.id_answer_selected);
 		setAnswers(answersMap);
 	}
 
-	function mapAnswers(answers, idQuestionOwner) {
+	function mapAnswers(answers, idQuestionOwner, idAnswerSelected) {
 		let answersMap;
 		if (answers) {
 			answersMap = answers.map(function(answer, index) {
+				let isBestAnswer = false;
+				if (answer.id == idAnswerSelected) {
+					isBestAnswer = true;
+				}
 				return (
 					<Answer
 						key={index}
@@ -53,11 +57,21 @@ export const QuestionDetail = () => {
 						idQuestionOwner={idQuestionOwner}
 						idQuestion={id}
 						onDeleteAnswer={onDeleteAnswer}
+						isBestAnswer={isBestAnswer}
+						onChooseBestAnswer={onChooseBestAnswer}
 					/>
 				);
 			});
 		}
 		return answersMap;
+	}
+
+	async function onChooseBestAnswer() {
+		const responseQuestion = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
+		await setQuestion(responseQuestion);
+		const answers = await doGetFetch(Constant.BACKEND_ROOT + ANSWERS_BY_QUESTION_ID_ENDPOINT + "/" + id);
+		const answersMap = mapAnswers(answers, responseQuestion.id_user, responseQuestion.id_answer_selected);
+		setAnswers(answersMap);
 	}
 
 	async function onDeleteAnswer() {
