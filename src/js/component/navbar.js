@@ -4,8 +4,11 @@ import { Searcher } from "./searcher";
 import { Button } from "./bootstrap/button";
 import { Context } from "../store/app-context";
 import { isAdmin } from "../helpers/tools-helpers";
+import { doPostFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const Navbar = () => {
+	const LOGOUT_ENDPOINT = "logout";
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
 
@@ -58,7 +61,7 @@ export const Navbar = () => {
 		}
 
 		localStorage.removeItem("accessToken");
-		let json = await actions.fetchLogout();
+		let json = await doPostFetch(Constant.BACKEND_ROOT + LOGOUT_ENDPOINT);
 		history.push("/");
 	}
 
