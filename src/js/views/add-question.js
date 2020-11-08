@@ -13,6 +13,31 @@ export const AddQuestion = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDesciption] = useState("");
 	const [link, setLink] = useState("");
+	const [file, setFile] = useState(null);
+
+	function fileSelected(event) {
+		let input = event.currentTarget;
+		setFile(input.files[0]);
+	}
+
+	function sendImages() {
+		const formData = new FormData();
+		formData.append("document", file);
+		let body = { document: file };
+		fetch(Constant.BACKEND_ROOT + "upload-file", {
+			method: "POST",
+			body: formData
+		})
+			.then(
+				response => response.json() // if the response is a JSON object
+			)
+			.then(
+				success => console.log(success) // Handle the success response object
+			)
+			.catch(
+				error => console.log(error) // Handle the error response object
+			);
+	}
 
 	async function questionCreatedOK() {
 		//$("#questionCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
@@ -34,7 +59,7 @@ export const AddQuestion = () => {
 		<div className="container">
 			<h1 className="text-center">Add Question</h1>
 
-			<form action="" className="was-validated" noValidate="">
+			<form className="was-validated">
 				<div className="form-group">
 					<label htmlFor="title">Title:</label>
 					<input
@@ -59,6 +84,18 @@ export const AddQuestion = () => {
 						onChange={event => setDesciption(event.target.value)}
 						required></textarea>
 					<div className="invalid-feedback">Please write a description for the question.</div>
+				</div>
+
+				<div className="form-group">
+					<label htmlFor="exampleFormControlFile1">Example file input</label>
+					<input
+						name="document"
+						type="file"
+						className="form-control-file"
+						id="exampleFormControlFile1"
+						multiple
+						onChange={event => setFile(event.currentTarget.files[0])}
+					/>
 				</div>
 
 				<div className="form-group">
@@ -98,7 +135,8 @@ export const AddQuestion = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						<Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />
+						{/*<Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />*/}
+						<Button label={"Save"} color={"primary"} onClick={sendImages} />
 						<Modal
 							id={"questionCreatedOK"}
 							title={"Question Saved"}
