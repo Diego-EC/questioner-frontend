@@ -1,15 +1,19 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { ModalImage } from "./modal-image";
+import { Button } from "./button";
+import * as Constant from "../../helpers/constants";
 
 export const Image = props => {
 	Image.propTypes = {
 		id: PropTypes.number,
-		src: PropTypes.string
+		src: PropTypes.string,
+		isDeleteable: PropTypes.bool,
+		onDeleteImage: PropTypes.func
 	};
+	const QUESTION_IMAGE_ENDPOINT = "question-image";
 
 	function displayImage() {
-		console.log("displayImage");
 		$("#" + props.id).modal({ show: true, keyboard: false, backdrop: "static" });
 	}
 
@@ -17,9 +21,20 @@ export const Image = props => {
 		console.log("closeModal");
 	}
 
+	async function deleteImage() {
+		props.onDeleteImage(props.id);
+	}
+
+	let buttonDeleteHTML = "";
+	if (props.isDeleteable == true) {
+		buttonDeleteHTML = <Button label={"Delete"} color={"danger"} onClick={deleteImage} />;
+	}
+
 	return (
-		<div onClick={displayImage}>
-			<img className="img-fluid" src={props.src} alt="image" />
+		<div>
+			<img className="img-fluid" src={props.src} alt="image" onClick={displayImage} />
+			<div className="text-right">{buttonDeleteHTML}</div>
+
 			<ModalImage
 				id={props.id.toString()}
 				title={"Question Saved"}
@@ -29,4 +44,8 @@ export const Image = props => {
 			/>
 		</div>
 	);
+};
+
+Image.defaultProps = {
+	isDeleteable: false
 };

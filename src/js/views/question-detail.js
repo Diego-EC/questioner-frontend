@@ -12,8 +12,6 @@ export const QuestionDetail = () => {
 	const QUESTION_ENDPOINT = "question";
 	const ANSWERS_BY_QUESTION_ID_ENDPOINT = "answers-by-question-id";
 	const QUESTION_IMAGES_BY_QUESTION_ID = "question-images-by-question-id";
-	//const ANSWER_IMAGES_BY_ANSWER_ID = "question-images-by-answer-id";
-	//const ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT = "answer-images-by-answer-id";
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
@@ -72,13 +70,6 @@ export const QuestionDetail = () => {
 		let responseAnswerImagesJSON = await doGetFetch(
 			Constant.BACKEND_ROOT + ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT + "/" + answerID
 		);
-		console.log("responseAnswerImagesJSON");
-		console.log(responseAnswerImagesJSON);
-		answerImagesMap = responseAnswerImagesJSON.map(function(answerImage, index) {
-			console.log("answerImage ");
-			console.log(answerImage);
-		});
-		//return answerImagesMap;
 		return responseAnswerImagesJSON;
 	}
 
@@ -86,10 +77,6 @@ export const QuestionDetail = () => {
 		let answersMap;
 		if (answers) {
 			answersMap = answers.map(function(answer, index) {
-				// aquí las imagenes
-				console.log("answer.id " + answer.id);
-				//let answerImages = getAnswerImages(answer.id);
-
 				let isBestAnswer = false;
 				if (answer.id == idAnswerSelected) {
 					isBestAnswer = true;

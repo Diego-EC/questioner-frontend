@@ -3,11 +3,14 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
-import { doGetFetch, doPutFetch, doFetchUploadImages } from "../helpers/fetch-helper";
+import { doGetFetch, doPutFetch, doFetchUploadImages, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
+import { Image } from "../component/bootstrap/image";
 
 export const EditQuestion = () => {
 	const QUESTION_ENDPOINT = "question";
+	const QUESTION_IMAGE_ENDPOINT = "question-image";
+	const QUESTION_IMAGES_BY_QUESTION_ID_ENDPOINT = "question-images-by-question-id";
 	const history = useHistory();
 	let { id } = useParams();
 	const { store, actions } = useContext(Context);
@@ -22,12 +25,41 @@ export const EditQuestion = () => {
 
 	async function init() {
 		let question = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
-		setDefaultQuestionValues(question);
+
+		const responseQuestionImages = await doGetFetch(
+			Constant.BACKEND_ROOT + QUESTION_IMAGES_BY_QUESTION_ID_ENDPOINT + "/" + id
+		);
+		let mappedImages = mapImages(responseQuestionImages);
+		setDefaultQuestionValues(question, mappedImages);
 	}
 
-	function setDefaultQuestionValues(question) {
+	function mapImages(images) {
+		let imagesMap;
+		if (images) {
+			imagesMap = images.map(function(image, index) {
+				return (
+					<div key={index} className="col-4">
+						<Image id={image.id} src={image.url} isDeleteable={true} onDeleteImage={deleteQuestionImage} />
+					</div>
+				);
+			});
+		}
+		return imagesMap;
+	}
+
+	async function deleteQuestionImage(imageID) {
+		let json = await doDeleteFetch(Constant.BACKEND_ROOT + QUESTION_IMAGE_ENDPOINT + "/" + imageID);
+		const responseQuestionImages = await doGetFetch(
+			Constant.BACKEND_ROOT + QUESTION_IMAGES_BY_QUESTION_ID_ENDPOINT + "/" + id
+		);
+		let mappedImages = mapImages(responseQuestionImages);
+		setFiles(mappedImages);
+	}
+
+	function setDefaultQuestionValues(question, questionImages) {
 		setTitle(question.title);
 		setDesciption(question.description);
+		setFiles(questionImages);
 		setLink(question.link);
 	}
 
@@ -102,6 +134,7 @@ export const EditQuestion = () => {
 						multiple
 						onChange={event => setFiles(event.currentTarget.files)}
 					/>
+					<div className="row">{files}</div>
 				</div>
 
 				<div className="form-group">

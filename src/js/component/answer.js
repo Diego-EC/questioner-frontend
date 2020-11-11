@@ -44,19 +44,10 @@ export const Answer = props => {
 		let responseAnswerImagesJSON = await doGetFetch(
 			Constant.BACKEND_ROOT + ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT + "/" + answerID
 		);
-		console.log("responseAnswerImagesJSON");
-		console.log(responseAnswerImagesJSON);
-		answerImagesMap = responseAnswerImagesJSON.map(function(answerImage, index) {
-			console.log("answerImage ");
-			console.log(answerImage);
-		});
-		//return answerImagesMap;
 		return responseAnswerImagesJSON;
 	}
 
 	function mapImages(images) {
-		console.log("---> mapImages");
-		console.log(images);
 		let imagesMap;
 		if (images) {
 			imagesMap = images.map(function(image, index) {
