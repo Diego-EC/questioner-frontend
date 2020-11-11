@@ -18,6 +18,7 @@ export const CreateUser = () => {
 		// validar
 		if (password !== repeatedPassword) {
 			alert("Passwords do not match");
+			return;
 		}
 		// fetch
 		let data = {
