@@ -3,6 +3,7 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Answer } from "../component/answer";
 import { Button } from "../component/bootstrap/button";
+import { Image } from "../component/bootstrap/image";
 import { Modal } from "../component/bootstrap/modal";
 import { doGetFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
@@ -10,11 +11,14 @@ import * as Constant from "../helpers/constants";
 export const QuestionDetail = () => {
 	const QUESTION_ENDPOINT = "question";
 	const ANSWERS_BY_QUESTION_ID_ENDPOINT = "answers-by-question-id";
+	const QUESTION_IMAGES_BY_QUESTION_ID = "question-images-by-question-id";
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
 	const [question, setQuestion] = useState({});
 	const [answers, setAnswers] = useState([]);
+	const [questionImages, setQuestionImages] = useState([]);
+	const [user, setUser] = useState({});
 
 	useEffect(() => {
 		init();
@@ -35,9 +39,38 @@ export const QuestionDetail = () => {
 	async function init() {
 		const responseQuestion = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
 		await setQuestion(responseQuestion);
+		await setUser(responseQuestion.user);
+		const responseQuestionImages = await doGetFetch(
+			Constant.BACKEND_ROOT + QUESTION_IMAGES_BY_QUESTION_ID + "/" + id
+		);
+		let imagesMap = await mapImages(responseQuestionImages);
+		setQuestionImages(imagesMap);
+
 		const answers = await doGetFetch(Constant.BACKEND_ROOT + ANSWERS_BY_QUESTION_ID_ENDPOINT + "/" + id);
 		const answersMap = mapAnswers(answers, responseQuestion.id_user, responseQuestion.id_answer_selected);
 		setAnswers(answersMap);
+	}
+
+	function mapImages(responseQuestionImages) {
+		let imagesMap;
+		if (responseQuestionImages) {
+			imagesMap = responseQuestionImages.map(function(image, index) {
+				return (
+					<div key={index} className="col-4">
+						<Image id={image.id} src={image.url} />
+					</div>
+				);
+			});
+		}
+		return imagesMap;
+	}
+
+	async function getAnswerImages(answerID) {
+		let answerImagesMap = [];
+		let responseAnswerImagesJSON = await doGetFetch(
+			Constant.BACKEND_ROOT + ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT + "/" + answerID
+		);
+		return responseAnswerImagesJSON;
 	}
 
 	function mapAnswers(answers, idQuestionOwner, idAnswerSelected) {
@@ -99,7 +132,7 @@ export const QuestionDetail = () => {
 			<div className="border border-secondary mb-3 p-2">
 				<div className="row justify-content-between mx-0">
 					<div>
-						<span>Owner: {question.user_name}</span>
+						<span>Owner: {user.name}</span>
 					</div>
 					<div className="mb-2 d-flex justify-content-end">
 						{buttonEditQuestionHTML}
@@ -119,6 +152,7 @@ export const QuestionDetail = () => {
 				</div>
 				<p className="h2">{question.title}</p>
 				<p>{question.description}</p>
+				<div className="row">{questionImages}</div>
 			</div>
 			<div>{answers}</div>
 			<div className="mt-5 row justify-content-center">

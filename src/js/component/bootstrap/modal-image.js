@@ -2,11 +2,11 @@ import React, { useEffect } from "react";
 import PropTypes from "prop-types";
 import { Link, useHistory } from "react-router-dom";
 
-export const Modal = props => {
-	Modal.propTypes = {
+export const ModalImage = props => {
+	ModalImage.propTypes = {
 		id: PropTypes.string,
 		title: PropTypes.string,
-		text: PropTypes.string,
+		text: PropTypes.object,
 		okCallbackFunction: PropTypes.func,
 		cancelCallbackFunction: PropTypes.func,
 		labelOK: PropTypes.string,
@@ -29,7 +29,7 @@ export const Modal = props => {
 
 	return (
 		<div className="modal fade" id={props.id} role="dialog">
-			<div className={"modal-dialog modal-" + props.size}>
+			<div className={"modal-dialog modal-xl"}>
 				<div className="modal-content">
 					<div className="modal-header">
 						<h4 className="modal-title">{props.title}</h4>
@@ -37,7 +37,7 @@ export const Modal = props => {
 							&times;
 						</button>
 					</div>
-					<div className="modal-body text-left">
+					<div className="modal-body text-center">
 						<p>{props.text}</p>
 					</div>
 					<div className="modal-footer">
@@ -56,7 +56,6 @@ export const Modal = props => {
 	);
 };
 
-Modal.defaultProps = {
-	labelCancel: "Close",
-	size: "sm"
+ModalImage.defaultProps = {
+	labelCancel: "Close"
 };

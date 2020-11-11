@@ -1,12 +1,13 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
 import { Context } from "../store/app-context";
-import { doPutFetch, doDeleteFetch } from "../helpers/fetch-helper";
+import { doGetFetch, doPutFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { BadgeInfo } from "./bootstrap/badge-info";
+import { Image } from "../component/bootstrap/image";
 
 export const Answer = props => {
 	Answer.propTypes = {
@@ -22,9 +23,43 @@ export const Answer = props => {
 	};
 	const MARK_BEST_ANSWER_ENDPOINT = "mark-best-answer";
 	const ANSWER_ENDPOINT = "answer";
+	const ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT = "answer-images-by-answer-id";
 	let { id } = useParams();
 	const history = useHistory();
 	const { store, actions } = useContext(Context);
+	const [answerImages, setAnswerImages] = useState([]);
+
+	useEffect(() => {
+		init(props.id);
+	}, []);
+
+	async function init(answerID) {
+		let answerImagesResponse = await getAnswerImages(answerID);
+		let mappedImages = mapImages(answerImagesResponse);
+		setAnswerImages(mappedImages);
+	}
+
+	async function getAnswerImages(answerID) {
+		let answerImagesMap = [];
+		let responseAnswerImagesJSON = await doGetFetch(
+			Constant.BACKEND_ROOT + ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT + "/" + answerID
+		);
+		return responseAnswerImagesJSON;
+	}
+
+	function mapImages(images) {
+		let imagesMap;
+		if (images) {
+			imagesMap = images.map(function(image, index) {
+				return (
+					<div key={index} className="col-4">
+						<Image id={image.id} src={image.url} />
+					</div>
+				);
+			});
+		}
+		return imagesMap;
+	}
 
 	function onDeleteAnswer() {
 		props.onDeleteAnswer();
@@ -92,6 +127,7 @@ export const Answer = props => {
 					<div>
 						<span className={textHighlightHTML}>Owner: {props.userName}</span>
 					</div>
+
 					<div className="d-flex justify-content-end">
 						<div className="ms-1">{buttonChooseAsBestAnswer}</div>
 						<div className="ml-1">{buttonEditAnswer}</div>
@@ -112,6 +148,7 @@ export const Answer = props => {
 			</div>
 			<div className="card-body">
 				<p className={"card-text" + textHighlightHTML}>{props.description}</p>
+				<div className="row">{answerImages}</div>
 			</div>
 		</div>
 	);
