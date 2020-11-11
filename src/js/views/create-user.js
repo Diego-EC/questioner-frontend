@@ -1,23 +1,52 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Modal } from "../component/bootstrap/modal";
 import { Button } from "../component/bootstrap/button";
+import { doPostFetch } from "../helpers/fetch-helper";
+import * as Constant from "../helpers/constants";
 
 export const CreateUser = () => {
+	const USER_ENDPOINT = "user";
 	const history = useHistory();
+	const [name, setName] = useState("");
+	const [email, setEmail] = useState("");
+	const [password, setPassword] = useState("");
+	const [repeatedPassword, setRepeatedPassword] = useState("");
+
+	async function createUser() {
+		console.log("createUser");
+		// validar
+		if (password !== repeatedPassword) {
+			alert("Passwords do not match");
+		}
+		// fetch
+		let data = {
+			name: name,
+			email: email,
+			password: password
+		};
+		let responseJsonUser = await doPostFetch(Constant.BACKEND_ROOT + USER_ENDPOINT, data);
+		// mensaje
+		if (responseJsonUser) {
+			$("#userCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+		}
+		// ir a login
+	}
 
 	function userCreatedOK() {
 		$("#userCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 	}
 
 	function closeModal() {
+		console.log("closeModal");
+
 		history.push("/");
 	}
 
 	return (
 		<div className="container">
 			<h1 className="text-center">Create User Account</h1>
-			<form action="">
+			<form className="was-validated">
 				<label htmlFor="email">Username:</label>
 				<div className="form-group">
 					<div className="input-group mb-3">
@@ -26,13 +55,28 @@ export const CreateUser = () => {
 								@
 							</span>
 						</div>
-						<input type="text" className="form-control" placeholder="Username" aria-label="Username" />
+						<input
+							type="text"
+							className="form-control"
+							placeholder="Username"
+							aria-label="Username"
+							onChange={event => setName(event.target.value)}
+							required
+						/>
 					</div>
 				</div>
 
 				<div className="form-group">
 					<label htmlFor="email">Email:</label>
-					<input type="email" className="form-control" id="email" placeholder="Enter email" name="email" />
+					<input
+						type="email"
+						className="form-control"
+						id="email"
+						placeholder="Enter email"
+						name="email"
+						onChange={event => setEmail(event.target.value)}
+						required
+					/>
 				</div>
 
 				<div className="form-group">
@@ -43,6 +87,8 @@ export const CreateUser = () => {
 						id="password"
 						placeholder="Enter password"
 						name="password"
+						onChange={event => setPassword(event.target.value)}
+						required
 					/>
 				</div>
 				<div className="form-group">
@@ -53,17 +99,20 @@ export const CreateUser = () => {
 						id="password"
 						placeholder="Repeat password"
 						name="password"
+						onChange={event => setRepeatedPassword(event.target.value)}
+						required
 					/>
 				</div>
 
 				<div className="row mt-5">
 					<div className="col" align="right">
-						<Button label={"Create"} color={"primary"} onClick={userCreatedOK} />
+						{/*<Button label={"Create"} color={"primary"} onClick={userCreatedOK} />*/}
+						<Button label={"Create"} color={"primary"} onClick={createUser} />
 						<Modal
 							id={"userCreatedOK"}
-							title={"Usuario creado"}
-							text={"Revisa tu correo electónico para confirmar la cuenta."}
-							close={closeModal}
+							title={"User created"}
+							text={"User created successfully"}
+							cancelCallbackFunction={closeModal}
 						/>
 					</div>
 					<div className="col" align="left">
