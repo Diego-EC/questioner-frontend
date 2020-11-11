@@ -54,3 +54,21 @@ async function doFetch(endpoint, method, headers, data) {
 			return null;
 		});
 }
+export async function doFetchUploadImages(endpoint, data) {
+	await fetch(endpoint, {
+		method: "POST",
+		body: data
+	})
+		.then(
+			response => {
+				response.json();
+				return response;
+			} // if the response is a JSON object
+		)
+		.then(
+			success => console.log(success) // Handle the success response object
+		)
+		.catch(
+			error => console.log(error) // Handle the error response object
+		);
+}

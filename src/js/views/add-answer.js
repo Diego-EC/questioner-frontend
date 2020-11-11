@@ -2,7 +2,7 @@ import React, { useState, useContext } from "react";
 import { Link, useParams, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
-import { doPostFetch } from "../helpers/fetch-helper";
+import { doPostFetch, doFetchUploadImages } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { Context } from "../store/app-context";
 
@@ -13,6 +13,7 @@ export const AddAnwser = () => {
 	const { store, actions } = useContext(Context);
 	const [description, setDesciption] = useState("");
 	const [link, setLink] = useState("");
+	const [files, setFiles] = useState(null);
 
 	async function answerCreatedOK() {
 		//$("#answerCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
@@ -22,8 +23,18 @@ export const AddAnwser = () => {
 			description: description,
 			link: link
 		};
-		await doPostFetch(Constant.BACKEND_ROOT + ADD_ANSWER_ENDPOINT, data);
+		const responseJsonAnswer = await doPostFetch(Constant.BACKEND_ROOT + ADD_ANSWER_ENDPOINT, data);
+		await sendImages(responseJsonAnswer.answer["id"]);
 		history.push(`/question-detail/${id}`);
+	}
+
+	async function sendImages(IDAnswer) {
+		const formData = new FormData();
+		formData.append("id_answer", IDAnswer);
+		for (var i = 0; i < files.length; i++) {
+			formData.append("document" + i, files[i]);
+		}
+		await doFetchUploadImages(Constant.BACKEND_ROOT + "upload-answer-images", formData);
 	}
 
 	function closeModal() {
@@ -47,18 +58,15 @@ export const AddAnwser = () => {
 				</div>
 
 				<div className="form-group">
-					<label htmlFor="text-area">Upload Files:</label>
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text">Upload</span>
-						</div>
-						<div className="custom-file">
-							<input type="file" className="custom-file-input" id="upload-files" />
-							<label className="custom-file-label" htmlFor="upload-files">
-								Choose file
-							</label>
-						</div>
-					</div>
+					<label htmlFor="exampleFormControlFile1">Upload Files:</label>
+					<input
+						name="document"
+						type="file"
+						className="form-control-file"
+						id="exampleFormControlFile1"
+						multiple
+						onChange={event => setFiles(event.currentTarget.files)}
+					/>
 				</div>
 
 				<div className="form-group">

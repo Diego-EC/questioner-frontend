@@ -13,18 +13,21 @@ export const AddQuestion = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDesciption] = useState("");
 	const [link, setLink] = useState("");
-	const [file, setFile] = useState(null);
+	const [files, setFiles] = useState(null);
+	//const [IDQuestion, setIDQuestion] = useState(0);
 
 	function fileSelected(event) {
 		let input = event.currentTarget;
-		setFile(input.files[0]);
+		setFiles(input.files);
 	}
 
-	function sendImages() {
+	async function sendImages(IDQuestion) {
 		const formData = new FormData();
-		formData.append("document", file);
-		let body = { document: file };
-		fetch(Constant.BACKEND_ROOT + "upload-file", {
+		formData.append("id_question", IDQuestion);
+		for (var i = 0; i < files.length; i++) {
+			formData.append("document" + i, files[i]);
+		}
+		await fetch(Constant.BACKEND_ROOT + "upload-question-images", {
 			method: "POST",
 			body: formData
 		})
@@ -47,7 +50,11 @@ export const AddQuestion = () => {
 			description: description,
 			link: link
 		};
-		await doPostFetch(Constant.BACKEND_ROOT + ADD_QUESTION_ENDPOINT, data);
+		let responseJsonQuestion = await doPostFetch(Constant.BACKEND_ROOT + ADD_QUESTION_ENDPOINT, data);
+		console.log(responseJsonQuestion.question["id"]);
+		// TODO?
+		//setIDQuestion(responseJsonQuestion.question["id"]);
+		await sendImages(responseJsonQuestion.question["id"]);
 		history.push(`/questions`);
 	}
 
@@ -57,7 +64,7 @@ export const AddQuestion = () => {
 
 	return (
 		<div className="container">
-			<h1 className="text-center">Add Question</h1>
+			<h1 className="text-center">Make Question</h1>
 
 			<form className="was-validated">
 				<div className="form-group">
@@ -87,18 +94,18 @@ export const AddQuestion = () => {
 				</div>
 
 				<div className="form-group">
-					<label htmlFor="exampleFormControlFile1">Example file input</label>
+					<label htmlFor="exampleFormControlFile1">Upload Files:</label>
 					<input
 						name="document"
 						type="file"
 						className="form-control-file"
 						id="exampleFormControlFile1"
 						multiple
-						onChange={event => setFile(event.currentTarget.files[0])}
+						onChange={event => fileSelected(event)}
 					/>
 				</div>
 
-				<div className="form-group">
+				{/*<div className="form-group">
 					<label htmlFor="text-area">Upload Files:</label>
 					<div className="input-group mb-3">
 						<div className="input-group-prepend">
@@ -111,7 +118,7 @@ export const AddQuestion = () => {
 							</label>
 						</div>
 					</div>
-				</div>
+                </div>*/}
 
 				<div className="form-group">
 					<label htmlFor="text-area">Add Links:</label>
@@ -135,8 +142,8 @@ export const AddQuestion = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						{/*<Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />*/}
-						<Button label={"Save"} color={"primary"} onClick={sendImages} />
+						<Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />
+						{/*<Button label={"Save"} color={"primary"} onClick={sendImages} />*/}
 						<Modal
 							id={"questionCreatedOK"}
 							title={"Question Saved"}

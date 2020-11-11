@@ -3,7 +3,7 @@ import { Link, useHistory, useParams } from "react-router-dom";
 import { Context } from "../store/app-context";
 import { Button } from "../component/bootstrap/button";
 import { Modal } from "../component/bootstrap/modal";
-import { doGetFetch, doPutFetch } from "../helpers/fetch-helper";
+import { doGetFetch, doPutFetch, doFetchUploadImages } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 
 export const EditQuestion = () => {
@@ -38,6 +38,7 @@ export const EditQuestion = () => {
 			link: link
 		};
 		let json = await doPutFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id, data);
+		await sendImages(id);
 		history.push(`/question-detail/${id}`);
 	}
 
@@ -47,6 +48,15 @@ export const EditQuestion = () => {
 
 	function closeModal() {
 		history.push(`/question-detail/${id}`);
+	}
+
+	async function sendImages(IDQuestion) {
+		const formData = new FormData();
+		formData.append("id_question", IDQuestion);
+		for (var i = 0; i < files.length; i++) {
+			formData.append("document" + i, files[i]);
+		}
+		await doFetchUploadImages(Constant.BACKEND_ROOT + "upload-question-images", formData);
 	}
 
 	return (
@@ -83,18 +93,15 @@ export const EditQuestion = () => {
 				</div>
 
 				<div className="form-group">
-					<label htmlFor="text-area">Upload Files:</label>
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text">Upload</span>
-						</div>
-						<div className="custom-file">
-							<input type="file" className="custom-file-input" id="upload-files" />
-							<label className="custom-file-label" htmlFor="upload-files">
-								Choose file
-							</label>
-						</div>
-					</div>
+					<label htmlFor="exampleFormControlFile1">Upload Files:</label>
+					<input
+						name="document"
+						type="file"
+						className="form-control-file"
+						id="exampleFormControlFile1"
+						multiple
+						onChange={event => setFiles(event.currentTarget.files)}
+					/>
 				</div>
 
 				<div className="form-group">
