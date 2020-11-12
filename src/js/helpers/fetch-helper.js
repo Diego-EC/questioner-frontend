@@ -50,7 +50,8 @@ async function doFetch(endpoint, method, headers, data) {
 		.catch(error => {
 			// TODO: gestionar errores: 422
 			// 401 - unautorized
-			alert(error);
+			//alert(error);
+			console.log("%c TODO: " + error, "background: #222; color: #bada55");
 			return null;
 		});
 }

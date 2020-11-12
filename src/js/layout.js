@@ -7,7 +7,7 @@ import { Footer } from "./component/footer";
 
 import { Login } from "./views/login";
 import { CreateUser } from "./views/create-user";
-import { ForgotPassword } from "./views/forgot-password";
+//import { ForgotPassword } from "./views/forgot-password";
 import { AuthRequired } from "./component/auth-required";
 
 const Layout = () => {
@@ -19,7 +19,7 @@ const Layout = () => {
 					<Switch>
 						<Route exact path="/" component={Login} />
 						<Route exact path="/create-user" component={CreateUser} />
-						<Route exact path="/forgot-password" component={ForgotPassword} />
+						{/*<Route exact path="/forgot-password" component={ForgotPassword} />*/}
 						<Route path="/" component={AuthRequired} />
 						<Route>
 							<h1>Not found!</h1>

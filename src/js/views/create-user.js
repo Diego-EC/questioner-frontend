@@ -14,10 +14,13 @@ export const CreateUser = () => {
 	const [repeatedPassword, setRepeatedPassword] = useState("");
 
 	async function createUser() {
-		console.log("createUser");
 		// validar
 		if (password !== repeatedPassword) {
-			alert("Passwords do not match");
+			$("#passwordsDoNotMatch").modal({ show: true, keyboard: false, backdrop: "static" });
+			return;
+		}
+		if (name === "" || email === "" || password === "" || repeatedPassword === "") {
+			$("#unfilledFields").modal({ show: true, keyboard: false, backdrop: "static" });
 			return;
 		}
 		// fetch
@@ -27,7 +30,7 @@ export const CreateUser = () => {
 			password: password
 		};
 		let responseJsonUser = await doPostFetch(Constant.BACKEND_ROOT + USER_ENDPOINT, data);
-		// mensaje
+		// mensaje OK
 		if (responseJsonUser) {
 			$("#userCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 		}
@@ -39,8 +42,6 @@ export const CreateUser = () => {
 	}
 
 	function closeModal() {
-		console.log("closeModal");
-
 		history.push("/");
 	}
 
@@ -116,6 +117,12 @@ export const CreateUser = () => {
 							cancelCallbackFunction={closeModal}
 						/>
 					</div>
+					<Modal id={"passwordsDoNotMatch"} title={"Data Validation Error"} text={"Passwords do not match"} />
+					<Modal
+						id={"unfilledFields"}
+						title={"Data Validation Error"}
+						text={"Please, fill in all the required fields"}
+					/>
 					<div className="col" align="left">
 						<Link to="/">
 							<Button label={"Cancel"} color={"secondary"} />

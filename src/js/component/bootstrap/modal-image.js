@@ -33,9 +33,6 @@ export const ModalImage = props => {
 				<div className="modal-content">
 					<div className="modal-header">
 						<h4 className="modal-title">{props.title}</h4>
-						<button type="button" className="close" data-dismiss="modal">
-							&times;
-						</button>
 					</div>
 					<div className="modal-body text-center">
 						<p>{props.text}</p>
