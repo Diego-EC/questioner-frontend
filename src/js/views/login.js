@@ -1,9 +1,10 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
 import { doPostFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
+import { Modal } from "../component/bootstrap/modal";
 
 export const Login = () => {
 	const LOGIN_ENDPOINT = "login";
@@ -11,12 +12,20 @@ export const Login = () => {
 	const history = useHistory();
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
+	const [loading, setLoading] = useState(false);
+	const [rememberMe, setRememberMe] = useState(true);
+
+	useEffect(() => {
+		//getLastLoggedUser();
+	}, []);
 
 	async function signIn() {
 		if (email == "" || password == "") {
-			alert("Please, enter valid email and password.");
+			$("#unfilledFields").modal({ show: true, keyboard: false, backdrop: "static" });
 			return;
 		}
+
+		setLoading(true);
 
 		let data = {
 			email: email,
@@ -27,10 +36,51 @@ export const Login = () => {
 		if (json !== null && json.status === "OK") {
 			localStorage.setItem("accessToken", json.access_token);
 			actions.setLoggedUserData(json.user, json.access_token);
+			saveLastLoggedUser();
 			history.push("/questions");
 		} else {
-			alert("Usuario no existe");
+			$("#userDontExist").modal({ show: true, keyboard: false, backdrop: "static" });
 		}
+		setLoading(false);
+	}
+
+	function getLastLoggedUser() {
+		const lastLoggedUserEmail = localStorage.getItem("lastLoggedUserEmail");
+		if (lastLoggedUserEmail !== null) {
+			const lastLoggedUserPassword = localStorage.getItem("lastLoggedUserPassword");
+			const lastLoggedUserRememberMe = localStorage.getItem("lastLoggedUserRememberMe");
+			setEmail(lastLoggedUserEmail);
+			setPassword(lastLoggedUserPassword);
+			setRememberMe(lastLoggedUserRememberMe);
+		}
+	}
+
+	function saveLastLoggedUser() {
+		// TODO: el checkbox no consigo hacer que funcione bien
+		if (rememberMe) {
+			localStorage.setItem("lastLoggedUserEmail", email);
+			localStorage.setItem("lastLoggedUserPassword", password);
+			localStorage.setItem("lastLoggedUserRememberMe", rememberMe);
+		} else {
+			localStorage.removeItem("lastLoggedUserEmail");
+			localStorage.removeItem("lastLoggedUserPassword");
+			localStorage.removeItem("lastLoggedUserRememberMe");
+		}
+	}
+
+	let buttonLoginHTML = "";
+	let textSingUpHTML = "";
+	if (loading === true) {
+		buttonLoginHTML = (
+			<button className="btn btn-primary" type="button" disabled>
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span> Loading...</span>
+			</button>
+		);
+		textSingUpHTML = "";
+	} else {
+		buttonLoginHTML = <Button label={"Sign in"} color={"primary"} onClick={signIn} />;
+		textSingUpHTML = <Link to={"/create-user"}>New around here? Sign up</Link>;
 	}
 
 	return (
@@ -48,6 +98,7 @@ export const Login = () => {
 						placeholder="Enter email"
 						name="email"
 						onChange={e => setEmail(e.target.value)}
+						defaultValue={email}
 					/>
 				</div>
 				<div className="form-group">
@@ -59,24 +110,32 @@ export const Login = () => {
 						placeholder="Enter password"
 						name="password"
 						onChange={e => setPassword(e.target.value)}
+						defaultValue={password}
 					/>
 				</div>
 				<div className="form-group form-check">
-					<input type="checkbox" className="form-check-input" id="check" />
+					<input
+						type="checkbox"
+						className="form-check-input"
+						id="check"
+						onClick={e => setRememberMe(e.target.checked)}
+						defaultChecked={rememberMe}
+					/>
 					<label className="form-check-label" htmlFor="check">
 						Remember me
 					</label>
 				</div>
+				<div className="form-group">{buttonLoginHTML}</div>
 				<div className="form-group">
-					<Button label={"Sign in"} color={"primary"} onClick={signIn} />
+					<p>{textSingUpHTML}</p>
 				</div>
-				<div className="form-group">
-					<p>
-						<Link to={"/create-user"}>New around here? Sign up</Link>
-					</p>
-					<p>
-						<Link to={"/forgot-password"}>Forgot password?</Link>
-					</p>
+				<div>
+					<Modal
+						id={"unfilledFields"}
+						title={"Data Validation Error"}
+						text={"Please, enter valid email and password"}
+					/>
+					<Modal id={"userDontExist"} title={"User Validation Error"} text={"User does not exist"} />
 				</div>
 			</form>
 		</div>
