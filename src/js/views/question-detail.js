@@ -26,7 +26,7 @@ export const QuestionDetail = () => {
 
 	let buttonEditQuestionHTML = "";
 	let buttonDeleteQuestionHTML = "";
-	if (question.id_user == store.loggedUser.id) {
+	if (question.id_user == actions.getLoggedUserID()) {
 		buttonEditQuestionHTML = (
 			<Link to={id + "/edit-question"}>
 				<Button label={"Edit Question"} color={"primary"} />

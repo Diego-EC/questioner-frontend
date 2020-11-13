@@ -13,7 +13,7 @@ export const Navbar = () => {
 	const history = useHistory();
 
 	let buttonManageUsersHTML = "";
-	if (isAdmin(store.loggedUser.idRole) == true) {
+	/*if (isAdmin(actions.getLoggedUserRoleID()) == true) {
 		buttonManageUsersHTML = (
 			<Fragment>
 				<Link to="/manage-users">
@@ -21,7 +21,7 @@ export const Navbar = () => {
 				</Link>
 			</Fragment>
 		);
-	}
+	}*/
 
 	let buttonIconHTML = (
 		<img className="img-fluid" width="40" height="40" src={require("../../img/questioner.png")} alt="logo"></img>
@@ -29,7 +29,7 @@ export const Navbar = () => {
 	let buttonMakeQuestionHTML = "";
 	let searcherHTML = "";
 	let buttonLogoutHTML = "";
-	if (store.loggedUser.id !== null) {
+	if (actions.getLoggedUserID() !== null) {
 		buttonIconHTML = (
 			<Link to="/questions">
 				<img

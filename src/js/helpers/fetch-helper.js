@@ -36,9 +36,9 @@ async function doFetch(endpoint, method, headers, data) {
 	};
 	// TODOs: header application/json aquí y body condicionarlo también a si
 	// le paso algo en data.
-	console.log("doFetch");
+	/*console.log("doFetch");
 	console.log(endpoint);
-	console.log(fetchOptions);
+	console.log(fetchOptions);*/
 	return fetch(endpoint, fetchOptions)
 		.then(response => {
 			if (response.ok) {

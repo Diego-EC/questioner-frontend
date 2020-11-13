@@ -16,6 +16,32 @@ const getState = ({ getStore, getActions, setStore }) => {
 			}
 		},
 		actions: {
+			getLoggedUserID() {
+				console.log("getLoggedUserID");
+				const store = getStore();
+				let user = this.getLoggedUserData();
+				console.log("user");
+				console.log(user);
+				if (user !== null && user.id) {
+					console.log("user.id " + user.id);
+					return user.id;
+				} else {
+					return null;
+				}
+			},
+			getLoggedUserRoleID() {
+				console.log("getLoggedUserRoleID");
+				const store = getStore();
+				let user = this.getLoggedUserData();
+				console.log("user");
+				console.log(user);
+				if (user !== null && user.idRole) {
+					console.log("user.idRole " + user.idRole);
+					return user.idRole;
+				} else {
+					return null;
+				}
+			},
 			setLoggedUserData: (loggedUser, accessToken) => {
 				let loggedUserParsed = {};
 				loggedUserParsed.id = loggedUser.id;
@@ -26,8 +52,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				loggedUserParsed.alertsActivated = loggedUser.alerts_activated;
 				loggedUserParsed.accessToken = accessToken;
 				setStore({ loggedUser: loggedUserParsed });
+				localStorage.setItem("loggedUser", loggedUserParsed);
+			},
+			getLoggedUserData: () => {
+				console.log("getLoggedUserData");
+
+				const store = getStore();
+				if (store.loggedUser !== null) {
+					return store.loggedUser;
+				}
+
+				let userInLocalStorage = localStorage.getItem("loggedUser");
+				if (userInLocalStorage !== null) {
+					getActions().setLoggedUserData(userInLocalStorage);
+				}
+
+				return userInLocalStorage;
 			},
 			setLogoutUser: () => {
+				console.log("setLogoutUser");
 				let logoutUserParsed = {};
 				logoutUserParsed.id = null;
 				logoutUserParsed.name = null;
@@ -37,6 +80,7 @@ const getState = ({ getStore, getActions, setStore }) => {
 				logoutUserParsed.alertsActivated = null;
 				logoutUserParsed.accessToken = null;
 				setStore({ loggedUser: logoutUserParsed });
+				localStorage.removeItem("loggedUser");
 			}
 			// TODO: añadir validación en los endpoints:
 			// - @jwt_required --> en backend
