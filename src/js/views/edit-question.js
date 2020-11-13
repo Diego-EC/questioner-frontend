@@ -17,11 +17,17 @@ export const EditQuestion = () => {
 	const [title, setTitle] = useState("");
 	const [description, setDesciption] = useState("");
 	const [files, setFiles] = useState([]);
+	const [filesHTML, setFilesHTML] = useState([]);
 	const [link, setLink] = useState("");
 
 	useEffect(() => {
 		init();
 	}, []);
+
+	function fileSelected(event) {
+		let input = event.currentTarget;
+		setFiles(input.files);
+	}
 
 	async function init() {
 		let question = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
@@ -53,13 +59,13 @@ export const EditQuestion = () => {
 			Constant.BACKEND_ROOT + QUESTION_IMAGES_BY_QUESTION_ID_ENDPOINT + "/" + id
 		);
 		let mappedImages = mapImages(responseQuestionImages);
-		setFiles(mappedImages);
+		setFilesHTML(mappedImages);
 	}
 
 	function setDefaultQuestionValues(question, questionImages) {
 		setTitle(question.title);
 		setDesciption(question.description);
-		setFiles(questionImages);
+		setFilesHTML(questionImages);
 		setLink(question.link);
 	}
 
@@ -132,9 +138,9 @@ export const EditQuestion = () => {
 						className="form-control-file"
 						id="exampleFormControlFile1"
 						multiple
-						onChange={event => setFiles(event.currentTarget.files)}
+						onChange={event => fileSelected(event)}
 					/>
-					<div className="row">{files}</div>
+					<div className="row">{filesHTML}</div>
 				</div>
 
 				<div className="form-group">
