@@ -19,7 +19,7 @@ export const AddAnwser = () => {
 		//$("#answerCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 		let data = {
 			id_question: id,
-			id_user: store.loggedUser.id,
+			id_user: actions.getLoggedUserID(),
 			description: description,
 			link: link
 		};

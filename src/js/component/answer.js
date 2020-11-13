@@ -68,7 +68,7 @@ export const Answer = props => {
 	let buttonChooseAsBestAnswer = "";
 	let buttonEditAnswer = "";
 	let buttonDeleteAnswer = "";
-	if (props.idUser == store.loggedUser.id) {
+	if (props.idUser == actions.getLoggedUserID()) {
 		buttonEditAnswer = (
 			<Link to={id + "/edit-answer/" + props.id}>
 				<Button label={"Edit answer"} color={"primary"} />
@@ -77,7 +77,7 @@ export const Answer = props => {
 		//buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={answerDeletedOK} />;
 		buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={deleteAnswer} />;
 	}
-	if (props.idQuestionOwner == store.loggedUser.id) {
+	if (props.idQuestionOwner == actions.getLoggedUserID()) {
 		if (props.isBestAnswer == true) {
 			buttonChooseAsBestAnswer = <BadgeInfo label={"Best Answer"} color={"success"} />;
 			buttonDeleteAnswer = "";

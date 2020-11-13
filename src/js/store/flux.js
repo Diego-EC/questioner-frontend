@@ -9,79 +9,61 @@ const getState = ({ getStore, getActions, setStore }) => {
 				id: null,
 				name: null,
 				email: null,
-				idRole: null,
-				isActive: null,
-				alertsActivated: null,
-				accessToken: null
+				id_role: null,
+				is_active: null,
+				alerts_activated: null,
+				access_token: null
 			}
 		},
 		actions: {
 			getLoggedUserID() {
-				console.log("getLoggedUserID");
 				const store = getStore();
 				let user = this.getLoggedUserData();
-				console.log("user");
-				console.log(user);
 				if (user !== null && user.id) {
-					console.log("user.id " + user.id);
 					return user.id;
 				} else {
 					return null;
 				}
 			},
 			getLoggedUserRoleID() {
-				console.log("getLoggedUserRoleID");
 				const store = getStore();
 				let user = this.getLoggedUserData();
-				console.log("user");
-				console.log(user);
-				if (user !== null && user.idRole) {
-					console.log("user.idRole " + user.idRole);
-					return user.idRole;
+				if (user !== null && user.id_role) {
+					return user.id_role;
 				} else {
 					return null;
 				}
 			},
 			setLoggedUserData: (loggedUser, accessToken) => {
 				let loggedUserParsed = {};
-				loggedUserParsed.id = loggedUser.id;
-				loggedUserParsed.name = loggedUser.name;
-				loggedUserParsed.email = loggedUser.email;
-				loggedUserParsed.idRole = loggedUser.id_role;
-				loggedUserParsed.isActive = loggedUser.is_active;
-				loggedUserParsed.alertsActivated = loggedUser.alerts_activated;
-				loggedUserParsed.accessToken = accessToken;
+				loggedUserParsed = loggedUser;
+				loggedUserParsed.access_token = accessToken;
 				setStore({ loggedUser: loggedUserParsed });
 				localStorage.setItem("loggedUser", JSON.stringify(loggedUserParsed));
 			},
 			getLoggedUserData: () => {
-				console.log("getLoggedUserData");
-
 				const store = getStore();
 				if (store.loggedUser.id !== null) {
-					console.log("store.loggedUser.id");
 					return store.loggedUser;
 				}
 
 				let userInLocalStorage = localStorage.getItem("loggedUser");
 				let userInLocalStorageParsed = JSON.parse(userInLocalStorage);
 				if (userInLocalStorageParsed !== null) {
-					console.log("userInLocalStorageParsed");
 					getActions().setLoggedUserData(userInLocalStorageParsed);
 				}
 
 				return userInLocalStorageParsed;
 			},
 			setLogoutUser: () => {
-				console.log("setLogoutUser");
 				let logoutUserParsed = {};
 				logoutUserParsed.id = null;
 				logoutUserParsed.name = null;
 				logoutUserParsed.email = null;
-				logoutUserParsed.idRole = null;
-				logoutUserParsed.isActive = null;
-				logoutUserParsed.alertsActivated = null;
-				logoutUserParsed.accessToken = null;
+				logoutUserParsed.id_role = null;
+				logoutUserParsed.is_active = null;
+				logoutUserParsed.alerts_activated = null;
+				logoutUserParsed.access_token = null;
 				setStore({ loggedUser: logoutUserParsed });
 				localStorage.removeItem("loggedUser");
 			}

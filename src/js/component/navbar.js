@@ -12,20 +12,10 @@ export const Navbar = () => {
 	const { store, actions } = useContext(Context);
 	const history = useHistory();
 
-	let buttonManageUsersHTML = "";
-	/*if (isAdmin(actions.getLoggedUserRoleID()) == true) {
-		buttonManageUsersHTML = (
-			<Fragment>
-				<Link to="/manage-users">
-					<Button label={"Manage Users"} color={"warning"} />
-				</Link>
-			</Fragment>
-		);
-	}*/
-
 	let buttonIconHTML = (
 		<img className="img-fluid" width="40" height="40" src={require("../../img/questioner.png")} alt="logo"></img>
 	);
+	let buttonManageUsersHTML = "";
 	let buttonMakeQuestionHTML = "";
 	let searcherHTML = "";
 	let buttonLogoutHTML = "";
@@ -51,6 +41,17 @@ export const Navbar = () => {
 		buttonLogoutHTML = (
 			<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} onClick={logout} />
 		);
+
+		const userRoleID = actions.getLoggedUserRoleID();
+		if (isAdmin(userRoleID) == true) {
+			buttonManageUsersHTML = (
+				<Fragment>
+					<Link to="/manage-users">
+						<Button label={"Manage Users"} color={"warning"} />
+					</Link>
+				</Fragment>
+			);
+		}
 	}
 
 	async function logout() {
