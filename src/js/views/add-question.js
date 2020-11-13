@@ -45,7 +45,7 @@ export const AddQuestion = () => {
 	async function questionCreatedOK() {
 		//$("#questionCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 		let data = {
-			id_user: store.loggedUser.id,
+			id_user: actions.getLoggedUserID(),
 			title: title,
 			description: description,
 			link: link

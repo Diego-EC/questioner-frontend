@@ -1,4 +1,4 @@
-import React, { useContext, useState, useEffect } from "react";
+import React, { useContext, useState } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Button } from "../component/bootstrap/button";
 import { Context } from "../store/app-context";
@@ -13,11 +13,6 @@ export const Login = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [loading, setLoading] = useState(false);
-	const [rememberMe, setRememberMe] = useState(true);
-
-	useEffect(() => {
-		getLastLoggedUser();
-	}, []);
 
 	async function signIn() {
 		if (email == "" || password == "") {
@@ -36,36 +31,11 @@ export const Login = () => {
 		if (json !== null && json.status === "OK") {
 			localStorage.setItem("accessToken", json.access_token);
 			actions.setLoggedUserData(json.user, json.access_token);
-			saveLastLoggedUser();
 			history.push("/questions");
 		} else {
 			$("#userDontExist").modal({ show: true, keyboard: false, backdrop: "static" });
 		}
 		setLoading(false);
-	}
-
-	function getLastLoggedUser() {
-		const lastLoggedUserEmail = localStorage.getItem("lastLoggedUserEmail");
-		if (lastLoggedUserEmail !== null) {
-			const lastLoggedUserPassword = localStorage.getItem("lastLoggedUserPassword");
-			const lastLoggedUserRememberMe = localStorage.getItem("lastLoggedUserRememberMe");
-			setEmail(lastLoggedUserEmail);
-			setPassword(lastLoggedUserPassword);
-			setRememberMe(lastLoggedUserRememberMe);
-		}
-	}
-
-	function saveLastLoggedUser() {
-		// TODO: el checkbox no consigo hacer que funcione bien
-		if (rememberMe) {
-			localStorage.setItem("lastLoggedUserEmail", email);
-			localStorage.setItem("lastLoggedUserPassword", password);
-			localStorage.setItem("lastLoggedUserRememberMe", rememberMe);
-		} else {
-			localStorage.removeItem("lastLoggedUserEmail");
-			localStorage.removeItem("lastLoggedUserPassword");
-			localStorage.removeItem("lastLoggedUserRememberMe");
-		}
 	}
 
 	let buttonLoginHTML = "";
@@ -113,6 +83,7 @@ export const Login = () => {
 						defaultValue={password}
 					/>
 				</div>
+				{/*// TODO: cambia la duración del token
 				<div className="form-group form-check">
 					<input
 						type="checkbox"
@@ -123,8 +94,9 @@ export const Login = () => {
 					/>
 					<label className="form-check-label" htmlFor="check">
 						Remember me
-					</label>
+                    </label>
 				</div>
+                */}
 				<div className="form-group">{buttonLoginHTML}</div>
 				<div className="form-group">
 					<p>{textSingUpHTML}</p>
