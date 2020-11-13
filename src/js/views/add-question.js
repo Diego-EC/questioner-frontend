@@ -54,7 +54,9 @@ export const AddQuestion = () => {
 		console.log(responseJsonQuestion.question["id"]);
 		// TODO?
 		//setIDQuestion(responseJsonQuestion.question["id"]);
-		await sendImages(responseJsonQuestion.question["id"]);
+		if (files !== null && files.length > 0) {
+			await sendImages(responseJsonQuestion.question["id"]);
+		}
 		history.push(`/questions`);
 	}
 

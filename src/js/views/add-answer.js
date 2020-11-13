@@ -24,7 +24,9 @@ export const AddAnwser = () => {
 			link: link
 		};
 		const responseJsonAnswer = await doPostFetch(Constant.BACKEND_ROOT + ADD_ANSWER_ENDPOINT, data);
-		await sendImages(responseJsonAnswer.answer["id"]);
+		if (files !== null && files.length > 0) {
+			await sendImages(responseJsonAnswer.answer["id"]);
+		}
 		history.push(`/question-detail/${id}`);
 	}
 
