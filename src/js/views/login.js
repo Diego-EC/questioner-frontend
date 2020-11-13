@@ -16,7 +16,7 @@ export const Login = () => {
 	const [rememberMe, setRememberMe] = useState(true);
 
 	useEffect(() => {
-		//getLastLoggedUser();
+		getLastLoggedUser();
 	}, []);
 
 	async function signIn() {
