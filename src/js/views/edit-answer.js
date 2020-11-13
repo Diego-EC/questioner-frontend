@@ -16,11 +16,17 @@ export const EditAnswer = () => {
 	const { store, actions } = useContext(Context);
 	const [description, setDesciption] = useState("");
 	const [files, setFiles] = useState([]);
+	const [filesHTML, setFilesHTML] = useState([]);
 	const [link, setLink] = useState("");
 
 	useEffect(() => {
 		init();
 	}, []);
+
+	function fileSelected(event) {
+		let input = event.currentTarget;
+		setFiles(input.files);
+	}
 
 	async function updateAnswer() {
 		let data = {
@@ -43,7 +49,7 @@ export const EditAnswer = () => {
 
 	function setDefaultAnswerValues(answer, mappedImages) {
 		setDesciption(answer.description);
-		setFiles(mappedImages);
+		setFilesHTML(mappedImages);
 
 		setLink(answer.link);
 	}
@@ -85,7 +91,7 @@ export const EditAnswer = () => {
 			Constant.BACKEND_ROOT + ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT + "/" + idAnswer
 		);
 		let mappedImages = mapImages(responseAnswerImages);
-		setFiles(mappedImages);
+		setFilesHTML(mappedImages);
 	}
 
 	return (
@@ -114,9 +120,9 @@ export const EditAnswer = () => {
 						className="form-control-file"
 						id="exampleFormControlFile1"
 						multiple
-						onChange={event => setFiles(event.currentTarget.files)}
+						onChange={event => fileSelected(event)}
 					/>
-					<div className="row">{files}</div>
+					<div className="row">{filesHTML}</div>
 				</div>
 				<div className="form-group">
 					<label htmlFor="text-area">Add Links:</label>
