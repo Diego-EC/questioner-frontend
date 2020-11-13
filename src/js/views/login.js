@@ -113,6 +113,7 @@ export const Login = () => {
 						defaultValue={password}
 					/>
 				</div>
+				{/*// TODO: cambia la duración del token
 				<div className="form-group form-check">
 					<input
 						type="checkbox"
@@ -123,8 +124,9 @@ export const Login = () => {
 					/>
 					<label className="form-check-label" htmlFor="check">
 						Remember me
-					</label>
+                    </label>
 				</div>
+                */}
 				<div className="form-group">{buttonLoginHTML}</div>
 				<div className="form-group">
 					<p>{textSingUpHTML}</p>

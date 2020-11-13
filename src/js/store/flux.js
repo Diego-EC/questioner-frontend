@@ -52,22 +52,25 @@ const getState = ({ getStore, getActions, setStore }) => {
 				loggedUserParsed.alertsActivated = loggedUser.alerts_activated;
 				loggedUserParsed.accessToken = accessToken;
 				setStore({ loggedUser: loggedUserParsed });
-				localStorage.setItem("loggedUser", loggedUserParsed);
+				localStorage.setItem("loggedUser", JSON.stringify(loggedUserParsed));
 			},
 			getLoggedUserData: () => {
 				console.log("getLoggedUserData");
 
 				const store = getStore();
-				if (store.loggedUser !== null) {
+				if (store.loggedUser.id !== null) {
+					console.log("store.loggedUser.id");
 					return store.loggedUser;
 				}
 
 				let userInLocalStorage = localStorage.getItem("loggedUser");
-				if (userInLocalStorage !== null) {
-					getActions().setLoggedUserData(userInLocalStorage);
+				let userInLocalStorageParsed = JSON.parse(userInLocalStorage);
+				if (userInLocalStorageParsed !== null) {
+					console.log("userInLocalStorageParsed");
+					getActions().setLoggedUserData(userInLocalStorageParsed);
 				}
 
-				return userInLocalStorage;
+				return userInLocalStorageParsed;
 			},
 			setLogoutUser: () => {
 				console.log("setLogoutUser");
