@@ -1,3 +1,32 @@
 /* 
     General Styles
 */
+.main-picture{
+    height: 15em;
+    width: 20em;
+    object-fit: cover;
+}
+
+@media (max-width: 575.98px) { 
+    .main-picture{
+        height: 5em;
+        width: 10em;
+        object-fit: cover;
+    }
+}
+
+@media (min-width: 576px) and (max-width: 767.98px) {
+    .main-picture{
+        height: 7em;
+        width: 13em;
+        object-fit: cover;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 991.98px) { 
+    .main-picture{
+        height: 11em;
+        width: 15em;
+        object-fit: cover;
+    }
+ }

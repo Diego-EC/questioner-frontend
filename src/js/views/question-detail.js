@@ -56,7 +56,7 @@ export const QuestionDetail = () => {
 		if (responseQuestionImages) {
 			imagesMap = responseQuestionImages.map(function(image, index) {
 				return (
-					<div key={index} className="col-4">
+					<div key={index} className="img-thumbnail col-4 my-1 justify-content-center">
 						<Image id={image.id} src={image.url} />
 					</div>
 				);
@@ -152,7 +152,7 @@ export const QuestionDetail = () => {
 				</div>
 				<p className="h2">{question.title}</p>
 				<p>{question.description}</p>
-				<div className="row">{questionImages}</div>
+				<div className="row mx-0">{questionImages}</div>
 			</div>
 			<div>{answers}</div>
 			<div className="mt-5 row justify-content-center">

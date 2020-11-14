@@ -32,7 +32,7 @@ export const Image = props => {
 
 	return (
 		<div>
-			<img className="img-fluid" src={props.src} alt="image" onClick={displayImage} />
+			<img className="img-fluid main-picture" src={props.src} alt="image" onClick={displayImage} />
 			<div className="text-right">{buttonDeleteHTML}</div>
 
 			<ModalImage
