@@ -132,7 +132,7 @@ export const QuestionDetail = () => {
 			<div className="border border-secondary mb-3 p-2">
 				<div className="row justify-content-between mx-0">
 					<div>
-						<span>Owner: {user.name}</span>
+						<span>By: {user.name}</span>
 					</div>
 					<div className="mb-2 d-flex justify-content-end">
 						{buttonEditQuestionHTML}

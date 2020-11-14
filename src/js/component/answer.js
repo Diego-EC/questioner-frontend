@@ -125,7 +125,7 @@ export const Answer = props => {
 			<div className={"card-header" + borderHighlightHTML}>
 				<div className="row justify-content-between">
 					<div>
-						<span className={textHighlightHTML}>Owner: {props.userName}</span>
+						<span className={textHighlightHTML}>By: {props.userName}</span>
 					</div>
 
 					<div className="d-flex justify-content-end">
