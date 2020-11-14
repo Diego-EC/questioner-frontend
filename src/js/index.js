@@ -11,6 +11,7 @@ import "bootstrap/dist/js/bootstrap.min.js";
 
 //include your index.scss file into the bundle
 import "../styles/index.scss";
+import "../styles/image.scss";
 
 //import your own components
 import Layout from "./layout";

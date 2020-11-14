@@ -32,8 +32,8 @@ export const Image = props => {
 
 	return (
 		<div>
-			<img className="img-fluid" src={props.src} alt="image" onClick={displayImage} />
-			<div className="text-right">{buttonDeleteHTML}</div>
+			<img className="img-fluid image" src={props.src} alt="image" onClick={displayImage} />
+			<div className="text-right mt-1">{buttonDeleteHTML}</div>
 
 			<ModalImage
 				id={props.id.toString()}

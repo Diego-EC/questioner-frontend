@@ -44,7 +44,7 @@ export const EditQuestion = () => {
 		if (images) {
 			imagesMap = images.map(function(image, index) {
 				return (
-					<div key={index} className="col-4">
+					<div key={index} className="img-thumbnail col-4 my-1 justify-content-center">
 						<Image id={image.id} src={image.url} isDeleteable={true} onDeleteImage={deleteQuestionImage} />
 					</div>
 				);
@@ -140,7 +140,7 @@ export const EditQuestion = () => {
 						multiple
 						onChange={event => fileSelected(event)}
 					/>
-					<div className="row">{filesHTML}</div>
+					<div className="row mt-3">{filesHTML}</div>
 				</div>
 
 				<div className="form-group">
