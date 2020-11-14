@@ -52,7 +52,7 @@ export const Answer = props => {
 		if (images) {
 			imagesMap = images.map(function(image, index) {
 				return (
-					<div key={index} className="col-4">
+					<div key={index} className="img-thumbnail col-4 my-1 justify-content-center">
 						<Image id={image.id} src={image.url} />
 					</div>
 				);
@@ -148,7 +148,7 @@ export const Answer = props => {
 			</div>
 			<div className="card-body">
 				<p className={"card-text" + textHighlightHTML}>{props.description}</p>
-				<div className="row">{answerImages}</div>
+				<div className="row mt-3">{answerImages}</div>
 			</div>
 		</div>
 	);

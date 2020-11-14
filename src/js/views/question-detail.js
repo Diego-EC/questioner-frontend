@@ -152,7 +152,7 @@ export const QuestionDetail = () => {
 				</div>
 				<p className="h2">{question.title}</p>
 				<p>{question.description}</p>
-				<div className="row mx-0">{questionImages}</div>
+				<div className="row mx-0 mt-3">{questionImages}</div>
 			</div>
 			<div>{answers}</div>
 			<div className="mt-5 row justify-content-center">
