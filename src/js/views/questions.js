@@ -30,6 +30,7 @@ export const Questions = () => {
 						idAnswerSelected={question.id_answer_selected}
 						numberOfAnswers={question.number_of_answers}
 						userName={question.user_name}
+						date={question.last_update}
 					/>
 				);
 			});

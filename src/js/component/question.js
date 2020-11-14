@@ -11,7 +11,8 @@ export const Question = props => {
 		description: PropTypes.string,
 		idAnswerSelected: PropTypes.number,
 		numberOfAnswers: PropTypes.number,
-		userName: PropTypes.string
+		userName: PropTypes.string,
+		date: PropTypes.string
 	};
 
 	let badgeSolvedHTML = "";
@@ -28,7 +29,9 @@ export const Question = props => {
 			<div className={"card-header" + borderHighlightHTML}>
 				<div className="row justify-content-between">
 					<div className="">
-						<span className={textHighlightHTML}>Owner: {props.userName}</span>
+						<span className={textHighlightHTML}>
+							By: <b>{props.userName}</b>
+						</span>
 					</div>
 					<div className="">
 						{badgeSolvedHTML}
