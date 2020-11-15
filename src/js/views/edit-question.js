@@ -154,7 +154,7 @@ export const EditQuestion = () => {
 						<input
 							type="text"
 							className="form-control"
-							placeholder="Here the link to your code"
+							placeholder="Here the link to your code ;)"
 							aria-label="add link"
 							aria-describedby="add link"
 							onChange={event => setLink(event.target.value)}
