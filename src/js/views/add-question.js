@@ -133,7 +133,7 @@ export const AddQuestion = () => {
 						<input
 							type="text"
 							className="form-control"
-							placeholder="Link"
+							placeholder="Here the link to your code ;)"
 							aria-label="add link"
 							aria-describedby="add link"
 							onChange={event => setLink(event.target.value)}
