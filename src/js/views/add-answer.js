@@ -5,6 +5,7 @@ import { Modal } from "../component/bootstrap/modal";
 import { doPostFetch, doFetchUploadImages } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { Context } from "../store/app-context";
+import { AlertInfoSnippetCode } from "../component/alert-info-snippet-code";
 
 export const AddAnwser = () => {
 	const ADD_ANSWER_ENDPOINT = "answer";
@@ -43,6 +44,10 @@ export const AddAnwser = () => {
 		history.push(`/question-detail/${id}`);
 	}
 
+	function openGist() {
+		window.open("https://gist.github.com/", "_blank");
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Add Anwser</h1>
@@ -72,8 +77,7 @@ export const AddAnwser = () => {
 				</div>
 
 				<div className="form-group">
-					<label htmlFor="text-area">Add Links:</label>
-
+					<AlertInfoSnippetCode />
 					<div className="input-group">
 						<input
 							type="text"
@@ -84,8 +88,8 @@ export const AddAnwser = () => {
 							onChange={event => setLink(event.target.value)}
 						/>
 						<div className="input-group-append">
-							<button className="btn btn-outline-secondary" type="button">
-								Add Link
+							<button onClick={openGist} className="btn btn-outline-primary" type="button">
+								Create a Gist
 							</button>
 						</div>
 					</div>

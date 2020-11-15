@@ -6,6 +6,7 @@ import { Modal } from "../component/bootstrap/modal";
 import { doGetFetch, doPutFetch, doFetchUploadImages, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { Image } from "../component/bootstrap/image";
+import { AlertInfoSnippetCode } from "../component/alert-info-snippet-code";
 
 export const EditQuestion = () => {
 	const QUESTION_ENDPOINT = "question";
@@ -97,6 +98,10 @@ export const EditQuestion = () => {
 		await doFetchUploadImages(Constant.BACKEND_ROOT + "upload-question-images", formData);
 	}
 
+	function openGist() {
+		window.open("https://gist.github.com/", "_blank");
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Edit Question</h1>
@@ -144,21 +149,20 @@ export const EditQuestion = () => {
 				</div>
 
 				<div className="form-group">
-					<label htmlFor="text-area">Add Links:</label>
-
+					<AlertInfoSnippetCode />
 					<div className="input-group">
 						<input
 							type="text"
 							className="form-control"
-							placeholder="Link"
+							placeholder="Here the link to your code"
 							aria-label="add link"
 							aria-describedby="add link"
 							onChange={event => setLink(event.target.value)}
 							defaultValue={link}
 						/>
 						<div className="input-group-append">
-							<button className="btn btn-outline-secondary" type="button">
-								Add Link
+							<button onClick={openGist} className="btn btn-outline-primary" type="button">
+								Create a Gist
 							</button>
 						</div>
 					</div>
