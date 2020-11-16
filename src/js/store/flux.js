@@ -13,11 +13,34 @@ const getState = ({ getStore, getActions, setStore }) => {
 				is_active: null,
 				alerts_activated: null,
 				access_token: null
-			}
+			},
+			questions: [],
+			searchText: ""
 		},
 		actions: {
-			getLoggedUserID() {
+			setQuestions(questions) {
+				setStore({ questions: questions });
+			},
+			getQuestions() {
 				const store = getStore();
+				if (store.questions) {
+					return store.questions;
+				} else {
+					return null;
+				}
+			},
+			setSearchText(searchText) {
+				setStore({ searchText: searchText });
+			},
+			getSearchText() {
+				const store = getStore();
+				if (store.searchText) {
+					return store.searchText;
+				} else {
+					return null;
+				}
+			},
+			getLoggedUserID() {
 				let user = this.getLoggedUserData();
 				if (user !== null && user.id) {
 					return user.id;
@@ -26,7 +49,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			getLoggedUserRoleID() {
-				const store = getStore();
 				let user = this.getLoggedUserData();
 				if (user !== null && user.id_role) {
 					return user.id_role;
