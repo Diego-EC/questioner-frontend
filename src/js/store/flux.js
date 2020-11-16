@@ -14,16 +14,28 @@ const getState = ({ getStore, getActions, setStore }) => {
 				alerts_activated: null,
 				access_token: null
 			},
-			filteredQuestions: []
+			questions: [],
+			searchText: ""
 		},
 		actions: {
-			setFilteredQuestions(filteredQuestions) {
-				setStore({ filteredQuestions: filteredQuestions });
+			setQuestions(questions) {
+				setStore({ questions: questions });
 			},
-			getFilteredQuestions() {
+			getQuestions() {
 				const store = getStore();
-				if (store.filteredQuestions !== null) {
-					return store.filteredQuestions;
+				if (store.questions) {
+					return store.questions;
+				} else {
+					return null;
+				}
+			},
+			setSearchText(searchText) {
+				setStore({ searchText: searchText });
+			},
+			getSearchText() {
+				const store = getStore();
+				if (store.searchText) {
+					return store.searchText;
 				} else {
 					return null;
 				}

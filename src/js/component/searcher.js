@@ -6,21 +6,19 @@ import { Question } from "../component/question";
 
 export const Searcher = () => {
 	const SEARCH_QUESTIONS_BY_STRING_ENDPOINT = "search-questions-by-string";
-	const [searchText, setSearchText] = useState("");
 	const { store, actions } = useContext(Context);
 
 	async function search() {
-		let data = {
-			search_text: searchText
-		};
-		console.log(searchText);
-		const filteredQuestionsResponse = await doGetFetch(
-			Constant.BACKEND_ROOT + SEARCH_QUESTIONS_BY_STRING_ENDPOINT + "/" + searchText
-		);
-		console.log(filteredQuestionsResponse);
-		console.log(filteredQuestionsResponse.questions);
-		const questionsMap = mapQuestions(filteredQuestionsResponse.questions);
-		actions.setFilteredQuestions(questionsMap);
+		let searchText = document.getElementById("inputTextSearcher").value;
+		if (searchText) {
+			actions.setSearchText(searchText);
+			const filteredQuestionsResponse = await doGetFetch(
+				Constant.BACKEND_ROOT + SEARCH_QUESTIONS_BY_STRING_ENDPOINT + "/" + searchText
+			);
+			const questionsMap = mapQuestions(filteredQuestionsResponse.questions);
+			actions.setQuestions(questionsMap);
+			document.getElementById("inputTextSearcher").value = "";
+		}
 	}
 
 	function mapQuestions(questions) {
@@ -44,16 +42,9 @@ export const Searcher = () => {
 		return questionsMap;
 	}
 
-	function getQuestionsFilteredByString() {}
-
 	return (
 		<div className="input-group">
-			<input
-				type="text"
-				className="form-control"
-				placeholder="Search"
-				onChange={event => setSearchText(event.target.value)}
-			/>
+			<input id="inputTextSearcher" type="text" placeholder="Search" defaultValue={actions.getSearchText()} />
 			<div className="input-group-append">
 				<button className="btn btn-primary" type="submit" onClick={search}>
 					<i className="fas fa-search"></i>

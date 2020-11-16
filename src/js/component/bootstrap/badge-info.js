@@ -9,7 +9,7 @@ export const BadgeInfo = props => {
 	};
 
 	function onMouseOver() {
-		console.log("LOL");
+		console.log("TODO: cambiar puntero");
 	}
 
 	return (

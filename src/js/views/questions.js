@@ -3,49 +3,52 @@ import { Question } from "../component/question";
 import { doGetFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { Context } from "../store/app-context";
+import { Button } from "../component/bootstrap/button";
 
 export const Questions = () => {
 	const QUESTIONS_ENDPOINT = "questions";
-	const [questions, setQuestions] = useState([]);
+	const SEARCH_QUESTIONS_BY_STRING_ENDPOINT = "search-questions-by-string";
 	const { store, actions } = useContext(Context);
 
 	useEffect(() => {
 		init();
 	}, []);
 
-	/*let searchResultHTML = "";
-	if (actions.getFilteredQuestions() !== null) {
-		console.log(actions.getFilteredQuestions());
-		searchResultHTML = (
-			<div>
-				<p>CUCU</p>
-			</div>
-		);
-	}*/
+	async function deleteFilter() {
+		actions.setSearchText(null);
+		const questions = await doGetFetch(Constant.BACKEND_ROOT + QUESTIONS_ENDPOINT);
+		const questionsMap = mapQuestions(questions);
+		actions.setQuestions(questionsMap);
+	}
 
-	let searchResultHTML = actions.getFilteredQuestions();
+	let searchText = actions.getSearchText();
 	let buttonResetFilterHTML = "";
-	console.log(searchResultHTML.length);
-	if (searchResultHTML.length > 0) {
-		console.log("SI");
+	if (searchText) {
 		buttonResetFilterHTML = (
-			<div>
-				<p>LOL</p>
+			<div className="alert alert-info">
+				<p className="h4">
+					Search result by: <b>{searchText}</b>
+				</p>
+				<Button label={"Delete Filter"} color={"danger"} onClick={deleteFilter} />
 			</div>
 		);
 	} else {
-		console.log("NO");
 		buttonResetFilterHTML = "";
 	}
 
-	/*let mapFavorites = store.favorites.map((name, index) => {
-		return <Favorite key={index} name={name} />;
-	});*/
-
 	async function init() {
-		const questions = await doGetFetch(Constant.BACKEND_ROOT + QUESTIONS_ENDPOINT);
+		let searchText = actions.getSearchText();
+		let questions;
+		if (searchText) {
+			const questionsResponse = await doGetFetch(
+				Constant.BACKEND_ROOT + SEARCH_QUESTIONS_BY_STRING_ENDPOINT + "/" + searchText
+			);
+			questions = questionsResponse.questions;
+		} else {
+			questions = await doGetFetch(Constant.BACKEND_ROOT + QUESTIONS_ENDPOINT);
+		}
 		const questionsMap = mapQuestions(questions);
-		setQuestions(questionsMap);
+		actions.setQuestions(questionsMap);
 	}
 
 	function mapQuestions(questions) {
@@ -70,10 +73,11 @@ export const Questions = () => {
 	}
 
 	return (
-		<div className="container">
-			{searchResultHTML}
-			{buttonResetFilterHTML}
-			<div className="container">{questions}</div>
+		<div className="">
+			<div className="container">
+				{buttonResetFilterHTML}
+				{actions.getQuestions()}
+			</div>
 		</div>
 	);
 };

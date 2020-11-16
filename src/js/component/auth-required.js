@@ -43,6 +43,7 @@ export const AuthRequired = () => {
 	return (
 		<Fragment>
 			<Route exact path="/questions" component={Questions} />
+			<Route exact path="/questions/:search" component={Questions} />
 			<Route exact path="/question-detail/:id" component={QuestionDetail} />
 			<Route exact path="/manage-users" component={ManageUsers} />
 			<Route exact path="/add-question" component={AddQuestion} />
