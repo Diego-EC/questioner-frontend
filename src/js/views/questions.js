@@ -1,15 +1,46 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Question } from "../component/question";
 import { doGetFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
+import { Context } from "../store/app-context";
 
 export const Questions = () => {
 	const QUESTIONS_ENDPOINT = "questions";
 	const [questions, setQuestions] = useState([]);
+	const { store, actions } = useContext(Context);
 
 	useEffect(() => {
 		init();
 	}, []);
+
+	/*let searchResultHTML = "";
+	if (actions.getFilteredQuestions() !== null) {
+		console.log(actions.getFilteredQuestions());
+		searchResultHTML = (
+			<div>
+				<p>CUCU</p>
+			</div>
+		);
+	}*/
+
+	let searchResultHTML = actions.getFilteredQuestions();
+	let buttonResetFilterHTML = "";
+	console.log(searchResultHTML.length);
+	if (searchResultHTML.length > 0) {
+		console.log("SI");
+		buttonResetFilterHTML = (
+			<div>
+				<p>LOL</p>
+			</div>
+		);
+	} else {
+		console.log("NO");
+		buttonResetFilterHTML = "";
+	}
+
+	/*let mapFavorites = store.favorites.map((name, index) => {
+		return <Favorite key={index} name={name} />;
+	});*/
 
 	async function init() {
 		const questions = await doGetFetch(Constant.BACKEND_ROOT + QUESTIONS_ENDPOINT);
@@ -40,6 +71,8 @@ export const Questions = () => {
 
 	return (
 		<div className="container">
+			{searchResultHTML}
+			{buttonResetFilterHTML}
 			<div className="container">{questions}</div>
 		</div>
 	);

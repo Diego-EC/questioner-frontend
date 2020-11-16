@@ -13,11 +13,22 @@ const getState = ({ getStore, getActions, setStore }) => {
 				is_active: null,
 				alerts_activated: null,
 				access_token: null
-			}
+			},
+			filteredQuestions: []
 		},
 		actions: {
-			getLoggedUserID() {
+			setFilteredQuestions(filteredQuestions) {
+				setStore({ filteredQuestions: filteredQuestions });
+			},
+			getFilteredQuestions() {
 				const store = getStore();
+				if (store.filteredQuestions !== null) {
+					return store.filteredQuestions;
+				} else {
+					return null;
+				}
+			},
+			getLoggedUserID() {
 				let user = this.getLoggedUserData();
 				if (user !== null && user.id) {
 					return user.id;
@@ -26,7 +37,6 @@ const getState = ({ getStore, getActions, setStore }) => {
 				}
 			},
 			getLoggedUserRoleID() {
-				const store = getStore();
 				let user = this.getLoggedUserData();
 				if (user !== null && user.id_role) {
 					return user.id_role;
