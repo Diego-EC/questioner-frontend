@@ -16,6 +16,7 @@ export const AddQuestion = () => {
 	const [link, setLink] = useState("");
 	const [files, setFiles] = useState(null);
 	//const [IDQuestion, setIDQuestion] = useState(0);
+	const [loading, setLoading] = useState(false);
 
 	function fileSelected(event) {
 		let input = event.currentTarget;
@@ -45,6 +46,7 @@ export const AddQuestion = () => {
 
 	async function questionCreatedOK() {
 		//$("#questionCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+		setLoading(true);
 		let data = {
 			id_user: actions.getLoggedUserID(),
 			title: title,
@@ -58,6 +60,7 @@ export const AddQuestion = () => {
 		if (files !== null && files.length > 0) {
 			await sendImages(responseJsonQuestion.question["id"]);
 		}
+		setLoading(false);
 		history.push(`/questions`);
 	}
 
@@ -67,6 +70,18 @@ export const AddQuestion = () => {
 
 	function openGist() {
 		window.open("https://gist.github.com/", "_blank");
+	}
+
+	let buttonSaveHTML = "";
+	if (loading === true) {
+		buttonSaveHTML = (
+			<button className="btn btn-primary" type="button" disabled>
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span> Saving...</span>
+			</button>
+		);
+	} else {
+		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />;
 	}
 
 	return (
@@ -112,21 +127,6 @@ export const AddQuestion = () => {
 					/>
 				</div>
 
-				{/*<div className="form-group">
-					<label htmlFor="text-area">Upload Files:</label>
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text">Upload</span>
-						</div>
-						<div className="custom-file">
-							<input type="file" className="custom-file-input" id="upload-files" />
-							<label className="custom-file-label" htmlFor="upload-files">
-								Choose file
-							</label>
-						</div>
-					</div>
-                </div>*/}
-
 				<div className="form-group">
 					<AlertInfoSnippetCode />
 					<div className="input-group">
@@ -148,8 +148,7 @@ export const AddQuestion = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						<Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />
-						{/*<Button label={"Save"} color={"primary"} onClick={sendImages} />*/}
+						{buttonSaveHTML}
 						<Modal
 							id={"questionCreatedOK"}
 							title={"Question Saved"}

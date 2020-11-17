@@ -15,9 +15,11 @@ export const AddAnwser = () => {
 	const [description, setDesciption] = useState("");
 	const [link, setLink] = useState("");
 	const [files, setFiles] = useState(null);
+	const [loading, setLoading] = useState(false);
 
 	async function answerCreatedOK() {
 		//$("#answerCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+		setLoading(true);
 		let data = {
 			id_question: id,
 			id_user: actions.getLoggedUserID(),
@@ -28,6 +30,7 @@ export const AddAnwser = () => {
 		if (files !== null && files.length > 0) {
 			await sendImages(responseJsonAnswer.answer["id"]);
 		}
+		setLoading(false);
 		history.push(`/question-detail/${id}`);
 	}
 
@@ -46,6 +49,18 @@ export const AddAnwser = () => {
 
 	function openGist() {
 		window.open("https://gist.github.com/", "_blank");
+	}
+
+	let buttonSaveHTML = "";
+	if (loading === true) {
+		buttonSaveHTML = (
+			<button className="btn btn-primary" type="button" disabled>
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span> Saving...</span>
+			</button>
+		);
+	} else {
+		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={answerCreatedOK} />;
 	}
 
 	return (
@@ -97,7 +112,8 @@ export const AddAnwser = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						<Button label={"Save"} color={"primary"} onClick={answerCreatedOK} />
+						{buttonSaveHTML}
+
 						<Modal
 							id={"answerCreatedOK"}
 							title={"Answer Saved"}
