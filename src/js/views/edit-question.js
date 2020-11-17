@@ -20,6 +20,7 @@ export const EditQuestion = () => {
 	const [files, setFiles] = useState([]);
 	const [filesHTML, setFilesHTML] = useState([]);
 	const [link, setLink] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		init();
@@ -71,6 +72,7 @@ export const EditQuestion = () => {
 	}
 
 	async function updateQuestion() {
+		setLoading(true);
 		let data = {
 			title: title,
 			description: description,
@@ -78,6 +80,7 @@ export const EditQuestion = () => {
 		};
 		let json = await doPutFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id, data);
 		await sendImages(id);
+		setLoading(false);
 		history.push(`/question-detail/${id}`);
 	}
 
@@ -100,6 +103,18 @@ export const EditQuestion = () => {
 
 	function openGist() {
 		window.open("https://gist.github.com/", "_blank");
+	}
+
+	let buttonSaveHTML = "";
+	if (loading === true) {
+		buttonSaveHTML = (
+			<button className="btn btn-primary" type="button" disabled>
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span> Saving...</span>
+			</button>
+		);
+	} else {
+		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={updateQuestion} />;
 	}
 
 	return (
@@ -170,8 +185,7 @@ export const EditQuestion = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						{/*<Button label={"Save"} color={"primary"} onClick={questionUpdatedOK} />*/}
-						<Button label={"Save"} color={"primary"} onClick={updateQuestion} />
+						{buttonSaveHTML}
 						<Modal
 							id={"questionUpdatedOK"}
 							title={"Question Edited"}

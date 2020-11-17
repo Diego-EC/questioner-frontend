@@ -19,6 +19,7 @@ export const EditAnswer = () => {
 	const [files, setFiles] = useState([]);
 	const [filesHTML, setFilesHTML] = useState([]);
 	const [link, setLink] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	useEffect(() => {
 		init();
@@ -30,12 +31,14 @@ export const EditAnswer = () => {
 	}
 
 	async function updateAnswer() {
+		setLoading(true);
 		let data = {
 			description: description,
 			link: link
 		};
 		let json = await doPutFetch(Constant.BACKEND_ROOT + ANSWER_ENDPOINT + "/" + idAnswer, data);
 		await sendImages(json.answer["id"]);
+		setLoading(false);
 		history.push(`/question-detail/${idQuestion}`);
 	}
 
@@ -99,6 +102,18 @@ export const EditAnswer = () => {
 		window.open("https://gist.github.com/", "_blank");
 	}
 
+	let buttonSaveHTML = "";
+	if (loading === true) {
+		buttonSaveHTML = (
+			<button className="btn btn-primary" type="button" disabled>
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span> Saving...</span>
+			</button>
+		);
+	} else {
+		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={updateAnswer} />;
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Edit Answer</h1>
@@ -151,8 +166,7 @@ export const EditAnswer = () => {
 
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="right">
-						{/*<Button label={"Save"} color={"primary"} onClick={answerUpdatedOK} />*/}
-						<Button label={"Save"} color={"primary"} onClick={updateAnswer} />
+						{buttonSaveHTML}
 						<Modal
 							id={"answerUpdatedOK"}
 							title={"Answer Edited"}

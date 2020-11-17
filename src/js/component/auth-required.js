@@ -37,7 +37,13 @@ export const AuthRequired = () => {
 	}
 
 	if (loading == true) {
-		return "Loading...";
+		return (
+			<div className="d-flex justify-content-center">
+				<div className="spinner-border" role="status">
+					<span className="sr-only">Loading...</span>
+				</div>
+			</div>
+		);
 	}
 
 	return (

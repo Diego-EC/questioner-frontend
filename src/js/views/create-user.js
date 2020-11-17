@@ -12,6 +12,7 @@ export const CreateUser = () => {
 	const [email, setEmail] = useState("");
 	const [password, setPassword] = useState("");
 	const [repeatedPassword, setRepeatedPassword] = useState("");
+	const [loading, setLoading] = useState(false);
 
 	async function createUser() {
 		// validar
@@ -24,6 +25,7 @@ export const CreateUser = () => {
 			return;
 		}
 		// fetch
+		setLoading(true);
 		let data = {
 			name: name,
 			email: email,
@@ -31,6 +33,7 @@ export const CreateUser = () => {
 		};
 		let responseJsonUser = await doPostFetch(Constant.BACKEND_ROOT + USER_ENDPOINT, data);
 		// mensaje OK
+		setLoading(false);
 		if (responseJsonUser) {
 			$("#userCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 		}
@@ -43,6 +46,18 @@ export const CreateUser = () => {
 
 	function closeModal() {
 		history.push("/");
+	}
+
+	let buttonCreateHTML = "";
+	if (loading === true) {
+		buttonCreateHTML = (
+			<button className="btn btn-primary" type="button" disabled>
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+				<span> Creating...</span>
+			</button>
+		);
+	} else {
+		buttonCreateHTML = <Button label={"Create"} color={"primary"} onClick={createUser} />;
 	}
 
 	return (
@@ -108,8 +123,7 @@ export const CreateUser = () => {
 
 				<div className="row mt-5">
 					<div className="col" align="right">
-						{/*<Button label={"Create"} color={"primary"} onClick={userCreatedOK} />*/}
-						<Button label={"Create"} color={"primary"} onClick={createUser} />
+						{buttonCreateHTML}
 						<Modal
 							id={"userCreatedOK"}
 							title={"User created"}

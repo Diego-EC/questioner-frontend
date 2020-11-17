@@ -8,6 +8,7 @@ import { Modal } from "../component/bootstrap/modal";
 export const Searcher = () => {
 	const SEARCH_QUESTIONS_BY_STRING_ENDPOINT = "search-questions-by-string";
 	const { store, actions } = useContext(Context);
+	const [loading, setLoading] = useState(false);
 
 	async function search() {
 		let searchText = document.getElementById("inputTextSearcher").value;
@@ -15,6 +16,7 @@ export const Searcher = () => {
 			$("#search").modal({ show: true, keyboard: false, backdrop: "static" });
 		} else {
 			if (searchText) {
+				setLoading(true);
 				actions.setSearchText(searchText);
 				const filteredQuestionsResponse = await doGetFetch(
 					Constant.BACKEND_ROOT + SEARCH_QUESTIONS_BY_STRING_ENDPOINT + "/" + searchText
@@ -22,6 +24,7 @@ export const Searcher = () => {
 				const questionsMap = mapQuestions(filteredQuestionsResponse.questions);
 				actions.setQuestions(questionsMap);
 				document.getElementById("inputTextSearcher").value = "";
+				setLoading(false);
 			}
 		}
 	}
@@ -47,14 +50,25 @@ export const Searcher = () => {
 		return questionsMap;
 	}
 
+	let buttonSearchHTML = "";
+	if (loading === true) {
+		buttonSearchHTML = (
+			<button className="btn btn-primary" type="button" disabled>
+				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+			</button>
+		);
+	} else {
+		buttonSearchHTML = (
+			<button className="btn btn-primary" type="submit" onClick={search}>
+				<i className="fas fa-search"></i>
+			</button>
+		);
+	}
+
 	return (
 		<div className="input-group">
 			<input id="inputTextSearcher" type="text" placeholder="Search" defaultValue={actions.getSearchText()} />
-			<div className="input-group-append">
-				<button className="btn btn-primary" type="submit" onClick={search}>
-					<i className="fas fa-search"></i>
-				</button>
-			</div>
+			<div className="input-group-append">{buttonSearchHTML}</div>
 			<Modal
 				id={"search"}
 				title={"Search text too short"}
