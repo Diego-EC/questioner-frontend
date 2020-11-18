@@ -19,7 +19,8 @@ export const Answer = props => {
 		onDeleteAnswer: PropTypes.func,
 		isBestAnswer: PropTypes.bool,
 		onChooseBestAnswer: PropTypes.func,
-		userName: PropTypes.string
+		userName: PropTypes.string,
+		link: PropTypes.string
 	};
 	const MARK_BEST_ANSWER_ENDPOINT = "mark-best-answer";
 	const ANSWER_ENDPOINT = "answer";
@@ -115,9 +116,24 @@ export const Answer = props => {
 
 	let borderHighlightHTML = "";
 	let textHighlightHTML = "";
+	let linkSnippetHTML = "";
 	if (props.isBestAnswer == true) {
 		borderHighlightHTML = " border-success";
 		textHighlightHTML = " text-success";
+	}
+	if (props.link) {
+		linkSnippetHTML = (
+			<div className="my-3">
+				<p>
+					<b>
+						Snippet<br></br>
+					</b>
+					<a href={props.link} target="_blank" rel="noopener noreferrer">
+						{props.link}
+					</a>
+				</p>
+			</div>
+		);
 	}
 
 	return (
@@ -149,6 +165,7 @@ export const Answer = props => {
 			<div className="card-body">
 				<p className={"card-text" + textHighlightHTML}>{props.description}</p>
 				<div className="row mt-3">{answerImages}</div>
+				{linkSnippetHTML}
 			</div>
 		</div>
 	);

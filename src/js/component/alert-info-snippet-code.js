@@ -1,6 +1,10 @@
 import React from "react";
 
 export const AlertInfoSnippetCode = props => {
+	function openGist() {
+		window.open("https://gist.github.com/", "_blank");
+	}
+
 	return (
 		<div className="alert alert-info" role="alert">
 			<h4 className="alert-heading">Share your code:</h4>
@@ -11,8 +15,12 @@ export const AlertInfoSnippetCode = props => {
 				<a href="https://youtu.be/7YBnd8zXhwI" target="_blank" rel="noreferrer">
 					Gist
 				</a>{" "}
-				(or a similar tool) to help to the community understand the question, and earn good kitty karma points
-				by the way 😻😻😻
+				<b>(or a similar tool)</b> to help to the community understand the question, and earn good kitty karma
+				points by the way 😻😻😻
+				<hr></hr>
+				<button onClick={openGist} className="btn btn-primary" type="button">
+					Create a Gist
+				</button>
 			</p>
 		</div>
 	);

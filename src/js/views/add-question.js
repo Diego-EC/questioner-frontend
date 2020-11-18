@@ -68,10 +68,6 @@ export const AddQuestion = () => {
 		history.push("/questions");
 	}
 
-	function openGist() {
-		window.open("https://gist.github.com/", "_blank");
-	}
-
 	let buttonSaveHTML = "";
 	if (loading === true) {
 		buttonSaveHTML = (
@@ -138,11 +134,6 @@ export const AddQuestion = () => {
 							aria-describedby="add link"
 							onChange={event => setLink(event.target.value)}
 						/>
-						<div className="input-group-append">
-							<button onClick={openGist} className="btn btn-outline-primary" type="button">
-								Create a Gist
-							</button>
-						</div>
 					</div>
 				</div>
 

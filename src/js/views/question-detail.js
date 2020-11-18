@@ -26,6 +26,7 @@ export const QuestionDetail = () => {
 
 	let buttonEditQuestionHTML = "";
 	let buttonDeleteQuestionHTML = "";
+	let linkSnippetHTML = "";
 	if (question.id_user == actions.getLoggedUserID()) {
 		buttonEditQuestionHTML = (
 			<Link to={id + "/edit-question"}>
@@ -34,6 +35,20 @@ export const QuestionDetail = () => {
 		);
 		//buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={questionDeletedOK} />;
 		buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={deleteQuestion} />;
+	}
+	if (question.link) {
+		linkSnippetHTML = (
+			<div className="my-3">
+				<p>
+					<b>
+						Snippet<br></br>
+					</b>
+					<a href={question.link} target="_blank" rel="noopener noreferrer">
+						{question.link}
+					</a>
+				</p>
+			</div>
+		);
 	}
 
 	async function init() {
@@ -93,6 +108,7 @@ export const QuestionDetail = () => {
 						isBestAnswer={isBestAnswer}
 						onChooseBestAnswer={onChooseBestAnswer}
 						userName={answer.user_name}
+						link={answer.link}
 					/>
 				);
 			});
@@ -152,7 +168,9 @@ export const QuestionDetail = () => {
 				</div>
 				<p className="h2">{question.title}</p>
 				<p>{question.description}</p>
+
 				<div className="row mx-0 mt-3">{questionImages}</div>
+				{linkSnippetHTML}
 			</div>
 			<div>{answers}</div>
 			<div className="mt-5 row justify-content-center">
