@@ -98,10 +98,6 @@ export const EditAnswer = () => {
 		setFilesHTML(mappedImages);
 	}
 
-	function openGist() {
-		window.open("https://gist.github.com/", "_blank");
-	}
-
 	let buttonSaveHTML = "";
 	if (loading === true) {
 		buttonSaveHTML = (
@@ -156,11 +152,6 @@ export const EditAnswer = () => {
 							onChange={event => setLink(event.target.value)}
 							defaultValue={link}
 						/>
-						<div className="input-group-append">
-							<button onClick={openGist} className="btn btn-outline-primary" type="button">
-								Create a Gist
-							</button>
-						</div>
 					</div>
 				</div>
 
