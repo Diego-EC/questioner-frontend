@@ -9,7 +9,7 @@ export const BadgeInfo = props => {
 	};
 
 	return (
-		<span className={"btn badge-info ml-1 text-white p-1 rounded bg-" + props.color}>
+		<span className={"btn badge-info ml-1 text-white rounded bg-" + props.color}>
 			{props.label} <span className="badge badge-light">{props.amount}</span>
 		</span>
 	);

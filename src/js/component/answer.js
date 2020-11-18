@@ -81,8 +81,8 @@ export const Answer = props => {
 	if (props.idQuestionOwner == actions.getLoggedUserID()) {
 		if (props.isBestAnswer == true) {
 			buttonChooseAsBestAnswer = <BadgeInfo label={"Best Answer"} color={"success"} />;
-			buttonDeleteAnswer = "";
-			buttonEditAnswer = "";
+			//buttonDeleteAnswer = "";
+			//buttonEditAnswer = "";
 		} else {
 			buttonChooseAsBestAnswer = (
 				<Button label={"Choose as Best Answer"} color={"primary"} onClick={chooseAsBestAnswer} />
@@ -145,7 +145,7 @@ export const Answer = props => {
 					</div>
 
 					<div className="d-flex justify-content-end">
-						<div className="ms-1">{buttonChooseAsBestAnswer}</div>
+						<div>{buttonChooseAsBestAnswer}</div>
 						<div className="ml-1">{buttonEditAnswer}</div>
 						<div className="ml-1">
 							{buttonDeleteAnswer}
