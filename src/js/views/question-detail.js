@@ -7,6 +7,9 @@ import { Image } from "../component/bootstrap/image";
 import { Modal } from "../component/bootstrap/modal";
 import { doGetFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
+import { RichTextEditor } from "../component/rich-text-editor";
+import { RichTextEditorDos } from "../component/rich-text-editor-dos";
+import { ControlledEditor } from "../component/controlled-editor";
 
 export const QuestionDetail = () => {
 	const QUESTION_ENDPOINT = "question";
@@ -143,8 +146,19 @@ export const QuestionDetail = () => {
 		history.push(`/question-detail/${id}`);
 	}
 
+	function onEditorStateChange(currentContentAsHTML) {
+		console.log(currentContentAsHTML);
+	}
+
 	return (
 		<div className="container">
+			<div>
+				<RichTextEditor
+					isReadOnly={true}
+					onEditorStateChange={onEditorStateChange}
+					description={question.description}
+				/>
+			</div>
 			<div className="border border-secondary mb-3 p-2">
 				<div className="row justify-content-between mx-0">
 					<div>

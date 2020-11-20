@@ -6,6 +6,7 @@ import { Context } from "../store/app-context";
 import { doPostFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { AlertInfoSnippetCode } from "../component/alert-info-snippet-code";
+import { RichTextEditor } from "../component/rich-text-editor";
 
 export const AddQuestion = () => {
 	const ADD_QUESTION_ENDPOINT = "question";
@@ -80,8 +81,16 @@ export const AddQuestion = () => {
 		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />;
 	}
 
+	function onEditorStateChange(currentContentAsHTML) {
+		console.log("-> " + currentContentAsHTML);
+		// y de aquí a setDesciption(convertedContent); y ya ta
+		setDesciption(currentContentAsHTML);
+		console.log(description);
+	}
+
 	return (
 		<div className="container">
+			<RichTextEditor isReadOnly={false} onEditorStateChange={onEditorStateChange} />
 			<h1 className="text-center">Make Question</h1>
 
 			<form className="was-validated">

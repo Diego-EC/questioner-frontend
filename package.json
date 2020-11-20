@@ -72,11 +72,15 @@
 	"dependencies": {
 		"@babel/polyfill": "^7.12.1",
 		"bootstrap": "^4.5.3",
+		"dompurify": "^2.2.2",
+		"draft-convert": "^2.1.10",
+		"draft-js": "^0.11.7",
 		"jquery": "^3.5.1",
 		"popper.js": "^1.16.1",
 		"prop-types": "^15.7.2",
 		"react": "^16.13.1",
 		"react-dom": "^16.13.1",
+		"react-draft-wysiwyg": "^1.14.5",
 		"react-polyfills": "0.0.1",
 		"react-router-dom": "^5.2.0"
 	}
