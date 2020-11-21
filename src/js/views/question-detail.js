@@ -7,6 +7,7 @@ import { Image } from "../component/bootstrap/image";
 import { Modal } from "../component/bootstrap/modal";
 import { doGetFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
+import { RichTextEditor } from "../component/rich-text-editor";
 
 export const QuestionDetail = () => {
 	const QUESTION_ENDPOINT = "question";
@@ -167,7 +168,9 @@ export const QuestionDetail = () => {
 					</div>
 				</div>
 				<p className="h2">{question.title}</p>
-				<p>{question.description}</p>
+				<div>
+					<RichTextEditor isReadOnly={true} description={question.description} />
+				</div>
 
 				<div className="row mx-0 mt-3">{questionImages}</div>
 				{linkSnippetHTML}

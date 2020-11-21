@@ -7,6 +7,7 @@ import { doGetFetch, doPutFetch, doFetchUploadImages, doDeleteFetch } from "../h
 import * as Constant from "../helpers/constants";
 import { Image } from "../component/bootstrap/image";
 import { AlertInfoSnippetCode } from "../component/alert-info-snippet-code";
+import { RichTextEditor } from "../component/rich-text-editor";
 
 export const EditQuestion = () => {
 	const QUESTION_ENDPOINT = "question";
@@ -21,6 +22,7 @@ export const EditQuestion = () => {
 	const [filesHTML, setFilesHTML] = useState([]);
 	const [link, setLink] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [question, setQuestion] = useState({});
 
 	useEffect(() => {
 		init();
@@ -33,7 +35,7 @@ export const EditQuestion = () => {
 
 	async function init() {
 		let question = await doGetFetch(Constant.BACKEND_ROOT + QUESTION_ENDPOINT + "/" + id);
-
+		setQuestion(question);
 		const responseQuestionImages = await doGetFetch(
 			Constant.BACKEND_ROOT + QUESTION_IMAGES_BY_QUESTION_ID_ENDPOINT + "/" + id
 		);
@@ -113,10 +115,13 @@ export const EditQuestion = () => {
 		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={updateQuestion} />;
 	}
 
+	function onEditorStateChange(currentContentAsHTML) {
+		setDesciption(currentContentAsHTML);
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Edit Question</h1>
-
 			<form action="" className="was-validated" noValidate="">
 				<div className="form-group">
 					<label htmlFor="title">Title:</label>
@@ -135,14 +140,11 @@ export const EditQuestion = () => {
 
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
-					<textarea
-						className="form-control"
-						id="text-area"
-						rows="3"
-						placeholder="Description"
-						required
-						onChange={event => setDesciption(event.target.value)}
-						defaultValue={description}></textarea>
+					<RichTextEditor
+						isReadOnly={false}
+						onEditorStateChange={onEditorStateChange}
+						description={question.description}
+					/>
 					<div className="invalid-feedback">Please write a description for the question.</div>
 				</div>
 

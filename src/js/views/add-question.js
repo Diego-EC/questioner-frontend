@@ -6,6 +6,7 @@ import { Context } from "../store/app-context";
 import { doPostFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { AlertInfoSnippetCode } from "../component/alert-info-snippet-code";
+import { RichTextEditor } from "../component/rich-text-editor";
 
 export const AddQuestion = () => {
 	const ADD_QUESTION_ENDPOINT = "question";
@@ -80,10 +81,13 @@ export const AddQuestion = () => {
 		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />;
 	}
 
+	function onEditorStateChange(currentContentAsHTML) {
+		setDesciption(currentContentAsHTML);
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Make Question</h1>
-
 			<form className="was-validated">
 				<div className="form-group">
 					<label htmlFor="title">Title:</label>
@@ -101,13 +105,7 @@ export const AddQuestion = () => {
 
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
-					<textarea
-						className="form-control"
-						id="text-area"
-						rows="3"
-						placeholder="Description"
-						onChange={event => setDesciption(event.target.value)}
-						required></textarea>
+					<RichTextEditor isReadOnly={false} onEditorStateChange={onEditorStateChange} />
 					<div className="invalid-feedback">Please write a description for the question.</div>
 				</div>
 
