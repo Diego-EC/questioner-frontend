@@ -82,17 +82,12 @@ export const AddQuestion = () => {
 	}
 
 	function onEditorStateChange(currentContentAsHTML) {
-		console.log("-> " + currentContentAsHTML);
-		// y de aquí a setDesciption(convertedContent); y ya ta
 		setDesciption(currentContentAsHTML);
-		console.log(description);
 	}
 
 	return (
 		<div className="container">
-			<RichTextEditor isReadOnly={false} onEditorStateChange={onEditorStateChange} />
 			<h1 className="text-center">Make Question</h1>
-
 			<form className="was-validated">
 				<div className="form-group">
 					<label htmlFor="title">Title:</label>
@@ -110,13 +105,7 @@ export const AddQuestion = () => {
 
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
-					<textarea
-						className="form-control"
-						id="text-area"
-						rows="3"
-						placeholder="Description"
-						onChange={event => setDesciption(event.target.value)}
-						required></textarea>
+					<RichTextEditor isReadOnly={false} onEditorStateChange={onEditorStateChange} />
 					<div className="invalid-feedback">Please write a description for the question.</div>
 				</div>
 

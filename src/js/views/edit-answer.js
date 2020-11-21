@@ -7,6 +7,7 @@ import { doGetFetch, doPutFetch, doFetchUploadImages, doDeleteFetch } from "../h
 import * as Constant from "../helpers/constants";
 import { Image } from "../component/bootstrap/image";
 import { AlertInfoSnippetCode } from "../component/alert-info-snippet-code";
+import { RichTextEditor } from "../component/rich-text-editor";
 
 export const EditAnswer = () => {
 	const ANSWER_ENDPOINT = "answer";
@@ -20,6 +21,7 @@ export const EditAnswer = () => {
 	const [filesHTML, setFilesHTML] = useState([]);
 	const [link, setLink] = useState("");
 	const [loading, setLoading] = useState(false);
+	const [answer, setAnswer] = useState({});
 
 	useEffect(() => {
 		init();
@@ -44,6 +46,7 @@ export const EditAnswer = () => {
 
 	async function init() {
 		const answer = await doGetFetch(Constant.BACKEND_ROOT + ANSWER_ENDPOINT + "/" + idAnswer);
+		setAnswer(answer);
 		const responseAnserImages = await doGetFetch(
 			Constant.BACKEND_ROOT + ANSWER_IMAGES_BY_ANSWER_ID_ENDPOINT + "/" + idAnswer
 		);
@@ -110,6 +113,10 @@ export const EditAnswer = () => {
 		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={updateAnswer} />;
 	}
 
+	function onEditorStateChange(currentContentAsHTML) {
+		setDesciption(currentContentAsHTML);
+	}
+
 	return (
 		<div className="container">
 			<h1 className="text-center">Edit Answer</h1>
@@ -117,14 +124,11 @@ export const EditAnswer = () => {
 			<form action="" className="was-validated" noValidate="">
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
-					<textarea
-						className="form-control"
-						id="text-area"
-						rows="3"
-						placeholder="Description"
-						required
-						onChange={event => setDesciption(event.target.value)}
-						defaultValue={description}></textarea>
+					<RichTextEditor
+						isReadOnly={false}
+						onEditorStateChange={onEditorStateChange}
+						description={answer.description}
+					/>
 					<div className="invalid-feedback">Please write a description for the answer.</div>
 				</div>
 

@@ -8,6 +8,7 @@ import { doGetFetch, doPutFetch, doDeleteFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { BadgeInfo } from "./bootstrap/badge-info";
 import { Image } from "../component/bootstrap/image";
+import { RichTextEditor } from "../component/rich-text-editor";
 
 export const Answer = props => {
 	Answer.propTypes = {
@@ -163,7 +164,9 @@ export const Answer = props => {
 				</div>
 			</div>
 			<div className="card-body">
-				<p className={"card-text" + textHighlightHTML}>{props.description}</p>
+				<div className={"card-text"}>
+					<RichTextEditor isReadOnly={true} description={props.description} />
+				</div>
 				<div className="row mt-3">{answerImages}</div>
 				{linkSnippetHTML}
 			</div>

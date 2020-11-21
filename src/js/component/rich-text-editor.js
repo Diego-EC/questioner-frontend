@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Editor } from "react-draft-wysiwyg";
-import { EditorState, ContentState, convertFromHTML } from "draft-js";
+import { EditorState, ContentState, convertToRaw } from "draft-js";
 import "react-draft-wysiwyg/dist/react-draft-wysiwyg.css";
-import { convertToHTML } from "draft-convert";
 import PropTypes from "prop-types";
+import draftToHtml from "draftjs-to-html";
+import htmlToDraft from "html-to-draftjs";
 
 export const RichTextEditor = props => {
 	RichTextEditor.propTypes = {
@@ -13,42 +14,52 @@ export const RichTextEditor = props => {
 	};
 
 	const [editorState, setEditorState] = useState(
-		EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML("<p>My initial content.</p>")))
+		EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft("<p>My initial content.</p>")))
 	);
 
 	useEffect(() => {
 		if (props.description) {
 			setEditorState(
-				EditorState.createWithContent(ContentState.createFromBlockArray(convertFromHTML(props.description)))
+				EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft(props.description)))
 			);
 		}
 	}, [props.description]);
 
 	const handleEditorChange = state => {
-		let currentContentAsHTML = convertToHTML(editorState.getCurrentContent());
-		props.onEditorStateChange(currentContentAsHTML);
-		setEditorState(state);
+		if (props.isReadOnly === false) {
+			let currentContentAsHTML = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+			props.onEditorStateChange(currentContentAsHTML);
+			setEditorState(state);
+		}
 	};
 
-	/*const convertContentToHTML = () => {};
-
-	const convertContentFromHTML = () => {
-		let currentContentAsText = convertFromHTML("<p>My initial content.</p>");
-		console.log(currentContentAsText);
-		setEditorState(currentContentAsText);
-		console.log(editorState);
-	};*/
+	let toolbarHTML = [];
+	if (props.isReadOnly === false) {
+		toolbarHTML = [
+			"inline",
+			"blockType",
+			"fontSize",
+			"fontFamily",
+			"list",
+			"textAlign",
+			"colorPicker",
+			"link",
+			"remove",
+			"history"
+		];
+	}
 
 	return (
-		<div className="App">
-			<header className="App-header">Rich Text Editor</header>
+		<div className="">
 			<Editor
 				editorState={editorState}
 				onEditorStateChange={handleEditorChange}
 				wrapperClassName="wrapper-class"
 				editorClassName="editor-class"
 				toolbarClassName="toolbar-class"
-				readOnly={props.isReadOnly}
+				toolbar={{
+					options: toolbarHTML
+				}}
 			/>
 		</div>
 	);
