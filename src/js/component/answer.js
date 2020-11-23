@@ -73,11 +73,17 @@ export const Answer = props => {
 	let buttonDeleteAnswer = "";
 	if (props.idUser == actions.getLoggedUserID()) {
 		buttonEditAnswer = (
-			<Link to={id + "/edit-answer/" + props.id}>
-				<Button label={"Edit answer"} color={"q-highlight"} />
-			</Link>
+			<div className="ml-2">
+				<Link to={id + "/edit-answer/" + props.id}>
+					<Button label={"Edit answer"} color={"q-highlight"} />
+				</Link>
+			</div>
 		);
-		buttonDeleteAnswer = <Button label={"Delete answer"} color={"q-secondary"} onClick={deleteAnswer} />;
+		buttonDeleteAnswer = (
+			<div className="ml-2">
+				<Button label={"Delete answer"} color={"q-secondary"} onClick={deleteAnswer} />
+			</div>
+		);
 	}
 	if (props.isBestAnswer === true) {
 		buttonChooseAsBestAnswer = <BadgeSolved />;
@@ -135,15 +141,15 @@ export const Answer = props => {
 	return (
 		<div className={"card mb-4 shadow-sm"}>
 			<div className={"card-header bg-transparent border-bottom-0"}>
-				<div className="row justify-content-between">
+				<div className="row justify-content-between px-3 pt-2">
 					<div>
 						<span className={""}>By: {props.userName}</span>
 					</div>
 
 					<div className="d-flex justify-content-end align-items-center">
 						<div>{buttonChooseAsBestAnswer}</div>
-						<div className="ml-2">{buttonEditAnswer}</div>
-						<div className="ml-2">
+						<div>{buttonEditAnswer}</div>
+						<div>
 							{buttonDeleteAnswer}
 							<Modal
 								id={"answerDeletedOK"}
@@ -158,11 +164,11 @@ export const Answer = props => {
 					</div>
 				</div>
 			</div>
-			<div className="card-body">
+			<div className="card-body p-3">
 				<div className={"card-text"}>
 					<RichTextEditor isReadOnly={true} description={props.description} />
 				</div>
-				<div className="row mt-3">{answerImages}</div>
+				<div className="row mx-0 mt-3">{answerImages}</div>
 				{linkSnippetHTML}
 			</div>
 		</div>

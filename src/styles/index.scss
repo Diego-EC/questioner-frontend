@@ -3,10 +3,12 @@
     $blue-sapphire-dark: #002835;
     $blue-sapphire-light: rgb(12, 150, 196);
     $orange-web: rgba(252, 163, 17, 1);
-    $platinum: rgba(229, 229, 229, 1);
+    $platinum: #e5e5e5;
     $platinum-alpha-05: rgba(229, 229, 229, 0.5);
-    $platinum-alpha-03: rgba(229, 229, 229, 0.2);
+    $platinum-alpha-02: rgba(229, 229, 229, 0.2);
+    $platinum-alpha-01: rgba(229, 229, 229, 0.1);
     $white: rgba(255, 255, 255, 1);
+    $maximum-green: #4d8b31ff;
 :root{
     --blue-sapphire: #{$blue-sapphire};
     --orange-web: #{$orange-web};
@@ -16,6 +18,7 @@
 body {
     font-family: 'Karla', sans-serif;
     min-height: 75rem;
+    background-color: $platinum-alpha-02;
 }
 
 h1,h2,h3,h4,h5,h6 {
@@ -59,11 +62,14 @@ a{
 .text-q-alert{
     color: $orange-web;
 }
+.text-q-green{
+    color: $maximum-green;
+}
 /*#endregion text-*/
 
 /*#region bg-*/
 .bg-q-default{
-    background-color: $platinum-alpha-03;
+    background-color: $platinum;
 }
 
 .bg-q-primary{
@@ -71,7 +77,7 @@ a{
 }
 
 .bg-q-secondary{
-    background-color: $platinum;
+    background-color: $white;
 }
 
 .bg-q-alert{
@@ -92,6 +98,10 @@ a{
 
 hr {
   border-top: 1px solid $orange-web;
+}
+
+.image{
+    cursor: zoom-in;
 }
 
 /*input[type="file"] {

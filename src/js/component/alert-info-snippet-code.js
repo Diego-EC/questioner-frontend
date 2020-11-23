@@ -1,4 +1,5 @@
 import React from "react";
+import { Button } from "../component/bootstrap/button";
 
 export const AlertInfoSnippetCode = props => {
 	function openGist() {
@@ -6,7 +7,7 @@ export const AlertInfoSnippetCode = props => {
 	}
 
 	return (
-		<div className="alert border-q-alert text-q-alert" role="alert">
+		<div className="alert border-q-alert text-q-default" role="alert">
 			<h4 className="alert-heading">Share your code:</h4>
 			<p>
 				Do you know that every time you ask a question without providing all the necessary information, a kitten
@@ -17,11 +18,8 @@ export const AlertInfoSnippetCode = props => {
 				</a>{" "}
 				<b>(or a similar tool)</b> to help to the community understand the question, and earn good kitty karma
 				points by the way 😻😻😻
-				<hr></hr>
-				<button onClick={openGist} className="btn btn-q-alert" type="button">
-					Create a Gist
-				</button>
 			</p>
+			<Button label={"Create a Gist"} color={"q-alert"} onClick={openGist} />
 		</div>
 	);
 };

@@ -219,8 +219,8 @@ fieldset[disabled] .btn-q-highlight.active {
 .btn-q-alert:active, 
 .btn-q-alert.active, 
 .open .dropdown-toggle.btn-q-alert { 
-  color: #FCA311; 
-  background-color: rgba(252, 162, 17, 0.1); 
+  color: #FFFFFF; 
+  background-color: #FCA311; 
   border-color: #FCA311; 
 } 
  
@@ -254,3 +254,51 @@ fieldset[disabled] .btn-q-alert.active {
   background-color: #FCA311; 
 }
 /*#endregion btn-q-alert*/
+
+/*#region btn-q-badge*/
+.btn-q-badge { 
+  color: #086788; 
+  background-color: #FFFFFF; 
+  border-color: #086788; 
+} 
+ 
+.btn-q-badge:hover, 
+.btn-q-badge:focus, 
+.btn-q-badge:active, 
+.btn-q-badge.active, 
+.open .dropdown-toggle.btn-q-badge { 
+  color: #086788; 
+  background-color: #FFFFFF; 
+  border-color: #086788; 
+} 
+ 
+.btn-q-badge:active, 
+.btn-q-badge.active, 
+.open .dropdown-toggle.btn-q-badge { 
+  background-image: none; 
+} 
+ 
+.btn-q-badge.disabled, 
+.btn-q-badge[disabled], 
+fieldset[disabled] .btn-q-badge, 
+.btn-q-badge.disabled:hover, 
+.btn-q-badge[disabled]:hover, 
+fieldset[disabled] .btn-q-badge:hover, 
+.btn-q-badge.disabled:focus, 
+.btn-q-badge[disabled]:focus, 
+fieldset[disabled] .btn-q-badge:focus, 
+.btn-q-badge.disabled:active, 
+.btn-q-badge[disabled]:active, 
+fieldset[disabled] .btn-q-badge:active, 
+.btn-q-badge.disabled.active, 
+.btn-q-badge[disabled].active, 
+fieldset[disabled] .btn-q-badge.active { 
+  background-color: #FFFFFF; 
+  border-color: #086788; 
+} 
+ 
+.btn-q-badge .badge { 
+  color: #FFFFFF; 
+  background-color: #086788; 
+}
+/*#endregion btn-q-badge*/

@@ -8,7 +8,7 @@ export const BadgeInfo = props => {
 	};
 
 	return (
-		<span className={"btn btn-q-highlight q-badge rounded"}>
+		<span className={"btn btn-q-badge q-badge rounded"}>
 			{props.label} <span className="badge badge-dark">{props.amount}</span>
 		</span>
 	);

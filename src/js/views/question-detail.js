@@ -145,7 +145,7 @@ export const QuestionDetail = () => {
 
 	return (
 		<div className="container">
-			<div className="border border-q-default shadow-sm mt-5 mb-5 p-2">
+			<div className="border border-q-default shadow-sm mt-5 mb-5 p-3 bg-q-secondary">
 				<div className="row justify-content-between mx-0 mb-3">
 					<div>
 						<span>By: {user.name}</span>
