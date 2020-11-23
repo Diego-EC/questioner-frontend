@@ -47,6 +47,11 @@ export const AddQuestion = () => {
 
 	async function questionCreatedOK() {
 		//$("#questionCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
+		if (title === "" || description === "") {
+			$("#unfilledFields").modal({ show: true, keyboard: false, backdrop: "static" });
+			return;
+		}
+
 		setLoading(true);
 		let data = {
 			id_user: actions.getLoggedUserID(),
@@ -71,14 +76,9 @@ export const AddQuestion = () => {
 
 	let buttonSaveHTML = "";
 	if (loading === true) {
-		buttonSaveHTML = (
-			<button className="btn btn-primary" type="button" disabled>
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-				<span> Saving...</span>
-			</button>
-		);
+		buttonSaveHTML = <Button color={"q-primary"} isDisabled={true} hasSpinner={true} />;
 	} else {
-		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={questionCreatedOK} />;
+		buttonSaveHTML = <Button label={"Save"} color={"q-primary"} onClick={questionCreatedOK} />;
 	}
 
 	function onEditorStateChange(currentContentAsHTML) {
@@ -87,49 +87,47 @@ export const AddQuestion = () => {
 
 	return (
 		<div className="container">
-			<h1 className="text-center">Make Question</h1>
-			<form className="was-validated">
-				<div className="form-group">
+			<h1 className="text-center mt-5">Make Question</h1>
+			<form className="">
+				<div className="form-group mt-5">
 					<label htmlFor="title">Title:</label>
 					<input
 						type="text"
 						className="form-control"
 						id="title"
-						aria-describedby="title"
 						placeholder="Title"
 						onChange={event => setTitle(event.target.value)}
-						required
 					/>
-					<div className="invalid-feedback">Please write a title for the question.</div>
+					<small className="text-muted">Required</small>
 				</div>
 
-				<div className="form-group">
+				<div className="form-group mt-5">
 					<label htmlFor="text-area">Description:</label>
 					<RichTextEditor isReadOnly={false} onEditorStateChange={onEditorStateChange} />
-					<div className="invalid-feedback">Please write a description for the question.</div>
+					<small className="text-muted">Required</small>
 				</div>
 
-				<div className="form-group">
-					<label htmlFor="exampleFormControlFile1">Upload Files:</label>
+				<div className="form-group mt-5">
+					<label htmlFor="uploadFiles">Upload Files:</label>
 					<input
 						name="document"
 						type="file"
 						className="form-control-file"
-						id="exampleFormControlFile1"
+						id="uploadFiles"
 						multiple
 						onChange={event => fileSelected(event)}
 					/>
 				</div>
 
-				<div className="form-group">
+				<div className="form-group mt-5">
+					<label htmlFor="codeSnippet">Code Snippet:</label>
 					<AlertInfoSnippetCode />
 					<div className="input-group">
 						<input
+							id="codeSnippet"
 							type="text"
 							className="form-control"
 							placeholder="Here the link to your code ;)"
-							aria-label="add link"
-							aria-describedby="add link"
 							onChange={event => setLink(event.target.value)}
 						/>
 					</div>
@@ -144,10 +142,15 @@ export const AddQuestion = () => {
 							text={"Soon you will have an answer ;)"}
 							close={closeModal}
 						/>
+						<Modal
+							id={"unfilledFields"}
+							title={"Data Validation Error"}
+							text={"Please, fill in all the required fields"}
+						/>
 					</div>
 					<div className="col" align="left">
 						<Link to="/questions">
-							<Button label={"Cancel"} color={"secondary"} />
+							<Button label={"Cancel"} color={"q-secondary"} />
 						</Link>
 					</div>
 				</div>

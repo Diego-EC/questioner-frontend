@@ -1,17 +1,24 @@
+    $black: rgba(0, 0, 0, 1);
+    $blue-sapphire: #086788;
+    $blue-sapphire-dark: #002835;
+    $blue-sapphire-light: rgb(12, 150, 196);
+    $orange-web: rgba(252, 163, 17, 1);
+    $platinum: rgba(229, 229, 229, 1);
+    $platinum-alpha-05: rgba(229, 229, 229, 0.5);
+    $platinum-alpha-03: rgba(229, 229, 229, 0.2);
+    $white: rgba(255, 255, 255, 1);
+
  .wrapper-class {
-  padding: 1rem;
-  border: 1px solid #ccc;
+    padding: 1rem;
+    //border: 1px solid #ced4da;
+    border-radius: .25rem;
 }
 .editor-class {
-  background-color:lightgray;
-  padding: 1rem;
-  border: 1px solid #ccc;
+    //background-color:lightgray;
+    padding: 1rem;
+    border: 1px solid #ced4da;
+    border-radius: .25rem;
 }
 .toolbar-class {
-  border: 1px solid rgba(255, 255, 255, 0) !important;
-}
-
-.preview {
-  padding: 1rem;
-  margin-top: 1rem;
+    //border: 1px solid #ced4da;
 }

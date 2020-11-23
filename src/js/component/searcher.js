@@ -4,6 +4,7 @@ import { doGetFetch } from "../helpers/fetch-helper";
 import * as Constant from "../helpers/constants";
 import { Question } from "../component/question";
 import { Modal } from "../component/bootstrap/modal";
+import { Button } from "./bootstrap/button";
 
 export const Searcher = () => {
 	const SEARCH_QUESTIONS_BY_STRING_ENDPOINT = "search-questions-by-string";
@@ -52,17 +53,9 @@ export const Searcher = () => {
 
 	let buttonSearchHTML = "";
 	if (loading === true) {
-		buttonSearchHTML = (
-			<button className="btn btn-primary" type="button" disabled>
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-			</button>
-		);
+		buttonSearchHTML = <Button color={"q-primary"} isDisabled={true} hasSpinner={true} />;
 	} else {
-		buttonSearchHTML = (
-			<button className="btn btn-primary" type="submit" onClick={search}>
-				<i className="fas fa-search"></i>
-			</button>
-		);
+		buttonSearchHTML = <Button color={"q-primary"} icon={"fas fa-search"} onClick={search} />;
 	}
 
 	return (

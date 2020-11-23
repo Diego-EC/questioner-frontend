@@ -41,25 +41,24 @@ export const Login = () => {
 	let buttonLoginHTML = "";
 	let textSingUpHTML = "";
 	if (loading === true) {
-		buttonLoginHTML = (
-			<button className="btn btn-primary" type="button" disabled>
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-				<span> Loading...</span>
-			</button>
-		);
+		buttonLoginHTML = <Button color={"q-default"} isDisabled={true} hasSpinner={true} />;
 		textSingUpHTML = "";
 	} else {
-		buttonLoginHTML = <Button label={"Sign in"} color={"primary"} onClick={signIn} />;
+		buttonLoginHTML = (
+			<Button label={"Sign in"} color={"q-default"} onClick={signIn} isDisabled={false} hasSpinner={false} />
+		);
 		textSingUpHTML = <Link to={"/create-user"}>New around here? Sign up</Link>;
 	}
 
 	return (
 		<div className="container">
-			<h1 className="text-center">Questioner</h1>
-			<h4 className="text-center">Where the answers live</h4>
+			<div className="mt-5">
+				<h1 className="text-center">Questioner</h1>
+				<h4 className="text-center">Where the answers live</h4>
+			</div>
 
 			<form action="">
-				<div className="form-group">
+				<div className="form-group mt-5">
 					<label htmlFor="email">Email:</label>
 					<input
 						type="email"
@@ -71,7 +70,7 @@ export const Login = () => {
 						defaultValue={email}
 					/>
 				</div>
-				<div className="form-group">
+				<div className="form-group mt-4">
 					<label htmlFor="password">Password:</label>
 					<input
 						type="password"
@@ -97,8 +96,8 @@ export const Login = () => {
                     </label>
 				</div>
                 */}
-				<div className="form-group">{buttonLoginHTML}</div>
-				<div className="form-group">
+				<div className="form-group mt-5">{buttonLoginHTML}</div>
+				<div className="form-group mt-5">
 					<p>{textSingUpHTML}</p>
 				</div>
 				<div>

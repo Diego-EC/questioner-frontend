@@ -6,7 +6,7 @@ export const AlertInfoSnippetCode = props => {
 	}
 
 	return (
-		<div className="alert alert-info" role="alert">
+		<div className="alert border-q-alert text-q-alert" role="alert">
 			<h4 className="alert-heading">Share your code:</h4>
 			<p>
 				Do you know that every time you ask a question without providing all the necessary information, a kitten
@@ -18,7 +18,7 @@ export const AlertInfoSnippetCode = props => {
 				<b>(or a similar tool)</b> to help to the community understand the question, and earn good kitty karma
 				points by the way 😻😻😻
 				<hr></hr>
-				<button onClick={openGist} className="btn btn-primary" type="button">
+				<button onClick={openGist} className="btn btn-q-alert" type="button">
 					Create a Gist
 				</button>
 			</p>

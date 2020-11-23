@@ -17,11 +17,7 @@ export const Modal = props => {
 	let confirmModal = "";
 	if (props.labelOK) {
 		confirmModal = (
-			<button
-				type="button"
-				className="btn btn-outline-primary"
-				data-dismiss="modal"
-				onClick={props.okCallbackFunction}>
+			<button type="button" className="btn btn-q-default" data-dismiss="modal" onClick={props.okCallbackFunction}>
 				{props.labelOK}
 			</button>
 		);
@@ -41,7 +37,7 @@ export const Modal = props => {
 						{confirmModal}
 						<button
 							type="button"
-							className="btn btn-outline-secondary"
+							className="btn btn-q-secondary"
 							data-dismiss="modal"
 							onClick={props.cancelCallbackFunction}>
 							{props.labelCancel}

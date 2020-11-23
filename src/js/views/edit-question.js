@@ -105,14 +105,9 @@ export const EditQuestion = () => {
 
 	let buttonSaveHTML = "";
 	if (loading === true) {
-		buttonSaveHTML = (
-			<button className="btn btn-primary" type="button" disabled>
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-				<span> Saving...</span>
-			</button>
-		);
+		buttonSaveHTML = <Button color={"q-primary"} isDisabled={true} hasSpinner={true} />;
 	} else {
-		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={updateQuestion} />;
+		buttonSaveHTML = <Button label={"Save"} color={"q-primary"} onClick={updateQuestion} />;
 	}
 
 	function onEditorStateChange(currentContentAsHTML) {
@@ -122,7 +117,7 @@ export const EditQuestion = () => {
 	return (
 		<div className="container">
 			<h1 className="text-center">Edit Question</h1>
-			<form action="" className="was-validated" noValidate="">
+			<form action="" className="">
 				<div className="form-group">
 					<label htmlFor="title">Title:</label>
 					<input
@@ -131,11 +126,9 @@ export const EditQuestion = () => {
 						id="title"
 						aria-describedby="title"
 						placeholder="Title"
-						required
 						onChange={event => setTitle(event.target.value)}
 						defaultValue={title}
 					/>
-					<div className="invalid-feedback">Please write a title for the question.</div>
 				</div>
 
 				<div className="form-group">
@@ -188,7 +181,7 @@ export const EditQuestion = () => {
 					</div>
 					<div className="col" align="left">
 						<Link to={"/question-detail/" + id}>
-							<Button label={"Cancel"} color={"secondary"} />
+							<Button label={"Cancel"} color={"q-secondary"} />
 						</Link>
 					</div>
 				</div>

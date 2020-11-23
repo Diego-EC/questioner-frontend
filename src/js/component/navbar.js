@@ -33,21 +33,19 @@ export const Navbar = () => {
 		buttonMakeQuestionHTML = (
 			<Fragment>
 				<Link to="/add-question">
-					<Button label={"Make Question"} color={"primary"} />
+					<Button label={"Make Question"} color={"q-primary"} />
 				</Link>
 			</Fragment>
 		);
 		searcherHTML = <Searcher />;
-		buttonLogoutHTML = (
-			<Button label={"Logout"} color={"secondary"} icon={"fas fa-sign-out-alt"} onClick={logout} />
-		);
+		buttonLogoutHTML = <Button color={"q-primary"} icon={"fas fa-sign-out-alt"} onClick={logout} />;
 
 		const userRoleID = actions.getLoggedUserRoleID();
 		if (isAdmin(userRoleID) == true) {
 			buttonManageUsersHTML = (
 				<Fragment>
 					<Link to="/manage-users">
-						<Button label={"Manage Users"} color={"warning"} />
+						<Button label={"Manage Users"} color={"q-alert"} />
 					</Link>
 				</Fragment>
 			);
@@ -67,7 +65,7 @@ export const Navbar = () => {
 	}
 
 	return (
-		<nav className="navbar navbar-expand-md navbar-light bg-light mb-3">
+		<nav className="navbar navbar-expand-md navbar-light bg-q-default mb-3">
 			{buttonIconHTML}
 			<button
 				className="navbar-toggler my-1"
