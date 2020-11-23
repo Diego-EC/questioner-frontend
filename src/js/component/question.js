@@ -28,7 +28,7 @@ export const Question = props => {
 	return (
 		<div className={"card mb-4 shadow-sm"}>
 			<div className={"card-header bg-transparent border-bottom-0"}>
-				<div className="row justify-content-between">
+				<div className="row justify-content-between mx-0 pt-2">
 					<div className="">
 						<span className="text-q-default">
 							By: <b>{props.userName}</b>
