@@ -27,7 +27,7 @@ export const Image = props => {
 
 	let buttonDeleteHTML = "";
 	if (props.isDeleteable == true) {
-		buttonDeleteHTML = <Button label={"Delete"} color={"danger"} onClick={deleteImage} />;
+		buttonDeleteHTML = <Button label={"Delete"} color={"q-secondary"} onClick={deleteImage} />;
 	}
 
 	return (
@@ -37,7 +37,7 @@ export const Image = props => {
 
 			<ModalImage
 				id={props.id.toString()}
-				title={"Question Saved"}
+				title={"Image"}
 				text={<img className="img-fluid" src={props.src} alt="image" />}
 				close={closeModal}
 				size={"xl"}

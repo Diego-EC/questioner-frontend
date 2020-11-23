@@ -103,14 +103,9 @@ export const EditAnswer = () => {
 
 	let buttonSaveHTML = "";
 	if (loading === true) {
-		buttonSaveHTML = (
-			<button className="btn btn-primary" type="button" disabled>
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-				<span> Saving...</span>
-			</button>
-		);
+		buttonSaveHTML = <Button color={"q-primary"} isDisabled={true} hasSpinner={true} />;
 	} else {
-		buttonSaveHTML = <Button label={"Save"} color={"primary"} onClick={updateAnswer} />;
+		buttonSaveHTML = <Button label={"Save"} color={"q-primary"} onClick={updateAnswer} />;
 	}
 
 	function onEditorStateChange(currentContentAsHTML) {
@@ -121,7 +116,7 @@ export const EditAnswer = () => {
 		<div className="container">
 			<h1 className="text-center">Edit Answer</h1>
 
-			<form action="" className="was-validated" noValidate="">
+			<form action="" className="">
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
 					<RichTextEditor
@@ -171,7 +166,7 @@ export const EditAnswer = () => {
 					</div>
 					<div className="col" align="left">
 						<Link to={"/question-detail/" + idQuestion}>
-							<Button label={"Cancel"} color={"secondary"} />
+							<Button label={"Cancel"} color={"q-secondary"} />
 						</Link>
 					</div>
 				</div>

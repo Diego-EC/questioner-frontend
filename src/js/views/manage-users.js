@@ -60,7 +60,7 @@ export const ManageUsers = () => {
 				<div className="row justify-content-center mt-5">
 					<div className="col" align="center">
 						<Link to="/questions">
-							<Button label={"Go Back"} color={"primary"} />
+							<Button label={"Go Back"} color={"q-secondary"} />
 						</Link>
 					</div>
 				</div>

@@ -31,11 +31,10 @@ export const QuestionDetail = () => {
 	if (question.id_user == actions.getLoggedUserID()) {
 		buttonEditQuestionHTML = (
 			<Link to={id + "/edit-question"}>
-				<Button label={"Edit Question"} color={"primary"} />
+				<Button label={"Edit Question"} color={"q-highlight"} />
 			</Link>
 		);
-		//buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={questionDeletedOK} />;
-		buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"danger"} onClick={deleteQuestion} />;
+		buttonDeleteQuestionHTML = <Button label={"Delete Question"} color={"q-secondary"} onClick={deleteQuestion} />;
 	}
 	if (question.link) {
 		linkSnippetHTML = (
@@ -146,8 +145,8 @@ export const QuestionDetail = () => {
 
 	return (
 		<div className="container">
-			<div className="border border-secondary mb-3 p-2">
-				<div className="row justify-content-between mx-0">
+			<div className="border border-q-default shadow-sm mt-5 mb-5 p-2">
+				<div className="row justify-content-between mx-0 mb-3">
 					<div>
 						<span>By: {user.name}</span>
 					</div>
@@ -167,24 +166,24 @@ export const QuestionDetail = () => {
 						</div>
 					</div>
 				</div>
-				<p className="h2">{question.title}</p>
-				<div>
+				<p className="h2 mb-3">{question.title}</p>
+				<div className="mb-3">
 					<RichTextEditor isReadOnly={true} description={question.description} />
 				</div>
 
-				<div className="row mx-0 mt-3">{questionImages}</div>
-				{linkSnippetHTML}
+				<div className="row mx-0 mb-5">{questionImages}</div>
+				<div className="mb-3">{linkSnippetHTML}</div>
 			</div>
 			<div>{answers}</div>
-			<div className="mt-5 row justify-content-center">
+			<div className="row justify-content-center">
 				<div className="col" align="right">
 					<Link to={"/question-detail/" + id + "/add-answer"}>
-						<Button label={"Add Answer"} color={"primary"} />
+						<Button label={"Add Answer"} color={"q-primary"} />
 					</Link>
 				</div>
 				<div className="col" align="left">
 					<Link to="/questions">
-						<Button label={"Go Back"} color={"secondary"} />
+						<Button label={"Go Back"} color={"q-secondary"} />
 					</Link>
 				</div>
 			</div>

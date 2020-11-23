@@ -50,40 +50,30 @@ export const CreateUser = () => {
 
 	let buttonCreateHTML = "";
 	if (loading === true) {
-		buttonCreateHTML = (
-			<button className="btn btn-primary" type="button" disabled>
-				<span className="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-				<span> Creating...</span>
-			</button>
-		);
+		buttonCreateHTML = <Button color={"q-primary"} isDisabled={true} hasSpinner={true} />;
 	} else {
-		buttonCreateHTML = <Button label={"Create"} color={"primary"} onClick={createUser} />;
+		buttonCreateHTML = <Button label={"Create"} color={"q-primary"} onClick={createUser} />;
 	}
 
 	return (
 		<div className="container">
-			<h1 className="text-center">Create User Account</h1>
-			<form className="was-validated">
-				<label htmlFor="email">Username:</label>
-				<div className="form-group">
-					<div className="input-group mb-3">
-						<div className="input-group-prepend">
-							<span className="input-group-text" id="basic-addon1">
-								@
-							</span>
-						</div>
-						<input
-							type="text"
-							className="form-control"
-							placeholder="Username"
-							aria-label="Username"
-							onChange={event => setName(event.target.value)}
-							required
-						/>
-					</div>
+			<h1 className="text-center mt-5">Create User Account</h1>
+			<form className="">
+				<div className="form-group mt-5">
+					<label htmlFor="userName">Username:</label>
+					<input
+						type="text"
+						className="form-control"
+						placeholder="Username"
+						aria-label="Username"
+						onChange={event => setName(event.target.value)}
+					/>
+					<small id="userNameHelp" className="form-text text-muted">
+						Required
+					</small>
 				</div>
 
-				<div className="form-group">
+				<div className="form-group mt-3">
 					<label htmlFor="email">Email:</label>
 					<input
 						type="email"
@@ -92,11 +82,13 @@ export const CreateUser = () => {
 						placeholder="Enter email"
 						name="email"
 						onChange={event => setEmail(event.target.value)}
-						required
 					/>
+					<small id="userNameHelp" className="form-text text-muted">
+						Required
+					</small>
 				</div>
 
-				<div className="form-group">
+				<div className="form-group mt-3">
 					<label htmlFor="password">Enter Password:</label>
 					<input
 						type="password"
@@ -105,10 +97,12 @@ export const CreateUser = () => {
 						placeholder="Enter password"
 						name="password"
 						onChange={event => setPassword(event.target.value)}
-						required
 					/>
+					<small id="userNameHelp" className="form-text text-muted">
+						Required
+					</small>
 				</div>
-				<div className="form-group">
+				<div className="form-group mt-3">
 					<label htmlFor="password">Repeat Password:</label>
 					<input
 						type="password"
@@ -117,8 +111,10 @@ export const CreateUser = () => {
 						placeholder="Repeat password"
 						name="password"
 						onChange={event => setRepeatedPassword(event.target.value)}
-						required
 					/>
+					<small id="userNameHelp" className="form-text text-muted">
+						Required
+					</small>
 				</div>
 
 				<div className="row mt-5">
@@ -139,7 +135,7 @@ export const CreateUser = () => {
 					/>
 					<div className="col" align="left">
 						<Link to="/">
-							<Button label={"Cancel"} color={"secondary"} />
+							<Button label={"Cancel"} color={"q-secondary"} />
 						</Link>
 					</div>
 				</div>

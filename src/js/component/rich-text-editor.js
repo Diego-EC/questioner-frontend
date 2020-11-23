@@ -14,7 +14,7 @@ export const RichTextEditor = props => {
 	};
 
 	const [editorState, setEditorState] = useState(
-		EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft("<p>My initial content.</p>")))
+		EditorState.createWithContent(ContentState.createFromBlockArray(htmlToDraft("<p></p>")))
 	);
 
 	useEffect(() => {
@@ -60,6 +60,7 @@ export const RichTextEditor = props => {
 				toolbar={{
 					options: toolbarHTML
 				}}
+				placeholder="The description goes here..."
 			/>
 		</div>
 	);

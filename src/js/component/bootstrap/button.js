@@ -6,16 +6,25 @@ export const Button = props => {
 		label: PropTypes.string,
 		icon: PropTypes.string,
 		onClick: PropTypes.func,
-		color: PropTypes.string
+		color: PropTypes.string,
+		isDisabled: PropTypes.bool,
+		hasSpinner: PropTypes.bool
 	};
 
+	let spinner = "";
+	if (props.hasSpinner === true) {
+		spinner = "spinner-grow spinner-grow-sm";
+	}
+
 	return (
-		<div className={"btn btn-" + props.color} type="submit" onClick={props.onClick}>
-			{props.label} <span className={props.icon}></span>
+		<div className={"btn btn-" + props.color} type="submit" onClick={props.onClick} disabled={props.isDisabled}>
+			<span className={props.icon}></span> <span className={spinner}></span> {props.label}
 		</div>
 	);
 };
 
 Button.defaultProps = {
-	color: "primary"
+	color: "primary",
+	isDisabled: false,
+	hasSpinner: false
 };

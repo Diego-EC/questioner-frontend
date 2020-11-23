@@ -9,6 +9,7 @@ import * as Constant from "../helpers/constants";
 import { BadgeInfo } from "./bootstrap/badge-info";
 import { Image } from "../component/bootstrap/image";
 import { RichTextEditor } from "../component/rich-text-editor";
+import { BadgeSolved } from "./bootstrap/badge-solved";
 
 export const Answer = props => {
 	Answer.propTypes = {
@@ -73,21 +74,18 @@ export const Answer = props => {
 	if (props.idUser == actions.getLoggedUserID()) {
 		buttonEditAnswer = (
 			<Link to={id + "/edit-answer/" + props.id}>
-				<Button label={"Edit answer"} color={"primary"} />
+				<Button label={"Edit answer"} color={"q-highlight"} />
 			</Link>
 		);
-		//buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={answerDeletedOK} />;
-		buttonDeleteAnswer = <Button label={"Delete answer"} color={"danger"} onClick={deleteAnswer} />;
+		buttonDeleteAnswer = <Button label={"Delete answer"} color={"q-secondary"} onClick={deleteAnswer} />;
 	}
 	if (props.idQuestionOwner == actions.getLoggedUserID()) {
 		if (props.isBestAnswer == true) {
-			buttonChooseAsBestAnswer = <BadgeInfo label={"Best Answer"} color={"success"} />;
+			buttonChooseAsBestAnswer = <BadgeSolved />;
 			//buttonDeleteAnswer = "";
 			//buttonEditAnswer = "";
 		} else {
-			buttonChooseAsBestAnswer = (
-				<Button label={"Choose as Best Answer"} color={"primary"} onClick={chooseAsBestAnswer} />
-			);
+			buttonChooseAsBestAnswer = <Button label={"Best Answer"} color={"q-alert"} onClick={chooseAsBestAnswer} />;
 		}
 	}
 
@@ -138,17 +136,17 @@ export const Answer = props => {
 	}
 
 	return (
-		<div className={"card mb-3" + borderHighlightHTML}>
-			<div className={"card-header" + borderHighlightHTML}>
+		<div className={"card mb-4 shadow-sm"}>
+			<div className={"card-header bg-transparent border-bottom-0"}>
 				<div className="row justify-content-between">
 					<div>
-						<span className={textHighlightHTML}>By: {props.userName}</span>
+						<span className={""}>By: {props.userName}</span>
 					</div>
 
-					<div className="d-flex justify-content-end">
+					<div className="d-flex justify-content-end align-items-center">
 						<div>{buttonChooseAsBestAnswer}</div>
-						<div className="ml-1">{buttonEditAnswer}</div>
-						<div className="ml-1">
+						<div className="ml-2">{buttonEditAnswer}</div>
+						<div className="ml-2">
 							{buttonDeleteAnswer}
 							<Modal
 								id={"answerDeletedOK"}
