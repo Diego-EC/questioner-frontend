@@ -20,6 +20,9 @@ export const Navbar = () => {
 	let searcherHTML = "";
 	let buttonLogoutHTML = "";
 	if (actions.getLoggedUserID() !== null) {
+		if (location.pathname == "/") {
+			history.push(`/questions`);
+		}
 		buttonIconHTML = (
 			<Link to="/questions">
 				<img
