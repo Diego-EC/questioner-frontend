@@ -79,14 +79,11 @@ export const Answer = props => {
 		);
 		buttonDeleteAnswer = <Button label={"Delete answer"} color={"q-secondary"} onClick={deleteAnswer} />;
 	}
-	if (props.idQuestionOwner == actions.getLoggedUserID()) {
-		if (props.isBestAnswer == true) {
-			buttonChooseAsBestAnswer = <BadgeSolved />;
-			//buttonDeleteAnswer = "";
-			//buttonEditAnswer = "";
-		} else {
-			buttonChooseAsBestAnswer = <Button label={"Best Answer"} color={"q-alert"} onClick={chooseAsBestAnswer} />;
-		}
+	if (props.isBestAnswer === true) {
+		buttonChooseAsBestAnswer = <BadgeSolved />;
+	}
+	if (props.idQuestionOwner == actions.getLoggedUserID() && props.isBestAnswer === false) {
+		buttonChooseAsBestAnswer = <Button label={"Best Answer"} color={"q-alert"} onClick={chooseAsBestAnswer} />;
 	}
 
 	async function chooseAsBestAnswer() {
