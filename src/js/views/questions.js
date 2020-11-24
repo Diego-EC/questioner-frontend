@@ -25,11 +25,11 @@ export const Questions = () => {
 	let buttonResetFilterHTML = "";
 	if (searchText) {
 		buttonResetFilterHTML = (
-			<div className="alert alert-info">
+			<div className="alert border-q-primary bg-q-default">
 				<p className="h4">
 					Search result by: <b>{searchText}</b>
 				</p>
-				<Button label={"Delete Filter"} color={"danger"} onClick={deleteFilter} />
+				<Button label={"Delete Filter"} color={"q-primary"} onClick={deleteFilter} />
 			</div>
 		);
 	} else {

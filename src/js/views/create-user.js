@@ -56,10 +56,10 @@ export const CreateUser = () => {
 	}
 
 	return (
-		<div className="container">
-			<h1 className="text-center mt-5">Create User Account</h1>
+		<div className="container bg-q-secondary border-q-default shadow-sm mt-4 p-3">
+			<h1 className="text-center mt-3">Create User Account</h1>
 			<form className="">
-				<div className="form-group mt-5">
+				<div className="form-group mt-3">
 					<label htmlFor="userName">Username:</label>
 					<input
 						type="text"

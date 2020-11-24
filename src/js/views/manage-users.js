@@ -40,7 +40,7 @@ export const ManageUsers = () => {
 	}
 
 	return (
-		<div className="container">
+		<div className="container bg-q-secondary border-q-default shadow-sm mt-4 p-3">
 			<h1 className="text-center mb-3">Manage Users</h1>
 			<form className="" action="">
 				<div className="">
@@ -57,7 +57,7 @@ export const ManageUsers = () => {
 						<tbody className="">{users}</tbody>
 					</table>
 				</div>
-				<div className="row justify-content-center mt-5">
+				<div className="row justify-content-center mt-4">
 					<div className="col" align="center">
 						<Link to="/questions">
 							<Button label={"Go Back"} color={"q-secondary"} />

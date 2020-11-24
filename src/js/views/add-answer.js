@@ -65,8 +65,8 @@ export const AddAnwser = () => {
 	}
 
 	return (
-		<div className="container">
-			<h1 className="text-center">Add Anwser</h1>
+		<div className="container bg-q-secondary border-q-default p-3 shadow-sm mt-4">
+			<h1 className="text-center mt-3 mb-5">Add Anwser</h1>
 			<form action="">
 				<div className="form-group">
 					<label htmlFor="text-area">Description:</label>
@@ -74,7 +74,7 @@ export const AddAnwser = () => {
 					<div className="invalid-feedback">Please write a description for the question.</div>
 				</div>
 
-				<div className="form-group">
+				<div className="form-group mt-5">
 					<label htmlFor="exampleFormControlFile1">Upload Files:</label>
 					<input
 						name="document"
@@ -86,7 +86,7 @@ export const AddAnwser = () => {
 					/>
 				</div>
 
-				<div className="form-group">
+				<div className="form-group mt-5">
 					<AlertInfoSnippetCode />
 					<div className="input-group">
 						<input

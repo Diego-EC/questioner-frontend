@@ -26,7 +26,7 @@ export const Question = props => {
 	}
 
 	return (
-		<div className={"card mb-4 shadow-sm"}>
+		<div className={"card mb-4 shadow-sm border-q-default"}>
 			<div className={"card-header bg-transparent border-bottom-0"}>
 				<div className="row justify-content-between mx-0 pt-2">
 					<div className="">

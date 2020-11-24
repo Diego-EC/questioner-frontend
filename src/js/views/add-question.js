@@ -86,8 +86,8 @@ export const AddQuestion = () => {
 	}
 
 	return (
-		<div className="container">
-			<h1 className="text-center mt-5">Make Question</h1>
+		<div className="container bg-q-secondary border-q-default p-3 shadow-sm mt-4">
+			<h1 className="text-center mt-3">Make Question</h1>
 			<form className="">
 				<div className="form-group mt-5">
 					<label htmlFor="title">Title:</label>
