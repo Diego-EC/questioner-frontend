@@ -113,8 +113,8 @@ export const EditAnswer = () => {
 	}
 
 	return (
-		<div className="container">
-			<h1 className="text-center">Edit Answer</h1>
+		<div className="container bg-q-secondary border-q-default p-3 shadow-sm mt-4">
+			<h1 className="text-center mt-3">Edit Answer</h1>
 
 			<form action="" className="">
 				<div className="form-group">
@@ -137,7 +137,7 @@ export const EditAnswer = () => {
 						multiple
 						onChange={event => fileSelected(event)}
 					/>
-					<div className="row mt-3">{filesHTML}</div>
+					<div className="row mt-3 mx-0">{filesHTML}</div>
 				</div>
 				<div className="form-group">
 					<AlertInfoSnippetCode />

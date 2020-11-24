@@ -51,8 +51,8 @@ export const Login = () => {
 	}
 
 	return (
-		<div className="container">
-			<div className="mt-5">
+		<div className="container bg-q-secondary border-q-default shadow-sm mt-4 p-3">
+			<div className="">
 				<h1 className="text-center">Questioner</h1>
 				<h4 className="text-center">Where the answers live</h4>
 			</div>
