@@ -44,14 +44,14 @@ async function doFetch(endpoint, method, headers, data) {
 			if (response.ok) {
 				return response.json();
 			} else {
-				throw Error(response.status);
+				throw Error(response);
 			}
 		})
-		.catch(error => {
-			// TODO: gestionar errores: 422
-			// 401 - unautorized
-			//alert(error);
-			console.log("%c TODO: " + error, "background: #222; color: #bada55");
+		.catch(response => {
+			if (response.msr === null) {
+				alert("error desconocido");
+			}
+			console.log("%c TODO: " + response, "background: #222; color: #bada55");
 			return null;
 		});
 }

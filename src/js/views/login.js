@@ -27,15 +27,20 @@ export const Login = () => {
 			password: password
 		};
 
-		let json = await doPostFetch(Constant.BACKEND_ROOT + LOGIN_ENDPOINT, data);
-		if (json !== null && json.status === "OK") {
-			localStorage.setItem("accessToken", json.access_token);
-			actions.setLoggedUserData(json.user, json.access_token);
-			history.push("/questions");
-		} else {
-			$("#userDontExist").modal({ show: true, keyboard: false, backdrop: "static" });
-		}
-		setLoading(false);
+		await doPostFetch(Constant.BACKEND_ROOT + LOGIN_ENDPOINT, data)
+			.then(json => {
+				if (json.status === "OK") {
+					localStorage.setItem("accessToken", json.access_token);
+					actions.setLoggedUserData(json.user, json.access_token);
+					history.push("/questions");
+				}
+			})
+			.catch(response => {
+				alert("No ha sipo posible realizar el Login");
+			})
+			.finally(() => {
+				setLoading(false);
+			});
 	}
 
 	let buttonLoginHTML = "";
