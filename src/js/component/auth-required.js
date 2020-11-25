@@ -29,9 +29,12 @@ export const AuthRequired = () => {
 
 	async function init() {
 		let responseJson = await doPostFetch(Constant.BACKEND_ROOT + CHECK_PROTECTED_ENDPOINT);
-		if (responseJson !== undefined && responseJson.status !== undefined && responseJson.status === "OK") {
+		if (responseJson !== null && responseJson.status !== undefined && responseJson.status === "OK") {
 			setLoading(false);
 		} else {
+			actions.setLogoutUser();
+			localStorage.removeItem("accessToken");
+			actions.setLoggedUserData({}, "");
 			history.push(REDIRECT_TO_IF_NOT_AUTHORIZED);
 		}
 	}
