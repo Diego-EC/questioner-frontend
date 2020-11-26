@@ -142,8 +142,8 @@ export const Answer = props => {
 		<div className={"card mb-4 shadow-sm border-q-default"}>
 			<div className={"card-header bg-transparent border-bottom-0"}>
 				<div className="row justify-content-between px-3 pt-2">
-					<div>
-						<span className={""}>By: {props.userName}</span>
+					<div className="pb-1 pb-md-0">
+						<span className="">By: {props.userName}</span>
 					</div>
 
 					<div className="d-flex justify-content-end align-items-center">
