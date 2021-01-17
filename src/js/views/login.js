@@ -46,11 +46,11 @@ export const Login = () => {
 	let buttonLoginHTML = "";
 	let textSingUpHTML = "";
 	if (loading === true) {
-		buttonLoginHTML = <Button color={"q-default"} isDisabled={true} hasSpinner={true} />;
+		buttonLoginHTML = <Button color={"q-primary"} isDisabled={true} hasSpinner={true} />;
 		textSingUpHTML = "";
 	} else {
 		buttonLoginHTML = (
-			<Button label={"Sign in"} color={"q-default"} onClick={signIn} isDisabled={false} hasSpinner={false} />
+			<Button label={"Sign in"} color={"q-primary"} onClick={signIn} isDisabled={false} hasSpinner={false} />
 		);
 		textSingUpHTML = <Link to={"/create-user"}>New around here? Sign up</Link>;
 	}
@@ -62,58 +62,64 @@ export const Login = () => {
 				<h4 className="text-center">Where the answers live</h4>
 			</div>
 
-			<form action="">
-				<div className="form-group mt-5">
-					<label htmlFor="email">Email:</label>
-					<input
-						type="email"
-						className="form-control"
-						id="email"
-						placeholder="Enter email"
-						name="email"
-						onChange={e => setEmail(e.target.value)}
-						defaultValue={email}
-					/>
+			<div className="row">
+				<div className="col-3"></div>
+				<div className="col-6">
+					<form action="">
+						<div className="form-group mt-5">
+							<label htmlFor="email">Email:</label>
+							<input
+								type="email"
+								className="form-control"
+								id="email"
+								placeholder="Enter email"
+								name="email"
+								onChange={e => setEmail(e.target.value)}
+								defaultValue={email}
+							/>
+						</div>
+						<div className="form-group mt-4">
+							<label htmlFor="password">Password:</label>
+							<input
+								type="password"
+								className="form-control"
+								id="password"
+								placeholder="Enter password"
+								name="password"
+								onChange={e => setPassword(e.target.value)}
+								defaultValue={password}
+							/>
+						</div>
+						{/*// TODO: cambia la duración del token
+					<div className="form-group form-check">
+						<input
+							type="checkbox"
+							className="form-check-input"
+							id="check"
+							onClick={e => setRememberMe(e.target.checked)}
+							defaultChecked={rememberMe}
+						/>
+						<label className="form-check-label" htmlFor="check">
+							Remember me
+						</label>
+					</div>
+					*/}
+						<div className="form-group mt-5">{buttonLoginHTML}</div>
+						<div className="form-group mt-5">
+							<p>{textSingUpHTML}</p>
+						</div>
+						<div>
+							<Modal
+								id={"unfilledFields"}
+								title={"Data Validation Error"}
+								text={"Please, enter valid email and password"}
+							/>
+							<Modal id={"userDontExist"} title={"User Validation Error"} text={"User does not exist"} />
+						</div>
+					</form>
 				</div>
-				<div className="form-group mt-4">
-					<label htmlFor="password">Password:</label>
-					<input
-						type="password"
-						className="form-control"
-						id="password"
-						placeholder="Enter password"
-						name="password"
-						onChange={e => setPassword(e.target.value)}
-						defaultValue={password}
-					/>
-				</div>
-				{/*// TODO: cambia la duración del token
-				<div className="form-group form-check">
-					<input
-						type="checkbox"
-						className="form-check-input"
-						id="check"
-						onClick={e => setRememberMe(e.target.checked)}
-						defaultChecked={rememberMe}
-					/>
-					<label className="form-check-label" htmlFor="check">
-						Remember me
-                    </label>
-				</div>
-                */}
-				<div className="form-group mt-5">{buttonLoginHTML}</div>
-				<div className="form-group mt-5">
-					<p>{textSingUpHTML}</p>
-				</div>
-				<div>
-					<Modal
-						id={"unfilledFields"}
-						title={"Data Validation Error"}
-						text={"Please, enter valid email and password"}
-					/>
-					<Modal id={"userDontExist"} title={"User Validation Error"} text={"User does not exist"} />
-				</div>
-			</form>
+				<div className="col-3"></div>
+			</div>
 		</div>
 	);
 };
