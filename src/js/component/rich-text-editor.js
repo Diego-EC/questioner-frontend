@@ -49,6 +49,12 @@ export const RichTextEditor = props => {
 		];
 	}
 
+	const handleBeforeInput = input => {
+		if (draftToHtml(convertToRaw(editorState.getCurrentContent())).length >= 5000) {
+			return "handled";
+		}
+	};
+
 	return (
 		<div className="">
 			<Editor
@@ -61,6 +67,7 @@ export const RichTextEditor = props => {
 					options: toolbarHTML
 				}}
 				placeholder="The description goes here..."
+				handleBeforeInput={handleBeforeInput}
 			/>
 		</div>
 	);

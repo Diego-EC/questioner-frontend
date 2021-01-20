@@ -19,12 +19,15 @@ export const AddAnwser = () => {
 	const [loading, setLoading] = useState(false);
 
 	async function answerCreatedOK() {
-		//$("#answerCreatedOK").modal({ show: true, keyboard: false, backdrop: "static" });
 		setLoading(true);
+		let descriptionAux = description;
+		if (description.length > 5000) {
+			descriptionAux = description.substr(0, 5000);
+		}
 		let data = {
 			id_question: id,
 			id_user: actions.getLoggedUserID(),
-			description: description,
+			description: descriptionAux,
 			link: link
 		};
 		const responseJsonAnswer = await doPostFetch(Constant.BACKEND_ROOT + ADD_ANSWER_ENDPOINT, data);
@@ -96,6 +99,7 @@ export const AddAnwser = () => {
 							aria-label="add link"
 							aria-describedby="add link"
 							onChange={event => setLink(event.target.value)}
+							maxLength="255"
 						/>
 					</div>
 				</div>

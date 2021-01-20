@@ -34,8 +34,12 @@ export const EditAnswer = () => {
 
 	async function updateAnswer() {
 		setLoading(true);
+		let descriptionAux = description;
+		if (description.length > 5000) {
+			descriptionAux = description.substr(0, 5000);
+		}
 		let data = {
-			description: description,
+			description: descriptionAux,
 			link: link
 		};
 		let json = await doPutFetch(Constant.BACKEND_ROOT + ANSWER_ENDPOINT + "/" + idAnswer, data);
@@ -150,6 +154,7 @@ export const EditAnswer = () => {
 							aria-describedby="add link"
 							onChange={event => setLink(event.target.value)}
 							defaultValue={link}
+							maxLength="255"
 						/>
 					</div>
 				</div>
