@@ -53,16 +53,17 @@ export const AddQuestion = () => {
 		}
 
 		setLoading(true);
+		let descriptionAux = description;
+		if (description.length > 5000) {
+			descriptionAux = description.substr(0, 5000);
+		}
 		let data = {
 			id_user: actions.getLoggedUserID(),
 			title: title,
-			description: description,
+			description: descriptionAux,
 			link: link
 		};
 		let responseJsonQuestion = await doPostFetch(Constant.BACKEND_ROOT + ADD_QUESTION_ENDPOINT, data);
-		console.log(responseJsonQuestion.question["id"]);
-		// TODO?
-		//setIDQuestion(responseJsonQuestion.question["id"]);
 		if (files !== null && files.length > 0) {
 			await sendImages(responseJsonQuestion.question["id"]);
 		}
@@ -97,6 +98,7 @@ export const AddQuestion = () => {
 						id="title"
 						placeholder="Title"
 						onChange={event => setTitle(event.target.value)}
+						maxLength="100"
 					/>
 					<small className="text-muted">Required</small>
 				</div>
@@ -129,6 +131,7 @@ export const AddQuestion = () => {
 							className="form-control"
 							placeholder="Here the link to your code ;)"
 							onChange={event => setLink(event.target.value)}
+							maxLength="255"
 						/>
 					</div>
 				</div>
