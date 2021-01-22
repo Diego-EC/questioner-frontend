@@ -152,7 +152,7 @@ export const EditAnswer = () => {
 							placeholder="Here the link to your code ;)"
 							aria-label="add link"
 							aria-describedby="add link"
-							onChange={event => setLink(event.target.value)}
+							onInput={event => setLink(event.target.value)}
 							defaultValue={link}
 							maxLength="255"
 						/>
